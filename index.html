@@ -6,10 +6,68 @@
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 
 <!-- Create an element where the map will take place -->
-<svg id="my_dataviz" width="1500" height="1500"></svg>
-
+<svg id="my_dataviz" width="1500" height="1100"></svg>
 <script>
 
+  // The svg
+  var svg = d3.select("svg"),
+      width = +svg.attr("width"),
+      height = +svg.attr("height");
+  
+  // Map and projection
+  var projection = d3.geoMercator()
+        .center([-95, 35])                // GPS of location to zoom on
+        .scale(1100)                       // This is like the zoom
+        .translate([ width/2, height/2 ])
+    
+    
+  
+  // A path generator
+  var path = d3.geoPath()
+      .projection(projection)
+  
+  // Load world shape AND list of connection
+  d3.queue()
+    .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")  // World shape
+    .defer(d3.csv, "https://raw.githubusercontent.com/geacquista/datavis-final/main/fight-songs.csv") // Position of circles
+    .await(ready);
+  
+  function ready(error, dataGeo, data) {
+  
+    dataGeo.features = dataGeo.features.filter( function(d){return d.properties.name=="USA"} )
+
+  
+      // Draw the map
+      svg.append("g")
+          .selectAll("path")
+          .data(dataGeo.features)
+          .enter().append("path")
+              .attr("fill", "#b8b8b8")
+              .attr("d", d3.geoPath()
+                  .projection(projection)
+              )
+              .style("stroke", "#fff")
+              .style("stroke-width", 0)
+  
+      // Add circles:
+      svg
+          .selectAll("myCircles")
+          .data(data)
+          .enter()
+          .append("circle")
+            .attr("cx", function(d){ return projection(data.lat);})
+            .attr("cy", function(d){ return projection(data.long);})
+            .attr("r", 3)
+            .style("fill", "69b3a2")
+            .attr("stroke", "#69b3a2")
+            .attr("stroke-width", 3)
+            .attr("fill-opacity", .4)
+  
+  }
+  
+  </script> 
+<script>
+/*
     // The svg
     var svg = d3.select("svg"),
         width = +svg.attr("width"),
@@ -23,22 +81,24 @@
         .translate([ width/2, height/2 ])
     
     
-    // Create data for circles:
-    var markers = [
-      {long: 9.083, lat: 42.149}, // corsica
-      {long: 7.26, lat: 43.71}, // nice
-      {long: 2.349, lat: 48.864}, // Paris
-      {long: -1.397, lat: 43.664}, // Hossegor
-      {long: 3.075, lat: 50.640}, // Lille
-      {long: -3.83, lat: 58}, // Morlaix
-    ];
+    d3.queue()
+      .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")  // World shape
+      .defer(d3.csv, "https://raw.githubusercontent.com/geacquista/datavis-final/main/fight-songs.csv") // Position of circles
+      .await(ready);    
+      
+
+    function ready(error, dataGeo, data) {
+      
+
+       // Filter data
+       data.features = data.features.filter( function(d){return d.properties.name=="USA"} )
     
-    // Load external data and boot
-    d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson", function(data){
-    
-        // Filter data
-        data.features = data.features.filter( function(d){return d.properties.name=="USA"} )
-    
+      var markers = [];
+      data.forEach(function(row) {
+
+      })
+
+
         // Draw the map
         svg.append("g")
             .selectAll("path")
@@ -65,6 +125,7 @@
             .attr("stroke", "#69b3a2")
             .attr("stroke-width", 3)
             .attr("fill-opacity", .4)
-    })
-    
+
+    } */
+      
     </script>
