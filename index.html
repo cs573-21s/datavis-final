@@ -25,6 +25,10 @@
   // A path generator
   var path = d3.geoPath()
       .projection(projection)
+
+  var color = d3.scaleOrdinal()
+    .domain(["Big 12", "Big Ten", "Pac-12", "SEC", "ACC" ])
+    .range([ "#f6938c", "#b5b639", "#4ebd94","#45bced", "#cb91c0"]);
   
   // Load world shape AND list of connection
   d3.queue()
@@ -42,7 +46,7 @@
           .selectAll("path")
           .data(dataGeo.features)
           .enter().append("path")
-              .attr("fill", "#b8b8b8")
+              .attr("fill", "green")
               .attr("d", d3.geoPath()
                   .projection(projection)
               )
@@ -50,18 +54,18 @@
               .style("stroke-width", 0)
   
       // Add circles:
-      svg
+      
+      svg.append('g')
           .selectAll("myCircles")
           .data(data)
           .enter()
           .append("circle")
-            .attr("cx", function(d){ return projection(data.lat);})
-            .attr("cy", function(d){ return projection(data.long);})
-            .attr("r", 3)
-            .style("fill", "69b3a2")
-            .attr("stroke", "#69b3a2")
-            .attr("stroke-width", 3)
+            .attr("r", 5)
+            .style("fill",  function (d) { return color(d.conference); })
             .attr("fill-opacity", .4)
+            .attr("transform", function(d) {
+              return "translate(" + projection([d.long, d.lat]) + ")"; 
+            });
   
   }
   
