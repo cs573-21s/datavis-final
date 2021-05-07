@@ -36,11 +36,11 @@
     d3.csv("2019data.csv", function(data) {
 
         var data_struct1 = generateDataset(data, countriesDeveloped);
-        buildBarChart(data_struct1, "div#barvis");
+        generateBar(data_struct1, "div#barvis");
         generateRadar(data_struct1, "div#radarvis");
 
         var data_struct2 = generateDataset(data, countriesDeveloping);
-        buildBarChart(data_struct2, "div#barvis");
+        generateBar(data_struct2, "div#barvis");
         generateRadar(data_struct2, "div#radarvis");
 
         generateCombinedRadar(data_struct1, data_struct2, "div#combinedradarvis");
@@ -96,7 +96,7 @@
          return data_struct;
     }
 
-    function buildBarChart(data, chosenDiv){
+    function generateBar(data, chosenDiv){
 
         // establishing variables
         var margin = 50,
