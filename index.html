@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+        <p>
+            
+        </p>
+         <div id="barvis"></div>
+         <div id="radarvis"></div>
+         <div id="combinedradarvis"></div>
+    </body>
+</html>
+
+
+<script>
+
+    // - - - - - - - - - COUNTRY GROUP PRESETS - - - - - - - - - 
+    var countriesNorthAmerica = ['Canada', 'Costa Rica', 'United States', 'Mexico', 'Guatemala', 'Panama', 'El Salvador', 'Trinidad & Tobago', 'Nicaragua', 'Jamaica', 'Honduras', 'Dominican Republic', 'Haiti'];
+    var countriesSouthAmerica = ['Brazil', 'Chile', 'Uruguay', 'Colombia', 'Argentina', 'Ecuador', 'Bolivia', 'Paraguay', 'Peru', 'Venezuela'];
+    var countriesEurope = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Kosovo', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Hungary', 'Northern Cyprus', 'Portugal', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Croatia', 'Bosnia and Herzegovina', 'Belarus', 'Greece', 'North Macedonia', 'Bulgaria', 'Albania', 'Ukraine'];
+    var countriesAsia = ['Israel', 'United Arab Emirates', 'Taiwan', 'Saudi Arabia', 'Qatar', 'Singapore', 'Bahrain', 'Uzbekistan', 'Kuwait', 'Thailand', 'South Korea', 'Japan', 'Kazakhstan', 'Pakistan', 'Philippines', 'Tajikistan', 'Hong Kong', 'Turkey', 'Malaysia', 'Mongolia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Nepal', 'Jordan', 'Laos', 'Cambodia', 'Palestinian Territories', 'Armenia', 'Iran', 'Georgia', 'Bangladesh', 'Iraq', 'Sri Lanka', 'Myanmar', 'India', 'Syria', 'Yemen', 'Afghanistan'];
+    var countriesAfrica = ['Mauritius', 'Libya', 'Nigeria', 'Algeria', 'Morocco', 'Cameroon', 'Ghana', 'Ivory Coast', 'Benin', 'Congo (Brazzaville)', 'Gabon', 'South Africa', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Guinea', 'Gambia', 'Kenya', 'Mauritania', 'Tunisia', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Chad', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Botswana', 'Malawi', 'Rwanda', 'Tanzania', 'Central African Republic', 'South Sudan'];
+    var countriesAustralia = ['New Zealand', 'Australia'];
+    var countriesDeveloped = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'New Zealand', 'Canada', 'Australia', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'United States', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Japan', 'Hungary', 'Portugal', 'Croatia', 'Greece', 'Bulgaria'];
+    var countriesTransition = ['Uzbekistan', 'Kazakhstan', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Tajikistan', 'Bosnia and Herzegovina', 'Belarus', 'North Macedonia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Albania', 'Armenia', 'Georgia', 'Ukraine'];
+    var countriesDeveloping = ['Costa Rica', 'Israel', 'United Arab Emirates', 'Mexico', 'Taiwan', 'Chile', 'Guatemala', 'Saudi Arabia', 'Qatar', 'Panama', 'Brazil', 'Uruguay', 'Singapore', 'El Salvador', 'Bahrain', 'Trinidad & Tobago', 'Colombia', 'Nicaragua', 'Kosovo', 'Argentina', 'Ecuador', 'Kuwait', 'Thailand', 'South Korea', 'Jamaica', 'Mauritius', 'Honduras', 'Bolivia', 'Paraguay', 'Northern Cyprus', 'Peru', 'Pakistan', 'Philippines', 'Libya', 'Hong Kong', 'Dominican Republic', 'Turkey', 'Malaysia', 'Mongolia', 'Nigeria', 'Algeria', 'Morocco', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Cameroon', 'Ghana', 'Ivory Coast', 
+        'Nepal', 'Jordan', 'Benin', 'Congo (Brazzaville)', 'Gabon', 'Laos', 'South Africa', 'Venezuela', 'Cambodia', 'Palestinian Territories', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Iran', 'Guinea', 'Gambia', 'Kenya', 'Mauritania', 'Mozambique', 'Tunisia', 'Bangladesh', 'Bangladesh', 'Iraq', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Sri Lanka', 'Myanmar', 'Chad', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'India', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Haiti', 'Botswana', 'Syria', 'Malawi', 'Yemen', 'Rwanda', 'Tanzania', 'Afghanistan', 'Central African Republic', 'South Sudan'];
+    var countriesTop50 = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'New Zealand', 'Canada', 'Austria', 'Australia', 'Costa Rica', 'Israel', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'United States', 'Czech Republic', 'United Arab Emirates', 'Malta', 'Mexico', 'France', 'Taiwan', 'Chile', 'Guatemala', 'Saudi Arabia', 'Qatar', 'Spain', 'Panama', 'Brazil', 'Uruguay', 'Singapore', 'El Salvador', 'Italy', 'Bahrain', 'Slovakia', 'Trinidad & Tobago', 'Poland', 'Uzbekistan', 'Lithuania', 'Colombia', 'Slovenia', 'Nicaragua', 'Kosovo', 'Argentina', 'Romania', 'Cyprus', 'Ecuador'];
+    var countriesBottom50 = ['Albania', 'Venezuela', 'Cambodia', 'Palestinian Territories', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Armenia', 'Iran', 'Guinea', 'Georgia', 'Gambia', 'Kenya', 'Mauritania', 'Mozambique', 'Tunisia', 'Bangladesh', 'Iraq', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Sri Lanka', 'Myanmar', 'Chad', 'Ukraine', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'India', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Haiti', 'Botswana', 'Syria', 'Malawi', 'Yemen', 'Rwanda', 'Tanzania', 'Afghanistan', 'Central African Republic', 'South Sudan'];
+
+    console.log(d3); // test if d3 is loaded
+
+    //Graphs made in csv load because it is asynchronous
+    d3.csv("2019data.csv", function(data) {
+
+        var data_struct1 = generateDataset(data, countriesDeveloped);
+        buildBarChart(data_struct1, "div#barvis");
+        generateRadar(data_struct1, "div#radarvis");
+
+        var data_struct2 = generateDataset(data, countriesDeveloping);
+        buildBarChart(data_struct2, "div#barvis");
+        generateRadar(data_struct2, "div#radarvis");
+
+        generateCombinedRadar(data_struct1, data_struct2, "div#combinedradarvis");
+
+    });
+
+    function generateDataset(data, chosenCountries) {
+
+        var score = 0;
+        var gdp_per_capita = 0;
+        var social_support = 0;
+        var life_expectancy = 0;
+        var freedom = 0;
+        var generosity = 0;
+        var corruption = 0;
+
+        var filtered_data = data.filter(function(d,i){ return chosenCountries.indexOf(d.Country) >= 0 });
+        //console.log(filtered_data);
+
+        for (var i = 0; i < filtered_data.length; i++) {
+            score += parseFloat(filtered_data[i].Score);
+            gdp_per_capita += parseFloat(filtered_data[i].GDPPerCapita);
+            social_support += parseFloat(filtered_data[i].SocialSupport);
+            life_expectancy += parseFloat(filtered_data[i].LifeExpectancy);
+            freedom += parseFloat(filtered_data[i].Freedom);
+            generosity += parseFloat(filtered_data[i].Generosity);
+            corruption += parseFloat(filtered_data[i].Corruption);
+        }
+
+        score = Math.round((score / filtered_data.length + Number.EPSILON) * 100) / 100;
+        gdp_per_capita /= filtered_data.length;
+        social_support /= filtered_data.length;
+        life_expectancy /= filtered_data.length;
+        freedom /= filtered_data.length;
+        generosity /= filtered_data.length;
+        corruption /= filtered_data.length;
+
+        var letterData = [
+            {letter: "GDP Per Capita", frequency: gdp_per_capita}, //GDP per capita
+            {letter: "Social Support", frequency: social_support}, //Social support
+            {letter: "Life Expectancy", frequency: life_expectancy}, //Life expectancy
+            {letter: "Freedom", frequency: freedom}, //Freedom
+            {letter: "Generosity", frequency: generosity}, //Generosity
+            {letter: "Corruption", frequency: corruption} //Corruption
+        ];
+
+        //create struct
+        var data_struct = {
+            score: score,
+            dataset: letterData
+        };
+        console.log(data_struct);
+         return data_struct;
+    }
+
+    function buildBarChart(data, chosenDiv){
+
+        // establishing variables
+        var margin = 50,
+        width = 500 - 2 * margin,
+        height = 500 - 2 * margin;
+
+        // creating svg
+        var svg = d3.select(chosenDiv).append('svg')
+        .attr("width", width + 2 * margin)
+        .attr("height", height + 2 * margin)
+        .attr("transform", "translate(" + margin + ", " + margin + ")")
+
+        var d = data.dataset;
+        //console.log(d);
+
+        // scaling
+        var xscale = d3.scaleBand()
+        .domain(d.map(function(d){ return (d.letter) }))
+        .range( [0, width])
+        .padding(0.4);
+
+        var yscale = d3.scaleLinear()
+        .domain([0, 1.8]) //d3.max(d, function(d){return d.frequency; })
+        .range( [height, 0] );
+        console.log(d3.max(d, d.frequency));
+
+        // Add X axis
+        var x_axis = d3.axisBottom()
+        .scale(xscale)
+        svg.append("g")
+        .attr("transform", "translate(" + margin + "," + height + ")")
+        .call(x_axis)
+        .attr("class", "xAxis")
+
+
+        // Add Y axis
+        var y_axis = d3.axisLeft()
+        .scale(yscale)
+        .tickValues([])
+        svg.append("g")
+        .attr("transform", "translate(" + margin + ", 0 )")
+        .call(y_axis)
+        .attr("class", "yAxis")
+
+        // Add X axis label
+        /*svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width/2 + margin)
+        .attr("y", height + 40)
+        .text("Letter");
+
+        // Add Y axis label
+        svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", -(height/2))
+        .attr("y", 0)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text("Frequency");*/
+
+        // Add Bars
+        var bars = svg.selectAll(".bar")
+        .data(d)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function(d){ return xscale(d.letter) + margin })
+        .attr("y", function(d){ return yscale(d.frequency) })
+        .attr("height", function(d){ return height - yscale(d.frequency) })
+        .attr("width", function(d){ return xscale.bandwidth() })
+
+        svg.append("text")
+        .attr("text-anchor", "middle")
+        .attr("x", width/2 + margin)
+        .attr("y", 15)
+        .text("Score: " + data.score);
+
+
+    }
+
+    function generateRadar(data, chosenDiv){
+        var dataset = data.dataset;
+        var score = data.score;
+
+        let radialScale = d3.scaleLinear()
+        .domain([0,11])
+        .range([0,200]);
+
+        function angleToCoordinate(angle, value){
+            let x = Math.cos(angle) * radialScale(value);
+            let y = Math.sin(angle) * radialScale(value);
+            return {"x": 250 + x, "y": 250 - y};
+        }
+
+        function getPathCoordinates(data_point){
+            let scale = 57;
+            let coordinates = [];
+            for (var i = 0; i < data_point.length; i++){
+                let point = data_point[i];
+                let ft_name = point.letter;
+                let angle = (Math.PI / 2) + (2 * Math.PI * i / data_point.length);
+                coordinates.push(angleToCoordinate(angle, (point.frequency * scale / 10)));
+            }
+            return coordinates;
+        }
+
+        let svg = d3.select(chosenDiv).append("svg")
+            .attr("width", 500)
+            .attr("height", 500);
+
+        /*
+        let ticks = [2,4,6,8,10];
+
+        ticks.forEach(t =>
+                svg.append("circle")
+                .attr("cx", 250)
+                .attr("cy", 250)
+                .attr("fill", "none")
+                .attr("stroke", "black")
+                .attr("r", radialScale(t))
+        );*/
+
+        for (var i = 0; i < dataset.length; i++) {
+            let ft_name = dataset[i].letter;
+            let angle = (Math.PI / 2) + (2 * Math.PI * i / dataset.length);
+            let line_coordinate = angleToCoordinate(angle, 10);
+            let label_coordinate = angleToCoordinate(angle, 10.5);
+
+            //draw axis line
+            svg.append("line")
+            .attr("x1", 250)
+            .attr("y1", 250)
+            .attr("x2", line_coordinate.x)
+            .attr("y2", line_coordinate.y)
+            .attr("stroke","black");
+
+            //draw axis label
+            svg.append("text")
+            .attr("x", label_coordinate.x - 5)
+            .attr("y", label_coordinate.y + 5)
+            .text(ft_name);
+        }
+
+        let line = d3.line()
+            .x(d => d.x)
+            .y(d => d.y);
+
+        let coordinates = getPathCoordinates(dataset);
+
+        //draw the path element
+        svg.append("path")
+        .datum(coordinates)
+        .attr("d",line)
+        .attr("stroke-width", 3)
+        .attr("stroke", "black")
+        .attr("fill", "black")
+        .attr("stroke-opacity", 1)
+        .attr("opacity", .5);
+    }
+
+    function generateCombinedRadar(data1, data2, chosenDiv){
+        var dataset1 = data1.dataset;
+        var dataset2 = data2.dataset;
+
+        var score1 = data1.score;
+        var score2 = data2.score;
+
+        let radialScale = d3.scaleLinear()
+        .domain([0,11])
+        .range([0,200]);
+
+        function angleToCoordinate(angle, value){
+            let x = Math.cos(angle) * radialScale(value);
+            let y = Math.sin(angle) * radialScale(value);
+            return {"x": 250 + x, "y": 250 - y};
+        }
+
+        function getPathCoordinates(data_point){
+            let scale = 57;
+            let coordinates = [];
+            for (var i = 0; i < data_point.length; i++){
+                let point = data_point[i];
+                let ft_name = point.letter;
+                let angle = (Math.PI / 2) + (2 * Math.PI * i / data_point.length);
+                coordinates.push(angleToCoordinate(angle, (point.frequency * scale / 10)));
+            }
+            return coordinates;
+        }
+
+        let svg = d3.select(chosenDiv).append("svg")
+            .attr("width", 500)
+            .attr("height", 500);
+
+        /*
+        let ticks = [2,4,6,8,10];
+
+        ticks.forEach(t =>
+                svg.append("circle")
+                .attr("cx", 250)
+                .attr("cy", 250)
+                .attr("fill", "none")
+                .attr("stroke", "black")
+                .attr("r", radialScale(t))
+        );*/
+
+        for (var i = 0; i < dataset1.length; i++) {
+            let ft_name = dataset1[i].letter;
+            let angle = (Math.PI / 2) + (2 * Math.PI * i / dataset1.length);
+            let line_coordinate = angleToCoordinate(angle, 10);
+            let label_coordinate = angleToCoordinate(angle, 10.5);
+
+            //draw axis line
+            svg.append("line")
+            .attr("x1", 250)
+            .attr("y1", 250)
+            .attr("x2", line_coordinate.x)
+            .attr("y2", line_coordinate.y)
+            .attr("stroke","black");
+
+            //draw axis label
+            svg.append("text")
+            .attr("x", label_coordinate.x - 5)
+            .attr("y", label_coordinate.y + 5)
+            .text(ft_name);
+        }
+
+        let line = d3.line()
+            .x(d => d.x)
+            .y(d => d.y);
+
+        let coordinates1 = getPathCoordinates(dataset1);
+
+        //draw the path element
+        svg.append("path")
+        .datum(coordinates1)
+        .attr("d",line)
+        .attr("stroke-width", 3)
+        .attr("stroke", "black")
+        .attr("fill", "black")
+        .attr("stroke-opacity", 1)
+        .attr("opacity", .5);
+
+        let coordinates2 = getPathCoordinates(dataset2);
+
+        //draw the path element
+        svg.append("path")
+        .datum(coordinates2)
+        .attr("d",line)
+        .attr("stroke-width", 3)
+        .attr("stroke", "black")
+        .attr("fill", "black")
+        .attr("stroke-opacity", 1)
+        .attr("opacity", .5);
+    }
+
+    
+
+  </script>
+
+
+  
+
+</script>
