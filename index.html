@@ -8,7 +8,7 @@
 
   <style>
     .circle:hover{
-      stroke: black;
+      stroke: white;
       stroke-width: 4px;
     }
     </style>
@@ -37,7 +37,7 @@
 
   var color = d3.scaleOrdinal()
     .domain(["Big 12", "Big Ten", "Pac-12", "SEC", "ACC", "Independent" ])
-    .range([ "#FF9747", "#54E500", "#0089E5","#B000E5", "#410081", "white"]);
+    .range([ "#AE1313", "#4498E2", "#01447F","#FFD500", "#FDF2B8", "white"]);
   
     var size = d3.scaleLinear()
       .domain([1,100])  // What's in the data
@@ -78,20 +78,21 @@
       var mouseover = function(d) {
         Tooltip.style("opacity", 1)
         d3.select(this)
-        .style("r", function (d) { return size((d.size)/10000) + 3; })
+        .style("r", function (d) { return size((d.size)/10000) + 5; })
         .style("opacity", 1)
       }
       var mousemove = function(d) {
         Tooltip
-          .html(d.school + "<br>" + "long: " + d.long + "<br>" + "lat: " + d.lat)
-          .style("left",  (d3.event.pageX+10) + "px")
-          .style("top",  (d3.event.pageX+10) + "px")
+          .html(d.school + "<br>" + "latitude: " + d.lat + "˚N<br>" + "longitude: " + d.long + "˚W")
+          .style("left",  (d3.event.pageX + 15) + "px")
+          .style("top",  (d3.event.pageY + 15) + "px")
       }
       var mouseleave = function(d) {
         Tooltip.style("opacity", 0)
         d3.select(this)
-          .style("r", function (d) { return size((d.size)/10000); })
-          .style("opacity", 0.9)
+        .transition(1000)
+          .style("r", function (d) { return size((d.size)/10000 + 3); })
+          .style("opacity", 0.7)
       }
 
 
@@ -101,10 +102,10 @@
           .data(data)
           .enter()
           .append("circle")
-            .attr("r",  function (d) { return size((d.size)/10000); })
+            .attr("r",  function (d) { return size((d.size)/10000) + 3; })
             .style("fill",  function (d) { return color(d.conference); })
             .attr("fill-opacity", .9)
-            .attr("stroke", '#1D6200')
+            .attr("stroke", 'whitesmoke')
             .attr("stroke-width", 1)
             .attr("transform", function(d) {
               return "translate(" + projection([d.long, d.lat]) + ")"; 
@@ -116,66 +117,3 @@
   }
   
   </script> 
-<script>
-/*
-    // The svg
-    var svg = d3.select("svg"),
-        width = +svg.attr("width"),
-        height = +svg.attr("height");
-        
-    
-    // Map and projection
-    var projection = d3.geoMercator()
-        .center([-95, 22])                // GPS of location to zoom on
-        .scale(1100)                       // This is like the zoom
-        .translate([ width/2, height/2 ])
-    
-    
-    d3.queue()
-      .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")  // World shape
-      .defer(d3.csv, "https://raw.githubusercontent.com/geacquista/datavis-final/main/fight-songs.csv") // Position of circles
-      .await(ready);    
-      
-
-    function ready(error, dataGeo, data) {
-      
-
-       // Filter data
-       data.features = data.features.filter( function(d){return d.properties.name=="USA"} )
-    
-      var markers = [];
-      data.forEach(function(row) {
-
-      })
-
-
-        // Draw the map
-        svg.append("g")
-            .selectAll("path")
-            .data(data.features)
-            .enter()
-            .append("path")
-              .attr("fill", "#b8b8b8")
-              .attr("d", d3.geoPath()
-                  .projection(projection)
-              )
-            .style("stroke", "black")
-            .style("opacity", .3)
-    
-        // Add circles:
-        svg
-          .selectAll("myCircles")
-          .data(markers)
-          .enter()
-          .append("circle")
-            .attr("cx", function(d){ return projection([d.long, d.lat])[0] })
-            .attr("cy", function(d){ return projection([d.long, d.lat])[1] })
-            .attr("r", 14)
-            .style("fill", "69b3a2")
-            .attr("stroke", "#69b3a2")
-            .attr("stroke-width", 3)
-            .attr("fill-opacity", .4)
-
-    } */
-      
-    </script>
