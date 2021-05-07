@@ -15,7 +15,8 @@
 </head>
 
 <!-- Create an element where the map will take place -->
-<svg id="my_dataviz" width="1500" height="1100"></svg>
+<svg id="vis" width="1500" height="1100"></svg>
+
 <script>
 
   // The svg
@@ -25,8 +26,8 @@
   
   // Map and projection
   var projection = d3.geoMercator()
-        .center([-95, 35])                // GPS of location to zoom on
-        .scale(1100)                       // This is like the zoom
+        .center([-95, 35])                
+        .scale(1100)                       
         .translate([ width/2, height/2 ])
     
     
@@ -40,13 +41,13 @@
     .range([ "#AE1313", "#4498E2", "#01447F","#FFD500", "#FDF2B8", "white"]);
   
     var size = d3.scaleLinear()
-      .domain([1,100])  // What's in the data
+      .domain([1,100])  
       .range([3, 100]) 
 
-  // Load world shape AND list of connection
+  // Load world shape and list of connection
   d3.queue()
-    .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")  // World shape
-    .defer(d3.csv, "https://raw.githubusercontent.com/geacquista/datavis-final/main/fight-songs.csv") // Position of circles
+    .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
+    .defer(d3.csv, "https://raw.githubusercontent.com/geacquista/datavis-final/main/fight-songs.csv") 
     .await(ready);
   
   function ready(error, dataGeo, data) {
