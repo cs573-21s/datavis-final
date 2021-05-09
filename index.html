@@ -1,120 +1,22 @@
 <!DOCTYPE html>
-<head>
-  <meta charset="utf-8">
-
-  <!-- Load d3.js and the geo projection plugin -->
-  <script src="https://d3js.org/d3.v4.js"></script>
-  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
-
-  <style>
-    .circle:hover{
-      stroke: white;
-      stroke-width: 4px;
-    }
-    </style>
-</head>
-
-<!-- Create an element where the map will take place -->
-<svg id="vis" width="1500" height="1100"></svg>
-
-<script>
-
-  // The svg
-  var svg = d3.select("svg"),
-      width = +svg.attr("width"),
-      height = +svg.attr("height");
-  
-  // Map and projection
-  var projection = d3.geoMercator()
-        .center([-95, 35])                
-        .scale(1100)                       
-        .translate([ width/2, height/2 ])
-    
-    
-  
-  // A path generator
-  var path = d3.geoPath()
-      .projection(projection)
-
-  var color = d3.scaleOrdinal()
-    .domain(["Big 12", "Big Ten", "Pac-12", "SEC", "ACC", "Independent" ])
-    .range([ "#AE1313", "#4498E2", "#01447F","#FFD500", "#FDF2B8", "white"]);
-  
-    var size = d3.scaleLinear()
-      .domain([1,100])  
-      .range([3, 100]) 
-
-  // Load world shape and list of connection
-  d3.queue()
-    .defer(d3.json, "https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson")
-    .defer(d3.csv, "https://raw.githubusercontent.com/geacquista/datavis-final/main/fight-songs.csv") 
-    .await(ready);
-  
-  function ready(error, dataGeo, data) {
-  
-    dataGeo.features = dataGeo.features.filter( function(d){return d.properties.name=="USA"} )
-
-  
-      // Draw the map
-      svg.append("g")
-          .selectAll("path")
-          .data(dataGeo.features)
-          .enter().append("path")
-              .attr("fill", "#0C7301")
-              .attr("fill-opacity", .5)
-              .attr("d", d3.geoPath()
-                  .projection(projection)
-              )
-              .style("stroke", "#fff")
-              .style("stroke-width", 0)
-  
-
-        // create a tooltip
-        var Tooltip = d3.select('body')
-          .append('div')
-          .attr('id', 'tooltip')
-          .attr('style', 'position: absolute; opacity: 0; padding:2%; text-align:center; background:whitesmoke; border-radius:20px;box-shadow: 0 0 5px black;');
-
-      // Three function that change the tooltip when user hover / move / leave a cell
-      var mouseover = function(d) {
-        Tooltip.style("opacity", 1)
-        d3.select(this)
-        .style("r", function (d) { return size((d.size)/10000) + 5; })
-        .style("opacity", 1)
-      }
-      var mousemove = function(d) {
-        Tooltip
-          .html(d.school + "<br>" + "latitude: " + d.lat + "˚N<br>" + "longitude: " + d.long + "˚W")
-          .style("left",  (d3.event.pageX + 15) + "px")
-          .style("top",  (d3.event.pageY + 15) + "px")
-      }
-      var mouseleave = function(d) {
-        Tooltip.style("opacity", 0)
-        d3.select(this)
-        .transition(1000)
-          .style("r", function (d) { return size((d.size)/10000 + 3); })
-          .style("opacity", 0.7)
-      }
-
-
-      // Add circles:
-      svg.append('g')
-          .selectAll("myCircles")
-          .data(data)
-          .enter()
-          .append("circle")
-            .attr("r",  function (d) { return size((d.size)/10000) + 3; })
-            .style("fill",  function (d) { return color(d.conference); })
-            .attr("fill-opacity", .9)
-            .attr("stroke", 'whitesmoke')
-            .attr("stroke-width", 1)
-            .attr("transform", function(d) {
-              return "translate(" + projection([d.long, d.lat]) + ")"; 
-            })
-          .on("mouseover", mouseover)
-          .on("mousemove", mousemove)
-          .on("mouseleave", mouseleave);
-  
-  }
-  
-  </script> 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CS 573: Final Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+        <script src="./script.js"></script>
+    </head>
+    <body>
+        <div id="overlay"></div>
+        <div id="start">
+            <h1>School Beats</h1>
+            <button id="init">Start</button>
+        </div>
+        <div id="content">
+            <svg id="vis" width="1500" height="700"></svg>
+            <img id="sound" src="img/on.png">
+        </div>
+    </body>
+</html>

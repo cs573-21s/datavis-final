@@ -1,0 +1,51 @@
+.circle:hover {
+    stroke: white;
+    stroke-width: 4px;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+}
+
+body {
+    position: relative;
+}
+
+svg {
+    margin-top: 150px;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+#start {
+    width: 300px;
+    height: 200px;
+    line-height: 75px;
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -150px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 11;
+}
+
+#sound {
+    width: 32px;
+    height: 32px;
+    position: fixed;
+    top: 95%;
+    left: 97%;
+    z-index: 5;
+}
