@@ -3,6 +3,7 @@
 <head>
     <title>CS573 Final Project</title>
     <script src="http://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
             margin: 0px; 
@@ -15,8 +16,8 @@
 
         .top {
             position: fixed;
-            left: 0;
-            right: 0;
+            left: 15%;
+            right: 15%;
             top: 0;
             display: flex;
             flex-direction: column;
@@ -26,7 +27,7 @@
         }
 
         .title {
-            background-color: black;
+            background-color: #282828;
             padding: 20px;
         }
 
@@ -36,10 +37,6 @@
             align-items: center;
             justify-content: space-around;
             padding-top: 20px;
-        }
-
-        .switch_vis_button {
-
         }
 
         h1 {
@@ -69,6 +66,9 @@
 
         }
 
+        .switch_vis_button {
+            padding-top: 10px;
+        }
 
 
         .comparison_ui {
@@ -83,7 +83,7 @@
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
-            background-color: red;
+            background-color: #363636;
             height: 100vh;
             width: 15vw;
         }
@@ -101,7 +101,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
-            background-color: pink;
+            background-color: #363636;
             height: 100vh;
             width: 35vw;
         }
@@ -111,7 +111,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-end;
-            background-color: purple;
+            background-color: #454545;
             height: 100vh;
             width: 35vw;
         }
@@ -132,7 +132,7 @@
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
-            background-color: blue;
+            background-color: #454545;
             height: 100vh;
             width: 15vw;
         }
@@ -145,6 +145,70 @@
             padding: 20px;
         }
 
+        #left_add_country:hover {
+            color:black;
+            cursor: pointer;
+        }
+
+        #right_add_country:hover {
+            color:black;
+            cursor: pointer;
+        }
+
+        .country_list {
+            padding: 20px;
+        }
+
+        #bar_graph_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 40px;
+            margin: 5px;
+            background: url('../../img/bar_chart.png')no-repeat;
+            background-size: contain;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+        
+        #radar_chart_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 40px;
+            margin: 5px;
+            background: url('../../img/radar_chart.png')no-repeat;
+            background-size: contain;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        #compare_toggle_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 40px;
+            margin: 5px;
+            background: url('../../img/expand.png')no-repeat;
+            background-size: contain;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        #bar_graph_button:hover {
+            background-color: gray;
+        }
+        
+        #radar_chart_button:hover {
+            background-color: gray;
+        }
+
+        #compare_toggle_button:hover {
+            background-color: gray;
+        }
         
 
     </style>
@@ -154,24 +218,18 @@
         <div class="title">
             <h1>WORLD HAPPINESS REPORT COMPARISON TOOL</h1>
         </div>
-        <div class="vis_buttons">
-            <div class="switch_vis_button">
-                <button id="bar_graph_button">
-                    Bar Graph
-                </button>
-                <button id="radar_chart_button">
-                    Radar Chart
-                </button>
-            </div>
-            <button id="compare_toggle_button">
-                Compare
-            </button>
+        <div class="switch_vis_button">
+            <button id="bar_graph_button"></button>
+            <button id="radar_chart_button"></button>
         </div>
+        <button id="compare_toggle_button"></button>
     </div>
 
     <div class="comparison_ui">
         <div class="left">
-            <h2 id='left_add_country'>COUNTRIES +</h2>
+            <div class="country_list">
+                <h2 id='left_add_country'>COUNTRIES +</h2>
+            </div>
         </div>
 
         <div class="middle">
@@ -192,9 +250,14 @@
         </div>
         
         <div class="right">
-            <h2 id='right_add_country'>+ COUNTRIES</h2>
+            <div class="country_list">
+                <h2 id="right_add_country">+ COUNTRIES</h2>
+                
+            </div>
         </div>
     </div>
+
+    
     
     
 </body>

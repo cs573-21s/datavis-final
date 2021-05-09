@@ -1,0 +1,6 @@
+1. maybe figure out how to reuse top somehow or not...
+
+load buttons using arrays
+link buttons to each other
+load data to integrate with buttons
+load selection screen

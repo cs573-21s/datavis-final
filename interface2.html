@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS573 Final Project</title>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <style>
+        body {
+            margin: 0px; 
+            padding: 0px;
+            width: 100vw; 
+            height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+
+        
+
+        .title {
+            background-color: rgb(18, 18, 18);
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h2 {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h3 {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        button {
+
+        }
+
+        .toggle {
+            background-color: black;
+            color: white;
+            border: none;
+            width: 150px;
+            height: 40px;
+            font-size: 15px;
+            text-align: left;
+            padding: 10px;
+            margin-top: 5px;
+        }
+
+        .toggle:hover {
+            cursor: pointer;
+        }
+
+        .countries_groups {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .selection_ui {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            z-index: 0;
+        }
+
+        .selection_ui .top {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            background-color: #171717;
+            width: 100vw;
+        }
+
+        .selection_ui .body {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-self: flex-start;
+            background-color: #171717;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .selection_ui .left {
+            display: flex;
+            flex-direction: column;
+            width: 80vw;
+            height: 100%;
+        }
+
+        .selection_ui .left .entities{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            background-color: #171717;
+            padding: 30px;
+            height: 100%;
+        }
+
+        .selection_ui .right {
+            display: flex;
+            flex-direction: column;
+            width: 20vw;
+            height: 100%;
+        }
+
+        .selection_ui .right .rank{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 30px;
+            height: 100%;
+        }
+
+        .selection_ui .right .rank .list{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            height: 100%;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .selection_ui .right .rank .list .list_item{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+        }
+
+        .selection_ui .right .rank .list .list_item h3{
+            margin-right: 10px;
+        }
+        
+        .rank_num {
+            
+        }
+
+        #exit_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 25px;
+            margin: 15px;
+            background: url('../../img/exit.png')no-repeat;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    
+
+    <div class="selection_ui">
+        <div class="top">
+            <div></div>
+            <div class="title">
+                <h1>TOGGLE COUNTRIES/GROUPS</h1>
+            </div>
+            <button id="exit_button"></button>
+        </div>
+        <div class="body">
+            <div class="left">
+                <div class="entities">
+                    <h2>PRE-DEFINED GROUPS</h2>
+                    <div class="countries_groups" id="predefined_groups">
+                        <button class="toggle">Top 50</button>
+                        <button class="toggle">Bottom 50</button>
+                        <button class="toggle">Developed</button>
+                        <button class="toggle">Developing</button>
+                        <button class="toggle">Transitioning</button>
+                    </div>
+
+                    <h2>CONTINENTS</h2>
+                    <div class="countries_groups" id="continents">
+                        <button class="toggle">North America</button>
+                        <button class="toggle">South America</button>
+                        <button class="toggle">Africa</button>
+                        <button class="toggle">Asia</button>
+                        <button class="toggle">Europe</button>
+                        <button class="toggle">Oceania</button>
+                        <button class="toggle">North America</button>
+                        <button class="toggle">South America</button>
+                        <button class="toggle">Africa</button>
+                        <button class="toggle">Asia</button>
+                        <button class="toggle">Europe</button>
+                        <button class="toggle">Oceania</button>
+                    </div>
+
+                    <h2>REGIONS</h2>
+                    <div class="countries_groups" id="regions">
+                        
+                    </div>
+
+                    <h2>NORTH AMERICA</h2>
+                    <div class="countries_groups" id="north_america">
+                        
+                    </div>
+
+                    <h2>SOUTH AMERICA</h2>
+                    <div class="countries_groups" id="south_america">
+                        
+                    </div>
+
+                    <h2>ASIA</h2>
+                    <div class="countries_groups" id="asia">
+                        
+                    </div>
+
+                    <h2>EUROPE</h2>
+                    <div class="countries_groups" id="europe">
+                        
+                    </div>
+                    <h2>AFRICA</h2>
+                    <div class="countries_groups" id="africa">
+                        
+                    </div>
+
+                    <h2>OCEANIA</h2>
+                    <div class="countries_groups" id="oceania">
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right">
+                <div class="rank">
+                    <h2>RANK</h2>
+                    <div class="list">
+                        <div class="list_item">
+                            <h3>1</h3>
+                            <button class="toggle">Top 50</button>
+                        </div>
+                        <div class="list_item">
+                            <h3>2</h3>
+                            <button class="toggle">Top 50</button>
+                        </div>
+                        <div class="list_item">
+                            <h3>3</h3>
+                            <button class="toggle">Top 50</button>
+                        </div>
+                        <div class="list_item">
+                            <button class="toggle">Top 50</button>
+                        </div>
+                        <div class="list_item">
+                            <button class="toggle">Top 50</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    
+    
+    
+</body>
+</html>
