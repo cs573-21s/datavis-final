@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS573 Final Project</title>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/touche-min.js" charset="utf-8"></script>
+    <script src="js/zepto.min.js" charset="utf-8"></script>
+    <style>
+        body {
+            margin: 0px; 
+            padding: 0px;
+            width: 100vw; 
+            height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            overflow:hidden;
+        }
+
+        .comparison_top {
+            position: fixed;
+            left: 15%;
+            right: 15%;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-self: flex-start;
+            z-index: 1;
+        }
+
+        .title {
+            background-color: #282828;
+            padding: 20px;
+        }
+
+        .vis_buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            padding-top: 20px;
+        }
+
+        h1 {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h2 {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        h3 {
+            color: white;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .score {
+            color: white;
+            font-size: 100px;
+        }
+
+        button {
+
+        }
+
+        .switch_vis_button {
+            padding-top: 20px;
+        }
+
+
+        .comparison_ui {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .comparison_ui .left {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            background-color: #363636;
+            height: 100vh;
+            width: 15vw;
+        }
+
+        .comparison_ui .middle {
+            display: flex;
+            flex-direction: row;
+            background-color: green;
+            height: 100vh;
+            width: 70vw;
+        }
+
+        .comparison_ui .middle_left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: #363636;
+            height: 100vh;
+            width: 35vw;
+        }
+        
+        .comparison_ui .middle_right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+            background-color: #454545;
+            height: 100vh;
+            width: 35vw;
+        }
+
+        #left_vis {
+            display:flex;
+            justify-content: flex-start;
+            background-color: orange;
+        }
+
+        #right_vis {
+            display:flex;
+            justify-content: flex-end;
+            background-color: orange;
+        }
+
+        .comparison_ui .right {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            background-color: #454545;
+            height: 100vh;
+            width: 15vw;
+        }
+
+        #left_add_country {
+            padding: 20px;
+        }
+
+        #right_add_country {
+            padding: 20px;
+        }
+
+        #left_add_country:hover {
+            color:black;
+            cursor: pointer;
+        }
+
+        #right_add_country:hover {
+            color:black;
+            cursor: pointer;
+        }
+
+        .country_list {
+            padding: 20px;
+        }
+
+        #bar_graph_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 40px;
+            margin: 5px;
+            background: url('../../img/bar_chart.png')no-repeat;
+            background-size: contain;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        #bar_graph_button.active {
+            background-color: orange;
+        }
+        
+        #radar_chart_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 40px;
+            margin: 5px;
+            background: url('../../img/radar_chart.png')no-repeat;
+            background-size: contain;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        #radar_chart_button.active {
+            background-color: orange;
+        }
+
+        #compare_toggle_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 40px;
+            margin: 5px;
+            background: url('../../img/expand.png')no-repeat;
+            background-size: contain;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+        
+        #compare_toggle_button:hover {
+            background-color: gray;
+        }
+
+        .toggle {
+            background-color: black;
+            color: white;
+            border: none;
+            width: 160px;
+            height: 40px;
+            font-size: 15px;
+            text-align: left;
+            padding: 10px;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+
+        .toggle:hover {
+            cursor: pointer;
+        }
+
+        .toggle.active {
+            background-color: green;
+        }
+
+        .countries_groups {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .selection_ui {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            background-color: #171717;
+        }
+
+        .selection_ui .top {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            background-color: #171717;
+            width: 100vw;
+        }
+
+        .selection_ui .body {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-self: flex-start;
+            background-color: #171717;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .selection_ui .left {
+            display: flex;
+            flex-direction: column;
+            width: 80vw;
+            height: 100%;
+        }
+
+        .selection_ui .left .entities{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            background-color: #171717;
+            overflow-y: auto;
+            padding: 30px;
+            padding-left: 50px;
+            height: 100%;
+            margin-bottom: 80px;
+        }
+
+        .selection_ui .right {
+            display: flex;
+            flex-direction: column;
+            width: 20vw;
+            height: 100%;
+        }
+
+        .selection_ui .right .rank{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 30px;
+            height: 100%;
+        }
+
+        .selection_ui .right .rank .list{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            overflow-y: auto;
+            height: 100%;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 130px;
+        }
+
+        .selection_ui .right .rank .list .list_item{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+        }
+
+        .selection_ui .right .rank .list .list_item h3{
+            margin-right: 10px;
+        }
+        
+        .rank_num {
+            
+        }
+
+        #exit_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 25px;
+            margin: 15px;
+            background: url('../../img/exit.png')no-repeat;
+            background-size: contain;
+            border: none;
+            cursor: pointer;
+        }
+
+        .page {
+            position: absolute;
+            transition: 0.5s transform ease;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .page[data-page="home"] {
+            transform: translate(0, 0);
+            z-index: 0;
+        }
+        .page[data-page="home"].active {
+            transform: translate(0, 0);
+            z-index: 0;
+        }
+
+        .page[data-page="right_selection"] {
+            transform: translate(100%, 0);
+            z-index: 2;
+        }
+
+        .page[data-page="right_selection"].active {
+            transform: translate(0, 0);
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="page active" data-page="home">
+        <div class="comparison_top">
+            <div class="title">
+                <h1>WORLD HAPPINESS REPORT COMPARISON TOOL</h1>
+            </div>
+            <div class="switch_vis_button">
+                <button class="type_button" id="bar_graph_button"></button>
+                <button class="type_button active" id="radar_chart_button"></button>
+            </div>
+            <button class="type_button" id="compare_toggle_button"></button>
+        </div>
+
+        <div class="comparison_ui">
+            <div class="left">
+                <div class="country_list">
+                    <h2 id='left_add_country'>COUNTRIES +</h2>
+                    <div id="left_countries">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="middle">
+                <div class="middle_left">
+                    <h3>SCORE</h3>
+                    <div class="score">8.56</div>
+                    <div id="left_vis">
+
+                    </div>
+                </div>
+                <div class="middle_right">
+                    <h3>SCORE</h3>
+                    <div class="score">8.56</div>
+                    <div id="right_vis">
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div class="right">
+                <div class="country_list">
+                    <h2 id="right_add_country" data-js-page="right_selection">+ COUNTRIES</h2>
+                    <div id="right_countries">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page" data-page="right_selection">
+        <div class="selection_ui">
+            <div class="top">
+                <div></div>
+                <div class="title">
+                    <h1>TOGGLE COUNTRIES/GROUPS</h1>
+                </div>
+                <button id="exit_button" data-js-page="home"></button>
+            </div>
+            <div class="body">
+                <div class="left">
+                    <div class="entities">
+                        <h2>PRE-DEFINED GROUPS</h2>
+                        <div class="countries_groups" id="predefined_groups">
+                        </div>
+    
+                        <h2>CONTINENTS</h2>
+                        <div class="countries_groups" id="continents">
+                        </div>
+    
+                        <h2>NORTH AMERICA</h2>
+                        <div class="countries_groups" id="north_america">
+                        </div>
+    
+                        <h2>SOUTH AMERICA</h2>
+                        <div class="countries_groups" id="south_america">
+                        </div>
+    
+                        <h2>ASIA</h2>
+                        <div class="countries_groups" id="asia">
+                        </div>
+    
+                        <h2>EUROPE</h2>
+                        <div class="countries_groups" id="europe">
+                        </div>
+
+                        <h2>AFRICA</h2>
+                        <div class="countries_groups" id="africa">    
+                        </div>
+    
+                        <h2>OCEANIA</h2>
+                        <div class="countries_groups" id="oceania">                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right">
+                    <div class="rank">
+                        <h2>RANK</h2>
+                        <div class="list">
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+
+    <script>
+        // - - - - - - - - - COUNTRY GROUP PRESETS - - - - - - - - - 
+        var countriesNorthAmerica = ['Canada', 'Costa Rica', 'United States', 'Mexico', 'Guatemala', 'Panama', 'El Salvador', 'Trinidad & Tobago', 'Nicaragua', 'Jamaica', 'Honduras', 'Dominican Republic', 'Haiti'];
+        var countriesSouthAmerica = ['Brazil', 'Chile', 'Uruguay', 'Colombia', 'Argentina', 'Ecuador', 'Bolivia', 'Paraguay', 'Peru', 'Venezuela'];
+        var countriesEurope = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Kosovo', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Hungary', 'Northern Cyprus', 'Portugal', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Croatia', 'Bosnia and Herzegovina', 'Belarus', 'Greece', 'North Macedonia', 'Bulgaria', 'Albania', 'Ukraine'];
+        var predefinedGroups = ['Top 50','Bottom 50','Developed','Developing','Transitioning']
+        var continents = ['North America','South America', 'Asia', 'Europe', 'Africa', 'Oceania']
+        var countriesAsia = ['Israel', 'United Arab Emirates', 'Taiwan', 'Saudi Arabia', 'Qatar', 'Singapore', 'Bahrain', 'Uzbekistan', 'Kuwait', 'Thailand', 'South Korea', 'Japan', 'Kazakhstan', 'Pakistan', 'Philippines', 'Tajikistan', 'Hong Kong', 'Turkey', 'Malaysia', 'Mongolia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Nepal', 'Jordan', 'Laos', 'Cambodia', 'Palestinian Territories', 'Armenia', 'Iran', 'Georgia', 'Bangladesh', 'Iraq', 'Sri Lanka', 'Myanmar', 'India', 'Syria', 'Yemen', 'Afghanistan'];
+        var countriesAfrica = ['Mauritius', 'Libya', 'Nigeria', 'Algeria', 'Morocco', 'Cameroon', 'Ghana', 'Ivory Coast', 'Benin', 'Congo (Brazzaville)', 'Gabon', 'South Africa', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Guinea', 'Gambia', 'Kenya', 'Mauritania', 'Tunisia', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Chad', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Botswana', 'Malawi', 'Rwanda', 'Tanzania', 'Central African Republic', 'South Sudan'];
+        var countriesOceania = ['New Zealand', 'Australia'];
+        var countriesDeveloped = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'New Zealand', 'Canada', 'Australia', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'United States', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Japan', 'Hungary', 'Portugal', 'Croatia', 'Greece', 'Bulgaria'];
+        var countriesTransition = ['Uzbekistan', 'Kazakhstan', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Tajikistan', 'Bosnia and Herzegovina', 'Belarus', 'North Macedonia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Albania', 'Armenia', 'Georgia', 'Ukraine'];
+        var countriesDeveloping = ['Costa Rica', 'Israel', 'United Arab Emirates', 'Mexico', 'Taiwan', 'Chile', 'Guatemala', 'Saudi Arabia', 'Qatar', 'Panama', 'Brazil', 'Uruguay', 'Singapore', 'El Salvador', 'Bahrain', 'Trinidad & Tobago', 'Colombia', 'Nicaragua', 'Kosovo', 'Argentina', 'Ecuador', 'Kuwait', 'Thailand', 'South Korea', 'Jamaica', 'Mauritius', 'Honduras', 'Bolivia', 'Paraguay', 'Northern Cyprus', 'Peru', 'Pakistan', 'Philippines', 'Libya', 'Hong Kong', 'Dominican Republic', 'Turkey', 'Malaysia', 'Mongolia', 'Nigeria', 'Algeria', 'Morocco', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Cameroon', 'Ghana', 'Ivory Coast', 
+            'Nepal', 'Jordan', 'Benin', 'Congo (Brazzaville)', 'Gabon', 'Laos', 'South Africa', 'Venezuela', 'Cambodia', 'Palestinian Territories', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Iran', 'Guinea', 'Gambia', 'Kenya', 'Mauritania', 'Mozambique', 'Tunisia', 'Bangladesh', 'Bangladesh', 'Iraq', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Sri Lanka', 'Myanmar', 'Chad', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'India', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Haiti', 'Botswana', 'Syria', 'Malawi', 'Yemen', 'Rwanda', 'Tanzania', 'Afghanistan', 'Central African Republic', 'South Sudan'];
+        var countriesTop50 = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'New Zealand', 'Canada', 'Austria', 'Australia', 'Costa Rica', 'Israel', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'United States', 'Czech Republic', 'United Arab Emirates', 'Malta', 'Mexico', 'France', 'Taiwan', 'Chile', 'Guatemala', 'Saudi Arabia', 'Qatar', 'Spain', 'Panama', 'Brazil', 'Uruguay', 'Singapore', 'El Salvador', 'Italy', 'Bahrain', 'Slovakia', 'Trinidad & Tobago', 'Poland', 'Uzbekistan', 'Lithuania', 'Colombia', 'Slovenia', 'Nicaragua', 'Kosovo', 'Argentina', 'Romania', 'Cyprus', 'Ecuador'];
+        var countriesBottom50 = ['Albania', 'Venezuela', 'Cambodia', 'Palestinian Territories', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Armenia', 'Iran', 'Guinea', 'Georgia', 'Gambia', 'Kenya', 'Mauritania', 'Mozambique', 'Tunisia', 'Bangladesh', 'Iraq', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Sri Lanka', 'Myanmar', 'Chad', 'Ukraine', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'India', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Haiti', 'Botswana', 'Syria', 'Malawi', 'Yemen', 'Rwanda', 'Tanzania', 'Afghanistan', 'Central African Republic', 'South Sudan'];
+        var countriesListRank = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'New Zealand', 'Canada', 'Austria', 'Australia', 'Costa Rica', 'Israel', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'United States', 'Czech Republic', 'United Arab Emirates', 'Malta', 'Mexico', 'France', 'Taiwan', 'Chile', 'Guatemala', 'Saudi Arabia', 'Qatar', 'Spain', 'Panama', 'Brazil', 'Uruguay', 'Singapore', 'El Salvador', 'Italy', 'Bahrain', 'Slovakia', 'Trinidad & Tobago', 'Poland', 'Uzbekistan', 'Lithuania', 'Colombia', 'Slovenia', 'Nicaragua', 'Kosovo', 'Argentina', 'Romania', 'Cyprus', 'Ecuador','Kuwait','Thailand','Latvia','South Korea','Estonia','Jamaica','Mauritius','Japan','Honduras','Kazakhstan','Bolivia','Hungary','Paraguay','Northern Cyprus','Peru','Portugal','Pakistan','Russia','Philippines','Serbia','Moldova','Libya','Montenegro','Tajikistan','Croatia','Hong Kong','Dominican Republic','Bosnia and Herzegovina','Turkey','Malaysia','Belarus','Greece','Mongolia','North Macedonia','Nigeria','Kyrgyzstan','Turkmenistan','Algeria','Morocco','Azerbaijan','Lebanon','Indonesia','China','Vietnam','Bhutan','Bhutan','Cameroon','Bulgaria','Ghana','Ivory Coast','Nepal','Jordan','Benin','Congo (Brazzaville)','Gabon','Laos','South Africa','Albania', 'Venezuela', 'Cambodia', 'Palestinian Territories', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Armenia', 'Iran', 'Guinea', 'Georgia', 'Gambia', 'Kenya', 'Mauritania', 'Mozambique', 'Tunisia', 'Bangladesh', 'Iraq', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Sri Lanka', 'Myanmar', 'Chad', 'Ukraine', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'India', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Haiti', 'Botswana', 'Syria', 'Malawi', 'Yemen', 'Rwanda', 'Tanzania', 'Afghanistan', 'Central African Republic', 'South Sudan'];
+
+        // - - - - - - - - - SIDE ARRAYS - - - - - - - - - - - - - 
+        var leftCountries = [];
+        var rightCountries = [];
+        var selectionSide = null; // left or right
+        var visType = 'radar'; // bar or radar
+        var comparisonType = 'separate'; // separate or together
+
+        console.log(d3); // test if d3 is loaded
+
+        //Graphs made in csv load because it is asynchronous
+        d3.csv("2019data.csv", function(data) {
+
+            // set up selection screen
+            for (i=0;i<countriesListRank.length;i++) {
+                $(".list").append("<div class='list_item'><h3>"+(i+1).toString()+"</h3><button class='toggle'>"+countriesListRank[i]+"</button></div>")
+            } 
+
+            for (i=0;i<countriesNorthAmerica.length;i++) {
+                $("#north_america").append("<button class='toggle'>"+countriesNorthAmerica[i]+"</button>");
+            } 
+
+            for (i=0;i<countriesSouthAmerica.length;i++) {
+                $("#south_america").append("<button class='toggle'>"+countriesSouthAmerica[i]+"</button>");
+            } 
+
+            for (i=0;i<countriesAsia.length;i++) {
+                $("#asia").append("<button class='toggle'>"+countriesAsia[i]+"</button>");
+            } 
+
+            for (i=0;i<countriesAfrica.length;i++) {
+                $("#africa").append("<button class='toggle'>"+countriesAfrica[i]+"</button>");
+            } 
+
+            for (i=0;i<countriesOceania.length;i++) {
+                $("#oceania").append("<button class='toggle'>"+countriesOceania[i]+"</button>");
+            } 
+
+            for (i=0;i<countriesEurope.length;i++) {
+                $("#europe").append("<button class='toggle'>"+countriesEurope[i]+"</button>");
+            } 
+
+            for (i=0;i<continents.length;i++) {
+                $("#continents").append("<button class='toggle'>"+continents[i]+"</button>");
+            } 
+
+            for (i=0;i<predefinedGroups.length;i++) {
+                $("#predefined_groups").append("<button class='toggle'>"+predefinedGroups[i]+"</button>");
+            } 
+
+            // Screen Shifting
+            $("[data-js-page]").on("touchend", async function(){
+                var goal_page = $(this).data("js-page");
+                $(".page").removeClass("active");
+                $(".page[data-page='"+goal_page+"']").addClass("active");
+                
+                if (goal_page == 'right_selection') {
+                    selectionSide = 'right';
+                    console.log("right-side");
+                } else if (goal_page == 'left_selection') {
+                    selectionSide = 'left';
+                    console.log("left-side");
+                } else if (goal_page == 'home') {
+                    selectionSide = null;
+                    generateVis(data)
+                    setCountryLabels()
+                    console.log("home");
+                }
+            })
+
+            // Toggle Button Logic
+            $(".toggle").click(async function() {
+                if (selectionSide == 'right') {
+                    if ($(this).hasClass('active')) {
+                        $(this).removeClass('active')
+                        removeItemOnce(rightCountries,$(this).html())
+                    } else {
+                        $(this).addClass('active')
+                        rightCountries.push($(this).html());
+                    }
+                    console.log(rightCountries)
+                    
+                } else {
+                    leftCountries.push($(this).html());
+                }
+
+                console.log($(this).html());
+            })
+
+            // Type Selection
+            $(".switch_vis_button .type_button").click(async function() {
+                $(".switch_vis_button .type_button").removeClass("active")
+                $(this).addClass("active");
+
+                if ($("#bar_graph_button").hasClass('active')) {
+                    visType = 'bar'
+                } else if ($("#radar_chart_button").hasClass('active')) {
+                    visType = 'radar'
+                }
+
+                generateVis(data)
+            })
+
+            //var data_struct1 = generateDataset(data, countriesDeveloped);
+            //generateBar(data_struct1, "#left_vis");
+            //generateRadar(data_struct1, "#right_vis");
+            //var data_struct2 = generateDataset(data, countriesDeveloping);
+            //generateBar(data_struct2, "div#barvis");
+            //generateRadar(data_struct2, "div#radarvis");
+
+            //generateCombinedRadar(data_struct1, data_struct2, "div#combinedradarvis");
+
+        });
+
+        async function setCountryLabels() {
+
+            $("#right_countries").empty()
+            $("#left_countries").empty()
+            
+            for (i=0;i<rightCountries.length;i++) {
+                $("#right_countries").append("<button class='toggle'>"+rightCountries[i]+"</button>");
+            }
+
+            for (i=0;i<leftCountries.length;i++) {
+                $("#left_countries").append("<button class='toggle'>"+leftCountries[i]+"</button>");
+            }
+        }
+
+        async function generateVis(data) {
+            
+            rightData = generateDataset(data, rightCountries)
+            leftData = generateDataset(data, leftCountries)
+
+            if (visType == 'radar') {
+                if (comparisonType == 'separate') {
+                    generateRadar(leftData, "#left_vis");
+                    generateRadar(rightData, "#right_vis");
+                } else { // together
+                    generateCombinedRadar(leftData, rightData, "#left_vis");
+                }
+                
+            } else { // bar
+                generateBar(leftData, "#left_vis");
+                generateBar(rightData, "#right_vis");
+            }
+            
+            
+            
+        }
+
+        function removeItemOnce(arr, value) {
+            var index = arr.indexOf(value);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+            return arr;
+        }
+
+        function generateDataset(data, chosenCountries) {
+
+            var score = 0;
+            var gdp_per_capita = 0;
+            var social_support = 0;
+            var life_expectancy = 0;
+            var freedom = 0;
+            var generosity = 0;
+            var corruption = 0;
+
+            var filtered_data = data.filter(function(d,i){ return chosenCountries.indexOf(d.Country) >= 0 });
+            //console.log(filtered_data);
+
+            for (var i = 0; i < filtered_data.length; i++) {
+                score += parseFloat(filtered_data[i].Score);
+                gdp_per_capita += parseFloat(filtered_data[i].GDPPerCapita);
+                social_support += parseFloat(filtered_data[i].SocialSupport);
+                life_expectancy += parseFloat(filtered_data[i].LifeExpectancy);
+                freedom += parseFloat(filtered_data[i].Freedom);
+                generosity += parseFloat(filtered_data[i].Generosity);
+                corruption += parseFloat(filtered_data[i].Corruption);
+            }
+
+            score = Math.round((score / filtered_data.length + Number.EPSILON) * 100) / 100;
+            gdp_per_capita /= filtered_data.length;
+            social_support /= filtered_data.length;
+            life_expectancy /= filtered_data.length;
+            freedom /= filtered_data.length;
+            generosity /= filtered_data.length;
+            corruption /= filtered_data.length;
+
+            var letterData = [
+                {letter: "GDP Per Capita", frequency: gdp_per_capita}, //GDP per capita
+                {letter: "Social Support", frequency: social_support}, //Social support
+                {letter: "Life Expectancy", frequency: life_expectancy}, //Life expectancy
+                {letter: "Freedom", frequency: freedom}, //Freedom
+                {letter: "Generosity", frequency: generosity}, //Generosity
+                {letter: "Corruption", frequency: corruption} //Corruption
+            ];
+
+            //create struct
+            var data_struct = {
+                score: score,
+                dataset: letterData
+            };
+            console.log(data_struct);
+            return data_struct;
+        }
+
+        function generateBar(data, chosenDiv){
+
+            // establishing variables
+            var margin = 50,
+            width = 500 - 2 * margin,
+            height = 500 - 2 * margin;
+
+            // creating svg
+            var svg = d3.select(chosenDiv).append('svg')
+            .attr("width", width + 2 * margin)
+            .attr("height", height + 2 * margin)
+            .attr("transform", "translate(" + margin + ", " + margin + ")")
+
+            var d = data.dataset;
+            //console.log(d);
+
+            // scaling
+            var xscale = d3.scaleBand()
+            .domain(d.map(function(d){ return (d.letter) }))
+            .range( [0, width])
+            .padding(0.4);
+
+            var yscale = d3.scaleLinear()
+            .domain([0, 1.8]) //d3.max(d, function(d){return d.frequency; })
+            .range( [height, 0] );
+            console.log(d3.max(d, d.frequency));
+
+            // Add X axis
+            var x_axis = d3.axisBottom()
+            .scale(xscale)
+            svg.append("g")
+            .attr("transform", "translate(" + margin + "," + height + ")")
+            .call(x_axis)
+            .attr("class", "xAxis")
+
+
+            // Add Y axis
+            var y_axis = d3.axisLeft()
+            .scale(yscale)
+            .tickValues([])
+            svg.append("g")
+            .attr("transform", "translate(" + margin + ", 0 )")
+            .call(y_axis)
+            .attr("class", "yAxis")
+
+            // Add X axis label
+            /*svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("x", width/2 + margin)
+            .attr("y", height + 40)
+            .text("Letter");
+
+            // Add Y axis label
+            svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("x", -(height/2))
+            .attr("y", 0)
+            .attr("dy", ".75em")
+            .attr("transform", "rotate(-90)")
+            .text("Frequency");*/
+
+            // Add Bars
+            var bars = svg.selectAll(".bar")
+            .data(d)
+            .enter().append("rect")
+            .attr("class", "bar")
+            .attr("x", function(d){ return xscale(d.letter) + margin })
+            .attr("y", function(d){ return yscale(d.frequency) })
+            .attr("height", function(d){ return height - yscale(d.frequency) })
+            .attr("width", function(d){ return xscale.bandwidth() })
+
+            svg.append("text")
+            .attr("text-anchor", "middle")
+            .attr("x", width/2 + margin)
+            .attr("y", 15)
+            .text("Score: " + data.score);
+
+
+        }
+
+        function generateRadar(data, chosenDiv){
+            var dataset = data.dataset;
+            var score = data.score;
+
+            let radialScale = d3.scaleLinear()
+            .domain([0,11])
+            .range([0,200]);
+
+            function angleToCoordinate(angle, value){
+                let x = Math.cos(angle) * radialScale(value);
+                let y = Math.sin(angle) * radialScale(value);
+                return {"x": 250 + x, "y": 250 - y};
+            }
+
+            function getPathCoordinates(data_point){
+                let scale = 57;
+                let coordinates = [];
+                for (var i = 0; i < data_point.length; i++){
+                    let point = data_point[i];
+                    let ft_name = point.letter;
+                    let angle = (Math.PI / 2) + (2 * Math.PI * i / data_point.length);
+                    coordinates.push(angleToCoordinate(angle, (point.frequency * scale / 10)));
+                }
+                return coordinates;
+            }
+
+            let svg = d3.select(chosenDiv).append("svg")
+                .attr("width", 500)
+                .attr("height", 500);
+
+            /*
+            let ticks = [2,4,6,8,10];
+
+            ticks.forEach(t =>
+                    svg.append("circle")
+                    .attr("cx", 250)
+                    .attr("cy", 250)
+                    .attr("fill", "none")
+                    .attr("stroke", "black")
+                    .attr("r", radialScale(t))
+            );*/
+
+            for (var i = 0; i < dataset.length; i++) {
+                let ft_name = dataset[i].letter;
+                let angle = (Math.PI / 2) + (2 * Math.PI * i / dataset.length);
+                let line_coordinate = angleToCoordinate(angle, 10);
+                let label_coordinate = angleToCoordinate(angle, 10.5);
+
+                //draw axis line
+                svg.append("line")
+                .attr("x1", 250)
+                .attr("y1", 250)
+                .attr("x2", line_coordinate.x)
+                .attr("y2", line_coordinate.y)
+                .attr("stroke","black");
+
+                //draw axis label
+                svg.append("text")
+                .attr("x", label_coordinate.x - 5)
+                .attr("y", label_coordinate.y + 5)
+                .text(ft_name);
+            }
+
+            let line = d3.line()
+                .x(d => d.x)
+                .y(d => d.y);
+
+            let coordinates = getPathCoordinates(dataset);
+
+            //draw the path element
+            svg.append("path")
+            .datum(coordinates)
+            .attr("d",line)
+            .attr("stroke-width", 3)
+            .attr("stroke", "black")
+            .attr("fill", "black")
+            .attr("stroke-opacity", 1)
+            .attr("opacity", .5);
+        }
+
+        function generateCombinedRadar(data1, data2, chosenDiv){
+            var dataset1 = data1.dataset;
+            var dataset2 = data2.dataset;
+
+            var score1 = data1.score;
+            var score2 = data2.score;
+
+            let radialScale = d3.scaleLinear()
+            .domain([0,11])
+            .range([0,200]);
+
+            function angleToCoordinate(angle, value){
+                let x = Math.cos(angle) * radialScale(value);
+                let y = Math.sin(angle) * radialScale(value);
+                return {"x": 250 + x, "y": 250 - y};
+            }
+
+            function getPathCoordinates(data_point){
+                let scale = 57;
+                let coordinates = [];
+                for (var i = 0; i < data_point.length; i++){
+                    let point = data_point[i];
+                    let ft_name = point.letter;
+                    let angle = (Math.PI / 2) + (2 * Math.PI * i / data_point.length);
+                    coordinates.push(angleToCoordinate(angle, (point.frequency * scale / 10)));
+                }
+                return coordinates;
+            }
+
+            let svg = d3.select(chosenDiv).append("svg")
+                .attr("width", 500)
+                .attr("height", 500);
+
+            /*
+            let ticks = [2,4,6,8,10];
+
+            ticks.forEach(t =>
+                    svg.append("circle")
+                    .attr("cx", 250)
+                    .attr("cy", 250)
+                    .attr("fill", "none")
+                    .attr("stroke", "black")
+                    .attr("r", radialScale(t))
+            );*/
+
+            for (var i = 0; i < dataset1.length; i++) {
+                let ft_name = dataset1[i].letter;
+                let angle = (Math.PI / 2) + (2 * Math.PI * i / dataset1.length);
+                let line_coordinate = angleToCoordinate(angle, 10);
+                let label_coordinate = angleToCoordinate(angle, 10.5);
+
+                //draw axis line
+                svg.append("line")
+                .attr("x1", 250)
+                .attr("y1", 250)
+                .attr("x2", line_coordinate.x)
+                .attr("y2", line_coordinate.y)
+                .attr("stroke","black");
+
+                //draw axis label
+                svg.append("text")
+                .attr("x", label_coordinate.x - 5)
+                .attr("y", label_coordinate.y + 5)
+                .text(ft_name);
+            }
+
+            let line = d3.line()
+                .x(d => d.x)
+                .y(d => d.y);
+
+            let coordinates1 = getPathCoordinates(dataset1);
+
+            //draw the path element
+            svg.append("path")
+            .datum(coordinates1)
+            .attr("d",line)
+            .attr("stroke-width", 3)
+            .attr("stroke", "black")
+            .attr("fill", "black")
+            .attr("stroke-opacity", 1)
+            .attr("opacity", .5);
+
+            let coordinates2 = getPathCoordinates(dataset2);
+
+            //draw the path element
+            svg.append("path")
+            .datum(coordinates2)
+            .attr("d",line)
+            .attr("stroke-width", 3)
+            .attr("stroke", "black")
+            .attr("fill", "black")
+            .attr("stroke-opacity", 1)
+            .attr("opacity", .5);
+        }
+    </script>
+    
+</body>
+
+
+</html>

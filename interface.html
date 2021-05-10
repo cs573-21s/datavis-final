@@ -337,19 +337,22 @@
             height: 100vh;
         }
 
-        .page.active {
-            transform: translate(0, 0);
-            z-index: 2;
-        }
-
         .page[data-page="home"] {
             transform: translate(0, 0);
-            
+            z-index: 0;
+        }
+        .page[data-page="home"].active {
+            transform: translate(0, 0);
+            z-index: 0;
         }
 
         .page[data-page="right_selection"] {
+            transform: translate(100%, 0);
+            z-index: 2;
+        }
+
+        .page[data-page="right_selection"].active {
             transform: translate(0, 0);
-            
         }
     
     </style>
