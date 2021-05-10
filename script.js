@@ -209,47 +209,47 @@ function startVisualization() {
     
             svg.selectAll("circles").remove();
 
-                svg.append('g')
-                .selectAll('circles')
-                .data(filter)
-                .enter().append('circle')
-                    .attr('r', d => mapData.size(d.size / 10000) + 3)
-                    .style('fill', d => mapData.color(d.conference))
-                    .attr('fill-opacity', 0.9)
-                    .attr('stroke', 'whitesmoke')
-                    .attr('stroke-width', 1)
-                    .attr('transform', d => "translate(" + mapData.projection([d.long, d.lat]) + ")")
-                    .on('mouseover', (point, i, nodes) => {
-                        tooltip.style('display', 'block');
-                        d3.select(nodes[i])
-                            .style('r', d => mapData.size(d.size / 10000) + 5)
-                            .style('opacity', 1);
-                        playingSound = getAudioIndex(point);
-                    })
-                    .on('mousemove', d => {
-                        tooltip
-                            .html("<strong>" + d.school + "</strong><br>"
-                                + "\"" + d.song_name + "\"<br>"
-                                + "Writer: " + d.writers + "<br>"
-                                + "Year: " + d.year + "<br><br>"
-                                + "<strong>Tropes</strong><br>"
-                                + "Win/Victory: " + summation(d.win_won, d.victory) + "<br>"
-                                + "Fight/Rah: " + summation(d.fight, d.rah) + "<br>"
-                                + "Color: " + d.colors + "<br>"
-                                + "Spelling: " + d.spelling + "<br>"
-                                + "Men/Opponents: " + summation(d.men, d.opponents) + "<br>"
-                                + "Nonsense: " + d.nonsense + "<br>")
-                            .style('left', (d3.event.pageX + 15) + "px")
-                            .style('top', (d3.event.pageY + 15) + "px");
-                    })
-                    .on('mouseleave', (_, i, nodes) => {
-                        tooltip.style('display', 'none');
-                        d3.select(nodes[i])
-                            .transition(1000)
-                                .style('r', d => mapData.size(d.size / 10000) + 3)
-                                .style('opacity', 0.7);
-                        playingSound = 0;
-                    });
+            svg.append('g')
+            .selectAll('circles')
+            .data(filter)
+            .enter().append('circle')
+                .attr('r', d => mapData.size(d.size / 10000) + 3)
+                .style('fill', d => mapData.color(d.conference))
+                .attr('fill-opacity', 0.9)
+                .attr('stroke', 'whitesmoke')
+                .attr('stroke-width', 1)
+                .attr('transform', d => "translate(" + mapData.projection([d.long, d.lat]) + ")")
+                .on('mouseover', (point, i, nodes) => {
+                    tooltip.style('display', 'block');
+                    d3.select(nodes[i])
+                        .style('r', d => mapData.size(d.size / 10000) + 5)
+                        .style('opacity', 1);
+                    playingSound = getAudioIndex(point);
+                })
+                .on('mousemove', d => {
+                    tooltip
+                        .html("<strong>" + d.school + "</strong><br>"
+                            + "\"" + d.song_name + "\"<br>"
+                            + "Writer: " + d.writers + "<br>"
+                            + "Year: " + d.year + "<br><br>"
+                            + "<strong>Tropes</strong><br>"
+                            + "Win/Victory: " + summation(d.win_won, d.victory) + "<br>"
+                            + "Fight/Rah: " + summation(d.fight, d.rah) + "<br>"
+                            + "Color: " + d.colors + "<br>"
+                            + "Spelling: " + d.spelling + "<br>"
+                            + "Men/Opponents: " + summation(d.men, d.opponents) + "<br>"
+                            + "Nonsense: " + d.nonsense + "<br>")
+                        .style('left', (d3.event.pageX + 15) + "px")
+                        .style('top', (d3.event.pageY + 15) + "px");
+                })
+                .on('mouseleave', (_, i, nodes) => {
+                    tooltip.style('display', 'none');
+                    d3.select(nodes[i])
+                        .transition(1000)
+                            .style('r', d => mapData.size(d.size / 10000) + 3)
+                            .style('opacity', 0.7);
+                    playingSound = 0;
+                });
         }
     
         d3.select("#dropdowns").on("change", function(d) {
