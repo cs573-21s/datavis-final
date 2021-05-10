@@ -51,6 +51,12 @@ window.onload = () => {
             enable = true;
         }
     });
+
+    document.getElementById("video-btn").addEventListener("click", e=> {
+        d3.select('#vid').style('display', 'block');
+        // document.getElementById("video-btn").attr('display', 'block');
+
+    } );
 };
 
 /**
