@@ -118,6 +118,14 @@ function loadSVGData() {
     mapData.size = d3.scaleLinear()
         .domain([1, 100])
         .range([3, 100]);
+
+    svg.select("#confButton")
+        .selectAll('myOptions')
+         .data(data.conference)
+        .enter()
+          .append('option')
+        .text(function (d) { return d; })
+        .attr("value", function (d) { return d; }) 
 }
 
 /**
