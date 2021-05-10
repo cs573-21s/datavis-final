@@ -5,15 +5,481 @@ body {
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
+    overflow:hidden;
 }
 
-.top {
+.comparison_top {
+    position: fixed;
+    left: 15%;
+    right: 15%;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: flex-start;
+    z-index: 1;
+}
+
+.title {
+    background-color: #282828;
+    padding: 20px;
+}
+
+.vis_buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 20px;
+}
+
+h1 {
+    color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+h2 {
+    color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+h3 {
+    color: white;
+    margin: 0px;
+    padding: 0px;
+}
+
+.score {
+    color: white;
+    font-size: 100px;
+}
+
+button {
+
+}
+
+.switch_vis_button {
+    padding-top: 20px;
+}
+
+
+.comparison_ui {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+}
+
+.comparison_ui .left {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    background-color: #363636;
+    height: 100vh;
+    width: 15vw;
+}
+
+.comparison_ui .middle {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 70vw;
+}
+
+.comparison_ui .middle_left {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+    background-color: #363636;
+    height: 100vh;
+    width: 35vw;
 }
 
-.vis_button {
+.comparison_ui .middle_right {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: flex-end;
+    background-color: #454545;
+    height: 100vh;
+    width: 35vw;
+}
+
+.comparison_ui .middle_right .score{
+    text-align: right;
+}
+
+#left_vis {
+    display:flex;
+    justify-content: flex-start;
+}
+
+#right_vis {
+    display:flex;
+    justify-content: flex-end;
+}
+
+#middle_vis {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #3d3d3d;
+    padding-top: 70px; 
+}
+
+.comparison_ui .right {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    background-color: #454545;
+    height: 100vh;
+    width: 15vw;
+}
+
+#left_add_country {
+    padding: 20px;
+}
+
+#right_add_country {
+    padding: 20px;
+    text-align: right;
+}
+
+#left_add_country:hover {
+    color:orange;
+    cursor: pointer;
+}
+
+#right_add_country:hover {
+    color:orange;
+    cursor: pointer;
+}
+
+.country_list {
+    padding: 20px;
+}
+
+#bar_graph_button {
+    line-height: 20px;
+    vertical-align: center;
+    padding: 40px;
+    margin: 5px;
+    background: url('../../img/bar_chart.png')no-repeat;
+    background-size: contain;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+}
+
+#bar_graph_button.active {
+    background-color: orange;
+}
+
+#radar_chart_button {
+    line-height: 20px;
+    vertical-align: center;
+    padding: 40px;
+    margin: 5px;
+    background: url('../../img/radar_chart.png')no-repeat;
+    background-size: contain;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+}
+
+#radar_chart_button.active {
+    background-color: orange;
+}
+
+#compare_toggle_button {
+    line-height: 20px;
+    vertical-align: center;
+    padding: 40px;
+    margin: 5px;
+    background: url('../../img/combine.png')no-repeat;
+    background-size: contain;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+}
+
+#info_button {
+    line-height: 20px;
+    vertical-align: center;
+    padding: 40px;
+    margin: 5px;
+    background: url('../../img/info.png')no-repeat;
+    background-size: contain;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+}
+
+.country_label {
+    background-color: black;
+    color: white;
+    border: none;
+    width: 160px;
+    height: 40px;
+    font-size: 15px;
+    text-align: left;
+    padding: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.toggle {
+    background-color: black;
+    color: white;
+    border: none;
+    width: 160px;
+    height: 40px;
+    font-size: 15px;
+    text-align: left;
+    padding: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.toggle:hover {
+    cursor: pointer;
+}
+
+.toggle.active {
+    background-color: green;
+}
+
+.countries_groups {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.selection_ui {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: #171717;
+}
+
+.info_ui {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background-color: #171717;
+    overflow-y: auto;
+}
+
+.info_ui .top{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #171717;
+    width: 100vw;
+}
+
+.info_ui .body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    background-color: #171717;
+    width: 100vw;
+    height: 100vh;
+}
+
+.selection_ui .top {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #171717;
+    width: 100vw;
+}
+
+.selection_ui .body {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-self: flex-start;
+    background-color: #171717;
+    width: 100vw;
+    height: 100vh;
+}
+
+.selection_ui .left {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    height: 100%;
+}
+
+.selection_ui .left .entities{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: #171717;
+    overflow-y: auto;
+    padding: 30px;
+    padding-left: 50px;
+    height: 100%;
+    margin-bottom: 80px;
+}
+
+.selection_ui .right {
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    height: 100%;
+}
+
+.selection_ui .right .rank{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 30px;
+    height: 100%;
+}
+
+.selection_ui .right .rank .list{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 130px;
+}
+
+.selection_ui .right .rank .list .list_item{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.selection_ui .right .rank .list .list_item h3{
+    margin-right: 10px;
+}
+
+.rank_num {
+    
+}
+
+#exit_button {
+    line-height: 20px;
+    vertical-align: center;
+    padding: 25px;
+    margin: 15px;
+    background: url('../../img/exit.png')no-repeat;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+}
+
+.page {
+    position: absolute;
+    transition: 0.5s transform ease;
+    width: 100vw;
+    height: 100vh;
+}
+
+.page[data-page="home"] {
+    transform: translate(0, 0);
+    z-index: 0;
+}
+.page[data-page="home"].active {
+    transform: translate(0, 0);
+    z-index: 0;
+}
+
+.page[data-page="right_selection"] {
+    transform: translate(100%, 0);
+    z-index: 2;
+}
+
+.page[data-page="right_selection"].active {
+    transform: translate(0, 0);
+}
+
+.page[data-page="left_selection"] {
+    transform: translate(-100%, 0);
+    z-index: 2;
+}
+
+.page[data-page="left_selection"].active {
+    transform: translate(0, 0);
+}
+
+.page[data-page="info"] {
+    transform: translate(0, 100%);
+    z-index: 2;
+}
+
+.page[data-page="info"].active {
+    transform: translate(0, 0);
+}
+
+#right_countries {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-right: 10px;
+}
+
+#left_countries {
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 10px;
+}
+
+.comparison_bottom {
+    position: fixed;
+    left: 15%;
+    right: 15%;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: flex-start;
+    z-index: 1;
+}
+
+.text_body {
+    text-align: left;
+    padding-top: 50px;
+    color: white;
+}
+
+.xAxis text {
+    fill:white;
+}
+
+div.tooltip-point {
+    position: absolute;
+    text-align: left;
+    padding: .5rem;
+    background: #757575;
+    color: #ffffff;
+    pointer-events: none;
+    font-weight: 400;
+    font-size: 1rem;
+    max-width: 300px;
 }
