@@ -481,6 +481,20 @@
             fill:white;
         }
 
+        div.tooltip-point {
+            position: absolute;
+            text-align: left;
+            padding: .5rem;
+            background: #FFFFFF;
+            color: #000000;
+            border: 1px solid #000000;
+            border-radius: 8px;
+            pointer-events: none;
+            font-family: sans-serif;
+            font-size: 1rem;
+            width: 300px;
+        }
+
     </style>
 </head>
 <body>
@@ -723,6 +737,11 @@
 
         console.log(d3); // test if d3 is loaded
 
+        // tooltip
+        var tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip-point")
+            .style("opacity", 0);
+
         //Graphs made in csv load because it is asynchronous
         d3.csv("2019data.csv", function(data) {
 
@@ -850,16 +869,6 @@
                 generateVis(data)
                 console.log(comparisonType)
             })
-
-            //var data_struct1 = generateDataset(data, countriesDeveloped);
-            //generateBar(data_struct1, "#left_vis");
-            //generateRadar(data_struct1, "#right_vis");
-            //var data_struct2 = generateDataset(data, countriesDeveloping);
-            //generateBar(data_struct2, "div#barvis");
-            //generateRadar(data_struct2, "div#radarvis");
-
-            //generateCombinedRadar(data_struct1, data_struct2, "div#combinedradarvis");
-
         });
 
         async function setCountryLabels() {
@@ -950,7 +959,6 @@
                     if (!(leftCountries.length == 0 && rightCountries.length == 0)) {
                         generateCombinedRadar(leftData, "blue", rightData, "red","#middle_vis");
                     }
-                    
                 }
                 
             } else { // bar
@@ -1101,7 +1109,42 @@
             .attr("y", function(d){ return yscale(d.frequency) })
             .attr("height", function(d){ return height - yscale(d.frequency) })
             .attr("width", function(d){ return xscale.bandwidth() })
-            .attr("fill", color);
+            .attr("fill", color)
+            .on("mouseover", function (d,i) {
+                    d3.select(this).style("cursor", "pointer")
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+                    
+                    var ft_name = d.letter
+
+                    var profile = '';
+
+                    if (ft_name == 'Freedom') {
+                        profile = 'How satisfied or dissatisfied people are with their freedom to make life decisions.'
+                    } else if (ft_name == 'Generosity') {
+                        profile = 'How likely people are to have donated money to a charity in the past month.' 
+                    } else if (ft_name == 'Corruption') {
+                        profile = 'How much corruption is perceived as widespread in the government and businesses.'
+                    } else if (ft_name == 'GDP Per Capita') {
+                        profile = 'The value of all the goods and services a country produces on a yearly basis divided by the total population.';
+                    } else if (ft_name == 'Social Support') {
+                        profile = 'How likely people are to have relatives or friends who they can count on in a time of need.';
+                    } else if (ft_name == 'Life Expectancy') {
+                        profile = 'Average number of healthy years a child at birth is estimated to live calculated by the WHO.'
+                    }
+
+                    tooltip.html(profile)
+                        .style("left", (d3.event.pageX - 40) + "px")
+                        .style("top", (d3.event.pageY - 100) + "px");
+                })
+                .on("mouseout", function(d,i) {
+                    d3.select(this).style("cursor", "default")
+                    
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 0);
+                })
 
             svg.append("text")
             .attr("text-anchor", "middle")
@@ -1145,18 +1188,6 @@
                 .attr("width", 500)
                 .attr("height", 500);
 
-            /*
-            let ticks = [2,4,6,8,10];
-
-            ticks.forEach(t =>
-                    svg.append("circle")
-                    .attr("cx", 250)
-                    .attr("cy", 250)
-                    .attr("fill", "none")
-                    .attr("stroke", "black")
-                    .attr("r", radialScale(t))
-            );*/
-
             for (var i = 0; i < dataset.length; i++) {
                 let ft_name = dataset[i].letter;
                 let angle = (Math.PI / 2) + (2 * Math.PI * i / dataset.length);
@@ -1177,7 +1208,42 @@
                 .attr("y", label_coordinate.y + 5)
                 .text(ft_name)
                 .attr("fill", "white")
-                .attr("text-anchor","middle");
+                .attr("text-anchor","middle")
+                .on("mouseover", function (d,i) {
+                    d3.select(this).style("cursor", "pointer")
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+
+                    console.log(ft_name)
+                    
+                    var profile = '';
+
+                    if (ft_name == 'Freedom') {
+                        profile = 'How satisfied or dissatisfied people are with their freedom to make life decisions.'
+                    } else if (ft_name == 'Generosity') {
+                        profile = 'How likely people are to have donated money to a charity in the past month.' 
+                    } else if (ft_name == 'Corruption') {
+                        profile = 'How much corruption is perceived as widespread in the government and businesses.'
+                    } else if (ft_name == 'GDP Per Capita') {
+                        profile = 'The value of all the goods and services a country produces on a yearly basis divided by the total population.';
+                    } else if (ft_name == 'Social Support') {
+                        profile = 'How likely people are to have relatives or friends who they can count on in a time of need.';
+                    } else if (ft_name == 'Life Expectancy') {
+                        profile = 'Average number of healthy years a child at birth is estimated to live calculated by the WHO.'
+                    }
+
+                    tooltip.html(profile)
+                        .style("left", (d3.event.pageX - 40) + "px")
+                        .style("top", (d3.event.pageY - 100) + "px");
+                })
+                .on("mouseout", function(d,i) {
+                    d3.select(this).style("cursor", "default")
+                    
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 0);
+                }) 
             }
 
             let line = d3.line()
@@ -1263,7 +1329,42 @@
                 .attr("y", label_coordinate.y + 5)
                 .text(ft_name)
                 .attr("fill", "white")
-                .attr("text-anchor","middle");
+                .attr("text-anchor","middle")
+                .on("mouseover", function (d,i) {
+                    d3.select(this).style("cursor", "pointer")
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+
+                    console.log(ft_name)
+                    
+                    var profile = '';
+
+                    if (ft_name == 'Freedom') {
+                        profile = 'How satisfied or dissatisfied people are with their freedom to make life decisions.'
+                    } else if (ft_name == 'Generosity') {
+                        profile = 'How likely people are to have donated money to a charity in the past month.' 
+                    } else if (ft_name == 'Corruption') {
+                        profile = 'How much corruption is perceived as widespread in the government and businesses.'
+                    } else if (ft_name == 'GDP Per Capita') {
+                        profile = 'The value of all the goods and services a country produces on a yearly basis divided by the total population.';
+                    } else if (ft_name == 'Social Support') {
+                        profile = 'How likely people are to have relatives or friends who they can count on in a time of need.';
+                    } else if (ft_name == 'Life Expectancy') {
+                        profile = 'Average number of healthy years a child at birth is estimated to live calculated by the WHO.'
+                    }
+
+                    tooltip.html(profile)
+                        .style("left", (d3.event.pageX - 40) + "px")
+                        .style("top", (d3.event.pageY - 100) + "px");
+                })
+                .on("mouseout", function(d,i) {
+                    d3.select(this).style("cursor", "default")
+                    
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 0);
+                }) 
             }
 
             let line = d3.line()
