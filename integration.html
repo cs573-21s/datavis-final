@@ -117,16 +117,18 @@
             width: 35vw;
         }
 
+        .comparison_ui .middle_right .score{
+            text-align: right;
+        }
+
         #left_vis {
             display:flex;
             justify-content: flex-start;
-            background-color: orange;
         }
 
         #right_vis {
             display:flex;
             justify-content: flex-end;
-            background-color: orange;
         }
 
         #middle_vis {
@@ -217,6 +219,19 @@
             background-color: white;
         }
 
+        #info_button {
+            line-height: 20px;
+            vertical-align: center;
+            padding: 40px;
+            margin: 5px;
+            background: url('../../img/info.png')no-repeat;
+            background-size: contain;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            background-color: white;
+        }
+
         .country_label {
             background-color: black;
             color: white;
@@ -262,6 +277,33 @@
             height: 100vh;
             width: 100vw;
             background-color: #171717;
+        }
+
+        .info_ui {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            background-color: #171717;
+            overflow-y: auto;
+        }
+
+        .info_ui .top{
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: space-between;
+            background-color: #171717;
+            width: 100vw;
+        }
+
+        .info_ui .body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            background-color: #171717;
+            width: 100vw;
+            height: 100vh;
         }
 
         .selection_ui .top {
@@ -392,6 +434,15 @@
             transform: translate(0, 0);
         }
 
+        .page[data-page="info"] {
+            transform: translate(0, 100%);
+            z-index: 2;
+        }
+
+        .page[data-page="info"].active {
+            transform: translate(0, 0);
+        }
+
         #right_countries {
             display:flex;
             flex-direction: column;
@@ -408,12 +459,33 @@
             padding-left: 10px;
         }
 
+        .comparison_bottom {
+            position: fixed;
+            left: 15%;
+            right: 15%;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-self: flex-start;
+            z-index: 1;
+        }
+
+        .text_body {
+            text-align: left;
+            padding-top: 50px;
+            color: white;
+        }
+
+        .xAxis text {
+            fill:white;
+        }
+
     </style>
 </head>
 <body>
     <div class="page active" data-page="home">
         <div class="comparison_top">
-            
             <div class="title">
                 <h1>WORLD HAPPINESS REPORT COMPARISON TOOL</h1>
             </div>
@@ -422,6 +494,11 @@
                 <button class="type_button active" id="radar_chart_button"></button>
             </div>
             <button class="type_button" id="compare_toggle_button"></button>
+            
+        </div>
+
+        <div class="comparison_bottom">
+            <button id="info_button" data-js-page="info"></button>
         </div>
 
         <div class="comparison_ui">
@@ -437,7 +514,7 @@
             <div class="middle">
                 <div class="middle_left">
                     <h3>AVERAGE SCORE</h3>
-                    <div class="score">8.56</div>
+                    <div class="score">ADD COUNTRIES</div>
                     <div id="left_vis">
 
                     </div>
@@ -447,7 +524,7 @@
                 </div>
                 <div class="middle_right">
                     <h3>AVERAGE SCORE</h3>
-                    <div class="score">8.56</div>
+                    <div class="score">ADD COUNTRIES</div>
                     <div id="right_vis">
                         
                     </div>
@@ -579,6 +656,46 @@
         </div>
     </div>
 
+    <div class="page" data-page="info">
+        <div class="info_ui">
+            <div class="top">
+                <button id="exit_button" data-js-page="home"></button>
+                <div class="title">
+                    <h1>PROJECT INFO</h1>
+                </div>
+                <button id="exit_button" data-js-page="home"></button>
+            </div>
+            <div class="body">
+                <div class="text_body">
+                    <h2>DESCRIPTION</h2>
+                    <p>fhdjkfjdsajdsakfjdksalfd
+                        safasdfsdfsdjfklsdjfsdjfklsd
+                    </p>
+
+                </div>
+                <div class="text_body">
+                    <h2>FINDINGS</h2>
+                    <p>fhdjkfjdsajdsakfjdksalfd
+                        safasdfsdfsdjfklsdjfsdjfklsd
+                    </p>
+                    <p>fhdjkfjdsajdsakfjdksalfd
+                        safasdfsdfsdjfklsdjfsdjfklsd
+                    </p>
+                </div>
+                <div class="text_body">
+                    <h2>HOW TO USE</h2>    
+                    <p>fhdjkfjdsajdsakfjdksalfd
+                        safasdfsdfsdjfklsdjfsdjfklsd
+                    </p>
+                    <p>fhdjkfjdsajdsakfjdksalfd
+                        safasdfsdfsdjfklsdjfsdjfklsd
+                    </p>
+                </div>
+                
+            </div>  
+        </div>
+    </div>
+
     <script>
         // - - - - - - - - - COUNTRY GROUP PRESETS - - - - - - - - - 
         var countriesNorthAmerica = ['Canada', 'Costa Rica', 'United States', 'Mexico', 'Guatemala', 'Panama', 'El Salvador', 'Trinidad & Tobago', 'Nicaragua', 'Jamaica', 'Honduras', 'Dominican Republic', 'Haiti'];
@@ -703,7 +820,7 @@
                 console.log($(this).html());
             })
 
-            // Type Selection
+            // Vis Type Selection
             $(".switch_vis_button .type_button").click(async function() {
                 $(".switch_vis_button .type_button").removeClass("active")
                 $(this).addClass("active");
@@ -719,6 +836,7 @@
                 generateVis(data)
             })
 
+            // Comparison Type Selection
             $("#compare_toggle_button").click(async function() {
                 if (comparisonType == "separate") {
                     comparisonType = 'together';
@@ -800,32 +918,52 @@
             rightData = generateDataset(data, actualRightCountries)
             leftData = generateDataset(data, actualLeftCountries)
 
-            $(".middle_right .score").html(rightData.score.toString());
-            $(".middle_left .score").html(leftData.score.toString());
+            if (isNaN(rightData.score)) {
+                $(".middle_right .score").html("ADD COUNTRIES");
+            } else {
+                $(".middle_right .score").html(rightData.score.toString());
+            }
+
+            if (isNaN(leftData.score)) {
+                $(".middle_left .score").html("ADD COUNTRIES");
+            } else {
+                $(".middle_left .score").html(leftData.score.toString());
+            }
+            
+            
 
             if (visType == 'radar') {
                 if (comparisonType == 'separate') {
                     d3.select("#middle_vis svg").remove();
 
-                    if (leftCountries != [])
-                        generateRadar(leftData, "#left_vis");
-
-                    if (rightCountries != [])
-                        generateRadar(rightData, "#right_vis");
+                    if (leftCountries.length != 0) {
+                        generateRadar(leftData, "#left_vis", "blue");
+                    }
+                        
+                    if (rightCountries.length != 0) {
+                        generateRadar(rightData, "#right_vis", "red");
+                    }
+                        
                 } else { // together
                     d3.select("#left_vis svg").remove();
                     d3.select("#right_vis svg").remove();
-                    generateCombinedRadar(leftData, rightData, "#middle_vis");
+                    if (!(leftCountries.length == 0 && rightCountries.length == 0)) {
+                        generateCombinedRadar(leftData, "blue", rightData, "red","#middle_vis");
+                    }
+                    
                 }
                 
             } else { // bar
                 d3.select("#middle_vis svg").remove();
-                generateBar(leftData, "#left_vis");
-                generateBar(rightData, "#right_vis");
+
+                if (leftCountries.length != 0) {
+                    generateBar(leftData, "#left_vis","blue");
+                }
+                
+                if (rightCountries.length != 0) {
+                    generateBar(rightData, "#right_vis","red");
+                }
             }
-            
-            
-            
         }
 
         function removeItemOnce(arr, value) {
@@ -834,10 +972,6 @@
                 arr.splice(index, 1);
             }
             return arr;
-        }
-
-        function setDefaultValues () {
-            
         }
 
         function generateDataset(data, chosenCountries) {
@@ -889,13 +1023,13 @@
             return data_struct;
         }
 
-        async function generateBar(data, chosenDiv){
+        async function generateBar(data, chosenDiv, color){
 
             d3.select(chosenDiv + " svg").remove();
             
             // establishing variables
             var margin = 50,
-            width = 500 - 2 * margin,
+            width = 600 - 2 * margin,
             height = 500 - 2 * margin;
 
             // creating svg
@@ -921,27 +1055,32 @@
             // Add X axis
             var x_axis = d3.axisBottom()
             .scale(xscale)
+
             svg.append("g")
             .attr("transform", "translate(" + margin + "," + height + ")")
             .call(x_axis)
             .attr("class", "xAxis")
+            .attr("fill", "white");
 
 
             // Add Y axis
             var y_axis = d3.axisLeft()
             .scale(yscale)
             .tickValues([])
+            
             svg.append("g")
             .attr("transform", "translate(" + margin + ", 0 )")
             .call(y_axis)
             .attr("class", "yAxis")
+            .attr("fill", "white");
 
             // Add X axis label
-            /*svg.append("text")
+            svg.append("text")
             .attr("text-anchor", "middle")
             .attr("x", width/2 + margin)
             .attr("y", height + 40)
-            .text("Letter");
+            .text("Factor")
+            .attr("fill", "white");
 
             // Add Y axis label
             svg.append("text")
@@ -950,7 +1089,8 @@
             .attr("y", 0)
             .attr("dy", ".75em")
             .attr("transform", "rotate(-90)")
-            .text("Frequency");*/
+            .text("Value")
+            .attr("fill", "white");
 
             // Add Bars
             var bars = svg.selectAll(".bar")
@@ -961,17 +1101,18 @@
             .attr("y", function(d){ return yscale(d.frequency) })
             .attr("height", function(d){ return height - yscale(d.frequency) })
             .attr("width", function(d){ return xscale.bandwidth() })
+            .attr("fill", color);
 
             svg.append("text")
             .attr("text-anchor", "middle")
             .attr("x", width/2 + margin)
             .attr("y", 15)
-            .text("Score: " + data.score);
+            .attr("fill", "white");
 
 
         }
 
-        async function generateRadar(data, chosenDiv){
+        async function generateRadar(data, chosenDiv, color){
 
             d3.select(chosenDiv + " svg").remove();
 
@@ -1028,13 +1169,15 @@
                 .attr("y1", 250)
                 .attr("x2", line_coordinate.x)
                 .attr("y2", line_coordinate.y)
-                .attr("stroke","black");
+                .attr("stroke","white");
 
                 //draw axis label
                 svg.append("text")
                 .attr("x", label_coordinate.x - 5)
                 .attr("y", label_coordinate.y + 5)
-                .text(ft_name);
+                .text(ft_name)
+                .attr("fill", "white")
+                .attr("text-anchor","middle");
             }
 
             let line = d3.line()
@@ -1047,14 +1190,12 @@
             svg.append("path")
             .datum(coordinates)
             .attr("d",line)
-            .attr("stroke-width", 3)
-            .attr("stroke", "black")
-            .attr("fill", "black")
+            .attr("fill", color)
             .attr("stroke-opacity", 1)
-            .attr("opacity", .5);
+            .attr("opacity", .4);
         }
 
-        async function generateCombinedRadar(data1, data2, chosenDiv){
+        async function generateCombinedRadar(data1, color1, data2, color2, chosenDiv){
 
             d3.select(chosenDiv + " svg").remove();
             
@@ -1114,13 +1255,15 @@
                 .attr("y1", 250)
                 .attr("x2", line_coordinate.x)
                 .attr("y2", line_coordinate.y)
-                .attr("stroke","black");
+                .attr("stroke","white");
 
                 //draw axis label
                 svg.append("text")
                 .attr("x", label_coordinate.x - 5)
                 .attr("y", label_coordinate.y + 5)
-                .text(ft_name);
+                .text(ft_name)
+                .attr("fill", "white")
+                .attr("text-anchor","middle");
             }
 
             let line = d3.line()
@@ -1133,9 +1276,7 @@
             svg.append("path")
             .datum(coordinates1)
             .attr("d",line)
-            .attr("stroke-width", 3)
-            .attr("stroke", "black")
-            .attr("fill", "black")
+            .attr("fill", color1)
             .attr("stroke-opacity", 1)
             .attr("opacity", .5);
 
@@ -1145,9 +1286,7 @@
             svg.append("path")
             .datum(coordinates2)
             .attr("d",line)
-            .attr("stroke-width", 3)
-            .attr("stroke", "black")
-            .attr("fill", "black")
+            .attr("fill", color2)
             .attr("stroke-opacity", 1)
             .attr("opacity", .5);
         }
