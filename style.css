@@ -10,6 +10,9 @@ html, body {
 
 body {
     position: relative;
+    max-width: 1210px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 svg {
@@ -72,6 +75,6 @@ svg {
 
 .dropdowns {
     margin: 10px 10px 10px 0;
-    max-width: 200px;
+    width: 250px;
     font-size: 1.26rem;
 }

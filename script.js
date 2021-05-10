@@ -100,7 +100,8 @@ function loadAudio() {
     }
 }
 
-var confs = ['Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ];
+var confs = ['Select a conference', 'Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ];
+var tropes = ['Select a trope', 'Fight/Rah', 'Win/Victory', 'Color', 'Spelling', 'Men/Oponents', 'Nonsense'];
 
 
 /**
@@ -146,6 +147,14 @@ function loadSVGData() {
         .text(function (d) { return d; }) 
         .attr("value", function (d) { return d; })
 
+    d3.select("#tropes")
+        .selectAll('myOptions') 
+            .data(tropes)
+        .enter()
+            .append('option')
+        .text(function (d) { return d; }) 
+        .attr("value", function (d) { return d; })
+
 }
 
 /**
@@ -173,7 +182,7 @@ function startVisualization() {
             var tooltip = d3.select('body')
                 .append('div')
                     .attr('id', 'tooltip')
-                    .attr('style', 'position: absolute; display: none; padding: 5px; text-align: center; background: whitesmoke; border-radius: 5px; box-shadow: 0 0 5px black;');
+                    .attr('style', 'position: absolute; display: none; padding: 5px; background: whitesmoke; border-radius: 5px; box-shadow: 0 0 5px black;');
 
             // Add Data Points to Map
             svg.append('g')
@@ -195,11 +204,11 @@ function startVisualization() {
                     })
                     .on('mousemove', d => {
                         tooltip
-                            .html("<strong>" + d.school + "</strong><br>"
+                            .html("<strong>" + d.school + "</strong><hr>"
                                 + "\"" + d.song_name + "\"<br>"
                                 + "Writer: " + d.writers + "<br>"
                                 + "Year: " + d.year + "<br><br>"
-                                + "<strong>Tropes</strong><br>"
+                                + "<strong>Tropes</strong><hr>"
                                 + "Win/Victory: " + summation(d.win_won, d.victory) + "<br>"
                                 + "Fight/Rah: " + summation(d.fight, d.rah) + "<br>"
                                 + "Color: " + d.colors + "<br>"
