@@ -145,6 +145,7 @@
 
         #right_add_country {
             padding: 20px;
+            text-align: right;
         }
 
         #left_add_country:hover {
@@ -210,6 +211,19 @@
         
         #compare_toggle_button:hover {
             background-color: gray;
+        }
+
+        .country_label {
+            background-color: black;
+            color: white;
+            border: none;
+            width: 160px;
+            height: 40px;
+            font-size: 15px;
+            text-align: left;
+            padding: 10px;
+            margin-top: 5px;
+            margin-right: 5px;
         }
 
         .toggle {
@@ -364,7 +378,32 @@
         .page[data-page="right_selection"].active {
             transform: translate(0, 0);
         }
-    
+
+        .page[data-page="left_selection"] {
+            transform: translate(-100%, 0);
+            z-index: 2;
+        }
+
+        .page[data-page="left_selection"].active {
+            transform: translate(0, 0);
+        }
+
+        #right_countries {
+            display:flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-end;
+            padding-right: 10px;
+        }
+
+        #left_countries {
+            display:flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding-left: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -383,7 +422,7 @@
         <div class="comparison_ui">
             <div class="left">
                 <div class="country_list">
-                    <h2 id='left_add_country'>COUNTRIES +</h2>
+                    <h2 id='left_add_country' data-js-page="left_selection">COUNTRIES +</h2>
                     <div id="left_countries">
 
                     </div>
@@ -392,14 +431,14 @@
 
             <div class="middle">
                 <div class="middle_left">
-                    <h3>SCORE</h3>
+                    <h3>AVERAGE SCORE</h3>
                     <div class="score">8.56</div>
                     <div id="left_vis">
 
                     </div>
                 </div>
                 <div class="middle_right">
-                    <h3>SCORE</h3>
+                    <h3>AVERAGE SCORE</h3>
                     <div class="score">8.56</div>
                     <div id="right_vis">
                         
@@ -426,6 +465,63 @@
                     <h1>TOGGLE COUNTRIES/GROUPS</h1>
                 </div>
                 <button id="exit_button" data-js-page="home"></button>
+            </div>
+            <div class="body">
+                <div class="left">
+                    <div class="entities">
+                        <h2>PRE-DEFINED GROUPS</h2>
+                        <div class="countries_groups" id="predefined_groups">
+                        </div>
+    
+                        <h2>CONTINENTS</h2>
+                        <div class="countries_groups" id="continents">
+                        </div>
+    
+                        <h2>NORTH AMERICA</h2>
+                        <div class="countries_groups" id="north_america">
+                        </div>
+    
+                        <h2>SOUTH AMERICA</h2>
+                        <div class="countries_groups" id="south_america">
+                        </div>
+    
+                        <h2>ASIA</h2>
+                        <div class="countries_groups" id="asia">
+                        </div>
+    
+                        <h2>EUROPE</h2>
+                        <div class="countries_groups" id="europe">
+                        </div>
+
+                        <h2>AFRICA</h2>
+                        <div class="countries_groups" id="africa">    
+                        </div>
+    
+                        <h2>OCEANIA</h2>
+                        <div class="countries_groups" id="oceania">                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right">
+                    <div class="rank">
+                        <h2>RANK</h2>
+                        <div class="list">
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+
+    <div class="page" data-page="left_selection">
+        <div class="selection_ui">
+            <div class="top">
+                <button id="exit_button" data-js-page="home"></button>
+                <div class="title">
+                    <h1>TOGGLE COUNTRIES/GROUPS</h1>
+                </div>
+                <div></div>
             </div>
             <div class="body">
                 <div class="left">
@@ -507,39 +603,48 @@
 
             // set up selection screen
             for (i=0;i<countriesListRank.length;i++) {
-                $(".list").append("<div class='list_item'><h3>"+(i+1).toString()+"</h3><button class='toggle'>"+countriesListRank[i]+"</button></div>")
+                $(".page[data-page='right_selection'] .list").append("<div class='list_item'><h3>"+(i+1).toString()+"</h3><button class='toggle'>"+countriesListRank[i]+"</button></div>")
+                $(".page[data-page='left_selection'] .list").append("<div class='list_item'><h3>"+(i+1).toString()+"</h3><button class='toggle'>"+countriesListRank[i]+"</button></div>")
             } 
 
             for (i=0;i<countriesNorthAmerica.length;i++) {
-                $("#north_america").append("<button class='toggle'>"+countriesNorthAmerica[i]+"</button>");
+                $(".page[data-page='right_selection'] #north_america").append("<button class='toggle'>"+countriesNorthAmerica[i]+"</button>");
+                $(".page[data-page='left_selection'] #north_america").append("<button class='toggle'>"+countriesNorthAmerica[i]+"</button>");
             } 
 
             for (i=0;i<countriesSouthAmerica.length;i++) {
-                $("#south_america").append("<button class='toggle'>"+countriesSouthAmerica[i]+"</button>");
+                $(".page[data-page='right_selection'] #south_america").append("<button class='toggle'>"+countriesSouthAmerica[i]+"</button>");
+                $(".page[data-page='left_selection'] #south_america").append("<button class='toggle'>"+countriesSouthAmerica[i]+"</button>");
             } 
 
             for (i=0;i<countriesAsia.length;i++) {
-                $("#asia").append("<button class='toggle'>"+countriesAsia[i]+"</button>");
+                $(".page[data-page='right_selection'] #asia").append("<button class='toggle'>"+countriesAsia[i]+"</button>");
+                $(".page[data-page='left_selection'] #asia").append("<button class='toggle'>"+countriesAsia[i]+"</button>");
             } 
 
             for (i=0;i<countriesAfrica.length;i++) {
-                $("#africa").append("<button class='toggle'>"+countriesAfrica[i]+"</button>");
+                $(".page[data-page='right_selection'] #africa").append("<button class='toggle'>"+countriesAfrica[i]+"</button>");
+                $(".page[data-page='left_selection'] #africa").append("<button class='toggle'>"+countriesAfrica[i]+"</button>");
             } 
 
             for (i=0;i<countriesOceania.length;i++) {
-                $("#oceania").append("<button class='toggle'>"+countriesOceania[i]+"</button>");
+                $(".page[data-page='right_selection'] #oceania").append("<button class='toggle'>"+countriesOceania[i]+"</button>");
+                $(".page[data-page='left_selection'] #oceania").append("<button class='toggle'>"+countriesOceania[i]+"</button>");
             } 
 
             for (i=0;i<countriesEurope.length;i++) {
-                $("#europe").append("<button class='toggle'>"+countriesEurope[i]+"</button>");
+                $(".page[data-page='right_selection'] #europe").append("<button class='toggle'>"+countriesEurope[i]+"</button>");
+                $(".page[data-page='left_selection'] #europe").append("<button class='toggle'>"+countriesEurope[i]+"</button>");
             } 
 
             for (i=0;i<continents.length;i++) {
-                $("#continents").append("<button class='toggle'>"+continents[i]+"</button>");
+                $(".page[data-page='right_selection'] #continents").append("<button class='toggle'>"+continents[i]+"</button>");
+                $(".page[data-page='left_selection'] #continents").append("<button class='toggle'>"+continents[i]+"</button>");
             } 
 
             for (i=0;i<predefinedGroups.length;i++) {
-                $("#predefined_groups").append("<button class='toggle'>"+predefinedGroups[i]+"</button>");
+                $(".page[data-page='right_selection'] #predefined_groups").append("<button class='toggle'>"+predefinedGroups[i]+"</button>");
+                $(".page[data-page='left_selection'] #predefined_groups").append("<button class='toggle'>"+predefinedGroups[i]+"</button>");
             } 
 
             // Screen Shifting
@@ -574,6 +679,15 @@
                     }
                     console.log(rightCountries)
                     
+                } else if (selectionSide == 'left') {
+                    if ($(this).hasClass('active')) {
+                        $(this).removeClass('active')
+                        removeItemOnce(leftCountries,$(this).html())
+                    } else {
+                        $(this).addClass('active')
+                        leftCountries.push($(this).html());
+                    }
+                    console.log(leftCountries)
                 } else {
                     leftCountries.push($(this).html());
                 }
@@ -610,13 +724,13 @@
 
             $("#right_countries").empty()
             $("#left_countries").empty()
-            
+
             for (i=0;i<rightCountries.length;i++) {
-                $("#right_countries").append("<button class='toggle'>"+rightCountries[i]+"</button>");
+                $("#right_countries").append("<button class='country_label'>"+rightCountries[i]+"</button>");
             }
 
             for (i=0;i<leftCountries.length;i++) {
-                $("#left_countries").append("<button class='toggle'>"+leftCountries[i]+"</button>");
+                $("#left_countries").append("<button class='country_label'>"+leftCountries[i]+"</button>");
             }
         }
 
@@ -625,10 +739,16 @@
             rightData = generateDataset(data, rightCountries)
             leftData = generateDataset(data, leftCountries)
 
+            $(".middle_right .score").html(rightData.score.toString());
+            $(".middle_left .score").html(leftData.score.toString());
+
             if (visType == 'radar') {
                 if (comparisonType == 'separate') {
-                    generateRadar(leftData, "#left_vis");
-                    generateRadar(rightData, "#right_vis");
+                    if (leftCountries != [])
+                        generateRadar(leftData, "#left_vis");
+
+                    if (rightCountries != [])
+                        generateRadar(rightData, "#right_vis");
                 } else { // together
                     generateCombinedRadar(leftData, rightData, "#left_vis");
                 }
@@ -699,8 +819,10 @@
             return data_struct;
         }
 
-        function generateBar(data, chosenDiv){
+        async function generateBar(data, chosenDiv){
 
+            d3.select(chosenDiv + " svg").remove();
+            
             // establishing variables
             var margin = 50,
             width = 500 - 2 * margin,
@@ -779,7 +901,10 @@
 
         }
 
-        function generateRadar(data, chosenDiv){
+        async function generateRadar(data, chosenDiv){
+
+            d3.select(chosenDiv + " svg").remove();
+
             var dataset = data.dataset;
             var score = data.score;
 
