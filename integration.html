@@ -93,7 +93,6 @@
         .comparison_ui .middle {
             display: flex;
             flex-direction: row;
-            background-color: green;
             height: 100vh;
             width: 70vw;
         }
@@ -128,6 +127,15 @@
             display:flex;
             justify-content: flex-end;
             background-color: orange;
+        }
+
+        #middle_vis {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #3d3d3d;
+            padding-top: 70px; 
         }
 
         .comparison_ui .right {
@@ -201,16 +209,12 @@
             vertical-align: center;
             padding: 40px;
             margin: 5px;
-            background: url('../../img/expand.png')no-repeat;
+            background: url('../../img/combine.png')no-repeat;
             background-size: contain;
             border-radius: 40px;
             border: none;
             cursor: pointer;
             background-color: white;
-        }
-        
-        #compare_toggle_button:hover {
-            background-color: gray;
         }
 
         .country_label {
@@ -409,6 +413,7 @@
 <body>
     <div class="page active" data-page="home">
         <div class="comparison_top">
+            
             <div class="title">
                 <h1>WORLD HAPPINESS REPORT COMPARISON TOOL</h1>
             </div>
@@ -436,6 +441,9 @@
                     <div id="left_vis">
 
                     </div>
+                </div>
+                <div id="middle_vis">
+
                 </div>
                 <div class="middle_right">
                     <h3>AVERAGE SCORE</h3>
@@ -701,12 +709,28 @@
                 $(this).addClass("active");
 
                 if ($("#bar_graph_button").hasClass('active')) {
+                    $("#compare_toggle_button").hide()
                     visType = 'bar'
                 } else if ($("#radar_chart_button").hasClass('active')) {
+                    $("#compare_toggle_button").show()
                     visType = 'radar'
                 }
 
                 generateVis(data)
+            })
+
+            $("#compare_toggle_button").click(async function() {
+                if (comparisonType == "separate") {
+                    comparisonType = 'together';
+                    $('#compare_toggle_button').css("background-image", "url('../../img/expand.png')");  
+
+                } else {
+                    comparisonType = 'separate';
+                    $('#compare_toggle_button').css("background-image", "url('../../img/combine.png')");  
+                }
+
+                generateVis(data)
+                console.log(comparisonType)
             })
 
             //var data_struct1 = generateDataset(data, countriesDeveloped);
@@ -781,16 +805,21 @@
 
             if (visType == 'radar') {
                 if (comparisonType == 'separate') {
+                    d3.select("#middle_vis svg").remove();
+
                     if (leftCountries != [])
                         generateRadar(leftData, "#left_vis");
 
                     if (rightCountries != [])
                         generateRadar(rightData, "#right_vis");
                 } else { // together
-                    generateCombinedRadar(leftData, rightData, "#left_vis");
+                    d3.select("#left_vis svg").remove();
+                    d3.select("#right_vis svg").remove();
+                    generateCombinedRadar(leftData, rightData, "#middle_vis");
                 }
                 
             } else { // bar
+                d3.select("#middle_vis svg").remove();
                 generateBar(leftData, "#left_vis");
                 generateBar(rightData, "#right_vis");
             }
@@ -805,6 +834,10 @@
                 arr.splice(index, 1);
             }
             return arr;
+        }
+
+        function setDefaultValues () {
+            
         }
 
         function generateDataset(data, chosenCountries) {
@@ -1021,7 +1054,10 @@
             .attr("opacity", .5);
         }
 
-        function generateCombinedRadar(data1, data2, chosenDiv){
+        async function generateCombinedRadar(data1, data2, chosenDiv){
+
+            d3.select(chosenDiv + " svg").remove();
+            
             var dataset1 = data1.dataset;
             var dataset2 = data2.dataset;
 

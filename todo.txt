@@ -4,3 +4,9 @@ load buttons using arrays
 link buttons to each other
 load data to integrate with buttons
 load selection screen
+figure out how to link rank and other countries together
+
+
+add info 
+tool tip
+set default
