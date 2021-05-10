@@ -149,12 +149,12 @@
         }
 
         #left_add_country:hover {
-            color:black;
+            color:orange;
             cursor: pointer;
         }
 
         #right_add_country:hover {
-            color:black;
+            color:orange;
             cursor: pointer;
         }
 
@@ -734,10 +734,47 @@
             }
         }
 
+
+        async function addGroups(countries) {
+            finalCountries = []
+
+            for (i=0;i<countries.length;i++) {
+                if (countries[i] == "Top 50") {
+                    finalCountries = finalCountries.concat(countriesTop50)
+                } else if (countries[i] == "Bottom 50") {
+                    finalCountries = finalCountries.concat(countriesBottom50)
+                } else if (countries[i] == "Developed") {
+                    finalCountries = finalCountries.concat(countriesDeveloped)
+                } else if (countries[i] == "Developing") {
+                    finalCountries = finalCountries.concat(countriesDeveloping)
+                } else if (countries[i] == "Transitioning") {
+                    finalCountries = finalCountries.concat(countriesTransition)
+                } else if (countries[i] == "North America") {
+                    finalCountries = finalCountries.concat(countriesNorthAmerica)
+                } else if (countries[i] == "South America") {
+                    finalCountries = finalCountries.concat(countriesSouthAmerica)
+                } else if (countries[i] == "Asia") {
+                    finalCountries = finalCountries.concat(countriesAsia)
+                } else if (countries[i] == "Europe") {
+                    finalCountries = finalCountries.concat(countriesEurope)
+                } else if (countries[i] == 'Africa') {
+                    finalCountries = finalCountries.concat(countriesAfrica)
+                } else if (countries[i] == "Oceania") {
+                    finalCountries = finalCountries.concat(countriesOceania)
+                } else {
+                    finalCountries.push(countries[i])
+                }
+            }
+            return finalCountries
+        }
+
         async function generateVis(data) {
-            
-            rightData = generateDataset(data, rightCountries)
-            leftData = generateDataset(data, leftCountries)
+
+            actualRightCountries = await addGroups(rightCountries)
+            actualLeftCountries = await addGroups(leftCountries)
+
+            rightData = generateDataset(data, actualRightCountries)
+            leftData = generateDataset(data, actualLeftCountries)
 
             $(".middle_right .score").html(rightData.score.toString());
             $(".middle_left .score").html(leftData.score.toString());
