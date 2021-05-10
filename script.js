@@ -173,7 +173,7 @@ function startVisualization() {
             var tooltip = d3.select('body')
                 .append('div')
                     .attr('id', 'tooltip')
-                    .attr('style', 'position: absolute; display: none; padding: 2%; text-align: center; background: whitesmoke; border-radius: 20px; box-shadow: 0 0 5px black;');
+                    .attr('style', 'position: absolute; display: none; padding: 5px; text-align: center; background: whitesmoke; border-radius: 5px; box-shadow: 0 0 5px black;');
 
             // Add Data Points to Map
             svg.append('g')
