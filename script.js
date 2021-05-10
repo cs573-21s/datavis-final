@@ -108,11 +108,27 @@ var confs = ['Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ];
  */
 function loadSVGData() {
     // Set svg
-    svg = d3.select('svg');
+
+
+    // the map is in the ratio of 2:1
+    // var width = window.innerWidth;
+    // var height = window.innerHeight;
+
+    // if(width < height) {
+    //    width = (width > 1200) ? 1200 : width;
+    //    height =  width/2;
+    // } else {
+    //     height = (height > 500) ? 500 : height;
+    //     width = height * 2
+    // }
+
+    svg = d3.select('svg')
+    .attr("height", 650)
+    .attr("width", 1200);
 
     // Set map data
     mapData.projection = d3.geoMercator()
-        .center([-95, 35])
+        .center([-96, 38])
         .scale(1100)
         .translate([svg.attr('width') / 2, svg.attr('height') / 2]);
     mapData.color = d3.scaleOrdinal()
@@ -122,7 +138,7 @@ function loadSVGData() {
         .domain([1, 100])
         .range([3, 100]);
 
-    d3.select("#dropdowns")
+    d3.select("#conference")
         .selectAll('myOptions') 
             .data(confs)
         .enter()
