@@ -168,7 +168,7 @@ button {
     vertical-align: center;
     padding: 40px;
     margin: 5px;
-    background: url('../../img/bar_chart.png')no-repeat;
+    background: url('/img/bar_chart.png')no-repeat;
     background-size: contain;
     border-radius: 40px;
     border: none;
@@ -185,7 +185,7 @@ button {
     vertical-align: center;
     padding: 40px;
     margin: 5px;
-    background: url('../../img/radar_chart.png')no-repeat;
+    background: url('/img/radar_chart.png')no-repeat;
     background-size: contain;
     border-radius: 40px;
     border: none;
@@ -202,7 +202,7 @@ button {
     vertical-align: center;
     padding: 40px;
     margin: 5px;
-    background: url('../../img/combine.png')no-repeat;
+    background: url('/img/combine.png')no-repeat;
     background-size: contain;
     border-radius: 40px;
     border: none;
@@ -215,7 +215,7 @@ button {
     vertical-align: center;
     padding: 40px;
     margin: 5px;
-    background: url('../../img/info.png')no-repeat;
+    background: url('/img/info.png')no-repeat;
     background-size: contain;
     border-radius: 40px;
     border: none;
@@ -385,7 +385,7 @@ button {
     vertical-align: center;
     padding: 25px;
     margin: 15px;
-    background: url('../../img/exit.png')no-repeat;
+    background: url('/img/exit.png')no-repeat;
     background-size: contain;
     border: none;
     cursor: pointer;
