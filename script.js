@@ -22,7 +22,7 @@ const audioSize = 64;
 let audioData = {}, playingSound = 0, enable = true;
 
 // HTML Data
-let svg, mapData = new Object();
+let svg, legend, mapData = new Object();
 
 //Handle on window load
 window.onload = () => {
@@ -35,7 +35,7 @@ window.onload = () => {
         document.getElementById('overlay').style.display = 'none';
         document.getElementById('start').style.display = 'none';
 
-        audioData[playingSound].play();
+        // audioData[playingSound].play();
     });
 
     // Handles the sound icon in the bottom right
@@ -47,7 +47,7 @@ window.onload = () => {
         } else {
             e.target.src = 'img/on.png';
             audioData[playingSound].currentTime = 0;
-            audioData[playingSound].play();
+            // audioData[playingSound].play();
             enable = true;
         }
     });
@@ -93,7 +93,8 @@ function loadAudio() {
         audio.addEventListener('ended', e => {
             if (enable) {
                 e.target.currentTime = 0;
-                audioData[playingSound].play();
+                e.target.play();
+                // audioData[playingSound].play();
             }
         }, false);
         audioData[i] = audio;
@@ -110,23 +111,17 @@ var tropes = ['Select a trope', 'Fight/Rah', 'Win/Victory', 'Color', 'Spelling',
 function loadSVGData() {
     // Set svg
 
-
-    // the map is in the ratio of 2:1
-    // var width = window.innerWidth;
-    // var height = window.innerHeight;
-
-    // if(width < height) {
-    //    width = (width > 1200) ? 1200 : width;
-    //    height =  width/2;
-    // } else {
-    //     height = (height > 500) ? 500 : height;
-    //     width = height * 2
-    // }
-
     svg = d3.select('svg')
     .attr("height", 650)
     .attr("width", 1200);
 
+    legend = d3.select(".map-container").append("svg")
+        .attr("width", 200)
+        .attr("height", 200)
+        .attr("class", "legend-container")
+        // .attr("border", "1px solid #888")
+        .append("g")
+        .attr("transform", "translate( 20, 50)");
     // Set map data
     mapData.projection = d3.geoMercator()
         .center([-96, 38])
@@ -135,6 +130,7 @@ function loadSVGData() {
     mapData.color = d3.scaleOrdinal()
         .domain(['Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ])
         .range(['#AE1313', '#4498E2', '#01447F','#FFD500', '#FDF2B8', 'white']);
+   
     mapData.size = d3.scaleLinear()
         .domain([1, 100])
         .range([3, 100]);
@@ -201,6 +197,10 @@ function startVisualization() {
                             .style('r', d => mapData.size(d.size / 10000) + 5)
                             .style('opacity', 1);
                         playingSound = getAudioIndex(point);
+                        if(enable){
+                            audioData[playingSound].currentTime = 0;
+                            audioData[playingSound].play();
+                        }
                     })
                     .on('mousemove', d => {
                         tooltip
@@ -215,7 +215,7 @@ function startVisualization() {
                                 + "Spelling: " + d.spelling + "<br>"
                                 + "Men/Opponents: " + summation(d.men, d.opponents) + "<br>"
                                 + "Nonsense: " + d.nonsense + "<br>")
-                            .style('left', (d3.event.pageX + 15) + "px")
+                            .style('left', (d3.event.pageX - svg.node().getBoundingClientRect().x + 15) + "px")
                             .style('top', (d3.event.pageY + 15) + "px");
                     })
                     .on('mouseleave', (_, i, nodes) => {
@@ -224,11 +224,13 @@ function startVisualization() {
                             .transition(1000)
                                 .style('r', d => mapData.size(d.size / 10000) + 3)
                                 .style('opacity', 0.7);
-                        playingSound = 0;
+                        audioData[playingSound].pause();
+                        // playingSound = 0;
                     });
+                    generateLegend();
         });
 
-        function updateChart(conf) {
+        function updateChart(conffilter='Select a conference', tropefilter='Select a trope') {
 
             var filter = data.map(function(d) {return {conference:d[conf]} })
     
@@ -250,6 +252,10 @@ function startVisualization() {
                         .style('r', d => mapData.size(d.size / 10000) + 5)
                         .style('opacity', 1);
                     playingSound = getAudioIndex(point);
+                    if(enable){
+                        audioData[playingSound].currentTime = 0;
+                        audioData[playingSound].play();
+                    }
                 })
                 .on('mousemove', d => {
                     tooltip
@@ -273,16 +279,51 @@ function startVisualization() {
                         .transition(1000)
                             .style('r', d => mapData.size(d.size / 10000) + 3)
                             .style('opacity', 0.7);
-                    playingSound = 0;
+                    audioData[playingSound].pause();
+                    // playingSound = 0;
                 });
         }
     
-        d3.select("#dropdowns").on("change", function(d) {
+        d3.select("#conference").on("change", function(d) {
             
             var selected = d3.select(this).property("value")
-            updateChart(selected)
+            updateChart(conferencefilter, tropefilter)
+
+        });
+        d3.select("#trope").on("change", function(d) {
+            
+            var selected = d3.select(this).property("value")
+            updateChart(conferenceFilter, tropefilter)
 
         })
+
+        /* code to generate the legend for the map */
+        function generateLegend (keys = null) {
+            // create a list of keys
+            keys = (keys == null) ? ['Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ] : keys;
+
+            // Add one dot in the legend for each name.
+            legend.selectAll("mydots")
+            .data(keys)
+            .enter()
+            .append("circle")
+            .attr("cx", 0)
+                .attr("cy", function(d,i){ return 0 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+                .attr("r", 7)
+                .style("fill", function(d){ return mapData.color(d)});
+
+            legend.selectAll("mylabels")
+            .data(keys)
+            .enter()
+            .append("text")
+            .attr("x", 20)
+                .attr("y", function(d,i){ return 0 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+                // .style("fill", function(d){ return color(d)})
+                .text(function(d){ return d})
+                .attr("text-anchor", "left")
+                .style("alignment-baseline", "middle");
+
+        }
         
             
 }

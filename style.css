@@ -3,16 +3,23 @@
     stroke-width: 4px;
 }
 
+html{
+    min-width: 1200px;
+}
+
 html, body {
     margin: 0;
     height: 100%;
+    background-color: #eee;
+    position: relative;
 }
 
 body {
-    position: relative;
-    max-width: 1210px;
+    width: 1200px;
     left: 50%;
+    background-color: #fff;
     transform: translateX(-50%);
+    box-shadow: 0 0 2px #aaa;
 }
 
 svg {
@@ -23,7 +30,7 @@ svg {
 #content {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 0;
     font-size: 1.56rem;
     justify-content: center;
 }
@@ -71,10 +78,24 @@ svg {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    padding: 0 5px;
 }
 
 .dropdowns {
     margin: 10px 10px 10px 0;
     width: 250px;
     font-size: 1.26rem;
+}
+
+#tooltip {
+    min-width: 200px;
+}
+
+.legend-container {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column-reverse;    
 }
