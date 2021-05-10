@@ -710,14 +710,14 @@
 
     <script>
         // - - - - - - - - - COUNTRY GROUP PRESETS - - - - - - - - - 
-        var countriesNorthAmerica = ['Canada', 'Costa Rica', 'United States', 'Mexico', 'Guatemala', 'Panama', 'El Salvador', 'Trinidad & Tobago', 'Nicaragua', 'Jamaica', 'Honduras', 'Dominican Republic', 'Haiti'];
-        var countriesSouthAmerica = ['Brazil', 'Chile', 'Uruguay', 'Colombia', 'Argentina', 'Ecuador', 'Bolivia', 'Paraguay', 'Peru', 'Venezuela'];
-        var countriesEurope = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Kosovo', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Hungary', 'Northern Cyprus', 'Portugal', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Croatia', 'Bosnia and Herzegovina', 'Belarus', 'Greece', 'North Macedonia', 'Bulgaria', 'Albania', 'Ukraine'];
+        var countriesNorthAmerica = ['Canada', 'Costa Rica', 'United States', 'Mexico', 'Guatemala', 'Panama', 'El Salvador', 'Trinidad & Tobago', 'Nicaragua', 'Jamaica', 'Honduras', 'Dominican Republic', 'Haiti'].sort();
+        var countriesSouthAmerica = ['Brazil', 'Chile', 'Uruguay', 'Colombia', 'Argentina', 'Ecuador', 'Bolivia', 'Paraguay', 'Peru', 'Venezuela'].sort();
+        var countriesEurope = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Kosovo', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Hungary', 'Northern Cyprus', 'Portugal', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Croatia', 'Bosnia and Herzegovina', 'Belarus', 'Greece', 'North Macedonia', 'Bulgaria', 'Albania', 'Ukraine'].sort();
         var predefinedGroups = ['Top 50','Bottom 50','Developed','Developing','Transitioning']
         var continents = ['North America','South America', 'Asia', 'Europe', 'Africa', 'Oceania']
-        var countriesAsia = ['Israel', 'United Arab Emirates', 'Taiwan', 'Saudi Arabia', 'Qatar', 'Singapore', 'Bahrain', 'Uzbekistan', 'Kuwait', 'Thailand', 'South Korea', 'Japan', 'Kazakhstan', 'Pakistan', 'Philippines', 'Tajikistan', 'Hong Kong', 'Turkey', 'Malaysia', 'Mongolia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Nepal', 'Jordan', 'Laos', 'Cambodia', 'Palestinian Territories', 'Armenia', 'Iran', 'Georgia', 'Bangladesh', 'Iraq', 'Sri Lanka', 'Myanmar', 'India', 'Syria', 'Yemen', 'Afghanistan'];
-        var countriesAfrica = ['Mauritius', 'Libya', 'Nigeria', 'Algeria', 'Morocco', 'Cameroon', 'Ghana', 'Ivory Coast', 'Benin', 'Congo (Brazzaville)', 'Gabon', 'South Africa', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Guinea', 'Gambia', 'Kenya', 'Mauritania', 'Tunisia', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Chad', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Botswana', 'Malawi', 'Rwanda', 'Tanzania', 'Central African Republic', 'South Sudan'];
-        var countriesOceania = ['New Zealand', 'Australia'];
+        var countriesAsia = ['Israel', 'United Arab Emirates', 'Taiwan', 'Saudi Arabia', 'Qatar', 'Singapore', 'Bahrain', 'Uzbekistan', 'Kuwait', 'Thailand', 'South Korea', 'Japan', 'Kazakhstan', 'Pakistan', 'Philippines', 'Tajikistan', 'Hong Kong', 'Turkey', 'Malaysia', 'Mongolia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Nepal', 'Jordan', 'Laos', 'Cambodia', 'Palestinian Territories', 'Armenia', 'Iran', 'Georgia', 'Bangladesh', 'Iraq', 'Sri Lanka', 'Myanmar', 'India', 'Syria', 'Yemen', 'Afghanistan'].sort();
+        var countriesAfrica = ['Mauritius', 'Libya', 'Nigeria', 'Algeria', 'Morocco', 'Cameroon', 'Ghana', 'Ivory Coast', 'Benin', 'Congo (Brazzaville)', 'Gabon', 'South Africa', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Guinea', 'Gambia', 'Kenya', 'Mauritania', 'Tunisia', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Chad', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Botswana', 'Malawi', 'Rwanda', 'Tanzania', 'Central African Republic', 'South Sudan'].sort();
+        var countriesOceania = ['New Zealand', 'Australia'].sort();
         var countriesDeveloped = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'New Zealand', 'Canada', 'Australia', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'United States', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Japan', 'Hungary', 'Portugal', 'Croatia', 'Greece', 'Bulgaria'];
         var countriesTransition = ['Uzbekistan', 'Kazakhstan', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Tajikistan', 'Bosnia and Herzegovina', 'Belarus', 'North Macedonia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Albania', 'Armenia', 'Georgia', 'Ukraine'];
         var countriesDeveloping = ['Costa Rica', 'Israel', 'United Arab Emirates', 'Mexico', 'Taiwan', 'Chile', 'Guatemala', 'Saudi Arabia', 'Qatar', 'Panama', 'Brazil', 'Uruguay', 'Singapore', 'El Salvador', 'Bahrain', 'Trinidad & Tobago', 'Colombia', 'Nicaragua', 'Kosovo', 'Argentina', 'Ecuador', 'Kuwait', 'Thailand', 'South Korea', 'Jamaica', 'Mauritius', 'Honduras', 'Bolivia', 'Paraguay', 'Northern Cyprus', 'Peru', 'Pakistan', 'Philippines', 'Libya', 'Hong Kong', 'Dominican Republic', 'Turkey', 'Malaysia', 'Mongolia', 'Nigeria', 'Algeria', 'Morocco', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Cameroon', 'Ghana', 'Ivory Coast', 
@@ -742,7 +742,6 @@
 
         //Graphs made in csv load because it is asynchronous
         d3.csv("2019data.csv", function(data) {
-
             // set up selection screen
             for (i=0;i<countriesListRank.length;i++) {
                 $(".page[data-page='right_selection'] .list").append("<div class='list_item'><h3>"+(i+1).toString()+"</h3><button class='toggle'>"+countriesListRank[i]+"</button></div>")
@@ -1350,18 +1349,6 @@
             let svg = d3.select(chosenDiv).append("svg")
                 .attr("width", 500)
                 .attr("height", 500);
-
-            /*
-            let ticks = [2,4,6,8,10];
-
-            ticks.forEach(t =>
-                    svg.append("circle")
-                    .attr("cx", 250)
-                    .attr("cy", 250)
-                    .attr("fill", "none")
-                    .attr("stroke", "black")
-                    .attr("r", radialScale(t))
-            );*/
 
             for (var i = 0; i < dataset1.length; i++) {
                 let ft_name = dataset1[i].letter;
