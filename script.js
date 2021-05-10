@@ -100,6 +100,10 @@ function loadAudio() {
     }
 }
 
+var confs = ['Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ];
+var dropdown = d3.select("#dropdowns")
+  .append('select')
+
 /**
  * Loads the svg data
  */
@@ -121,7 +125,7 @@ function loadSVGData() {
 
     svg.select("#confButton")
         .selectAll('myOptions')
-         .data(data.conference)
+         .data(confs)
         .enter()
           .append('option')
         .text(function (d) { return d; })
@@ -198,4 +202,29 @@ function startVisualization() {
                         playingSound = 0;
                     });
         });
+
+        function updateChart(conf) {
+
+            var filter = data.map(function(d) {return {conference:d[conf]} })
+    
+            point
+                .data(filter)
+                .transition()
+                .duration(1000)
+                .attr("cx", function(d) { return x(+d.lat) })
+                .attr("cy", function(d) { return y(+d.long) })
+        }
+    
+            dropdown.on("change", function(d) {
+
+                // recover the option that has been chosen
+                var selectedConference = d3.select(this).property("value")
+            
+                // run the updateChart function with this selected option
+                updateChart(selectedConference)
+            })
+            
 }
+
+  
+  
