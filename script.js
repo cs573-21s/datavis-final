@@ -101,8 +101,7 @@ function loadAudio() {
 }
 
 var confs = ['Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ];
-var dropdown = d3.select("#dropdowns")
-  .append('select')
+
 
 /**
  * Loads the svg data
@@ -123,13 +122,14 @@ function loadSVGData() {
         .domain([1, 100])
         .range([3, 100]);
 
-    svg.select("#confButton")
-        .selectAll('myOptions')
-         .data(confs)
+    d3.select("#dropdowns")
+        .selectAll('myOptions') 
+            .data(confs)
         .enter()
-          .append('option')
-        .text(function (d) { return d; })
-        .attr("value", function (d) { return d; }) 
+            .append('option')
+        .text(function (d) { return d; }) 
+        .attr("value", function (d) { return d; })
+
 }
 
 /**
@@ -215,14 +215,13 @@ function startVisualization() {
                 .attr("cy", function(d) { return y(+d.long) })
         }
     
-            dropdown.on("change", function(d) {
-
-                // recover the option that has been chosen
-                var selectedConference = d3.select(this).property("value")
+        d3.select("#dropdowns").on("change", function(d) {
             
-                // run the updateChart function with this selected option
-                updateChart(selectedConference)
-            })
+            var selected = d3.select(this).property("value")
+            updateChart(selected)
+
+        })
+        
             
 }
 
