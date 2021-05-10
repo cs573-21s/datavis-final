@@ -369,11 +369,11 @@
             $("#compare_toggle_button").click(async function() {
                 if (comparisonType == "separate") {
                     comparisonType = 'together';
-                    $('#compare_toggle_button').css("background-image", "url('../../img/expand.png')");  
+                    $('#compare_toggle_button').css("background-image", "url('img/expand.png')");  
 
                 } else {
                     comparisonType = 'separate';
-                    $('#compare_toggle_button').css("background-image", "url('../../img/combine.png')");  
+                    $('#compare_toggle_button').css("background-image", "url('img/combine.png')");  
                 }
 
                 generateVis(data)
