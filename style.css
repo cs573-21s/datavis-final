@@ -1,6 +1,11 @@
-.circle:hover {
+circle {
+    cursor: pointer;
+}
+
+circle:hover {
     stroke: white;
-    stroke-width: 4px;
+    stroke-width: 2px;
+    /* transform: scale(1.2); */
 }
 
 html{
@@ -93,9 +98,11 @@ svg {
 
 .legend-container {
     position: absolute;
-    right: 5px;
-    bottom: 5px;
-    background-color: transparent;
+    right: 6px;
+    bottom: 12px;
+    background-color: #3333;
     display: flex;
-    flex-direction: column-reverse;    
+    flex-direction: column-reverse;
+    box-shadow: 0 0 2px #666;
+    border-radius: 4px; 
 }

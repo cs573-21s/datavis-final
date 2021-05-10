@@ -22,7 +22,7 @@ const audioSize = 64;
 let audioData = {}, playingSound = 0, enable = true;
 
 // HTML Data
-let svg, legend, mapData = new Object();
+let svg, legend, conferenceFilter, tropeFilter, dataGlobal, tooltip, mapData = new Object();
 
 //Handle on window load
 window.onload = () => {
@@ -121,7 +121,7 @@ function loadSVGData() {
         .attr("class", "legend-container")
         // .attr("border", "1px solid #888")
         .append("g")
-        .attr("transform", "translate( 20, 50)");
+        .attr("transform", "translate( 20, 25)");
     // Set map data
     mapData.projection = d3.geoMercator()
         .center([-96, 38])
@@ -163,6 +163,7 @@ function startVisualization() {
         .await((error, geo, data) => {
             if (error) throw error;
 
+            dataGlobal = data;
             // Draw Map
             svg.append('g')
                 .selectAll('path')
@@ -175,13 +176,14 @@ function startVisualization() {
                     .style('stroke-width', 0)
 
             // Declare tooltip
-            var tooltip = d3.select('body')
+            tooltip = d3.select('body')
                 .append('div')
                     .attr('id', 'tooltip')
                     .attr('style', 'position: absolute; display: none; padding: 5px; background: whitesmoke; border-radius: 5px; box-shadow: 0 0 5px black;');
 
             // Add Data Points to Map
             svg.append('g')
+                .attr('class', 'circles-g')
                 .selectAll('circles')
                 .data(data)
                 .enter().append('circle')
@@ -230,15 +232,44 @@ function startVisualization() {
                     generateLegend();
         });
 
-        function updateChart(conffilter='Select a conference', tropefilter='Select a trope') {
+        function updateChart(conffilter='Select a conference', trpFilter='Select a trope') {
 
-            var filter = data.map(function(d) {return {conference:d[conf]} })
-    
-            svg.selectAll("circles").remove();
+            var filterdata = dataGlobal;
+
+            if(conffilter != 'Select a conference') {
+                filterdata = filterdata.filter( d => d.conference == conffilter);
+            }
+
+            if(trpFilter != "Select a trope") {
+                switch (trpFilter) {
+                    case "Fight/Rah":
+                        filterdata = filterdata.filter( d => (d.fight == "Yes" || d.rah == "Yes"));
+                        break;
+                    case "Win/Victory": 
+                    filterdata = filterdata.filter( d => (d.win_won == "Yes" || d.victory_win_won == "Yes"));
+                        break;
+                    case "Color":
+                        filterdata = filterdata.filter( d => d.colors == "Yes");
+                        break;
+                    case "Spelling":
+                        filterdata = filterdata.filter( d => d.spelling == "Yes" );
+                        break;
+                    case "Men/Oponents":
+                        filterdata = filterdata.filter( d => (d.men == "Yes" || d.opponents == "Yes"));
+                        break;
+                    case "Nonsense":
+                        filterdata = filterdata.filter( d => d.nonsense == "Yes" );
+                        break;
+
+                }
+            }
+            
+            svg.select(".circles-g").remove();
 
             svg.append('g')
+            .attr('class', 'circles-g')
             .selectAll('circles')
-            .data(filter)
+            .data(filterdata)
             .enter().append('circle')
                 .attr('r', d => mapData.size(d.size / 10000) + 3)
                 .style('fill', d => mapData.color(d.conference))
@@ -270,7 +301,7 @@ function startVisualization() {
                             + "Spelling: " + d.spelling + "<br>"
                             + "Men/Opponents: " + summation(d.men, d.opponents) + "<br>"
                             + "Nonsense: " + d.nonsense + "<br>")
-                        .style('left', (d3.event.pageX + 15) + "px")
+                        .style('left', (d3.event.pageX - svg.node().getBoundingClientRect().x + 15) + "px")
                         .style('top', (d3.event.pageY + 15) + "px");
                 })
                 .on('mouseleave', (_, i, nodes) => {
@@ -282,18 +313,26 @@ function startVisualization() {
                     audioData[playingSound].pause();
                     // playingSound = 0;
                 });
+
+                if (conffilter != "Select a conference") {
+                    generateLegend([conffilter]);
+                } else if (trpFilter != "Select a trope" && conffilter == "Select a conference") {
+                    generateLegend([... new Set(filterdata.map(d => d.conference))]);
+                } else {
+                    generateLegend();
+                }
         }
     
         d3.select("#conference").on("change", function(d) {
             
-            var selected = d3.select(this).property("value")
-            updateChart(conferencefilter, tropefilter)
+            conferencefilter = d3.select(this).property("value")
+            updateChart(conferencefilter, tropeFilter)
 
         });
-        d3.select("#trope").on("change", function(d) {
+        d3.select("#tropes").on("change", function(d) {
             
-            var selected = d3.select(this).property("value")
-            updateChart(conferenceFilter, tropefilter)
+            tropeFilter = d3.select(this).property("value")
+            updateChart(conferencefilter, tropeFilter)
 
         })
 
@@ -303,19 +342,23 @@ function startVisualization() {
             keys = (keys == null) ? ['Big 12', 'Big Ten', 'Pac-12', 'SEC', 'ACC', 'Independent' ] : keys;
 
             // Add one dot in the legend for each name.
-            legend.selectAll("mydots")
+            legend.selectAll(".mydots").remove();
+            legend.selectAll(".mylabels").remove();
+            legend.selectAll(".mydots")
             .data(keys)
             .enter()
             .append("circle")
+            .attr("class", "mydots")
             .attr("cx", 0)
                 .attr("cy", function(d,i){ return 0 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
                 .attr("r", 7)
                 .style("fill", function(d){ return mapData.color(d)});
 
-            legend.selectAll("mylabels")
+            legend.selectAll(".mylabels")
             .data(keys)
             .enter()
             .append("text")
+            .attr("class", "mylabels")
             .attr("x", 20)
                 .attr("y", function(d,i){ return 0 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
                 // .style("fill", function(d){ return color(d)})
