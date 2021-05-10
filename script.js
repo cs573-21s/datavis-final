@@ -158,8 +158,10 @@ function loadSVGData() {
  */
 function startVisualization() {
     d3.queue()
-        .defer(d3.json, './states.json')
-        .defer(d3.csv, './fight-songs.csv')
+        .defer(d3.json, 'https://raw.githubusercontent.com/geacquista/datavis-final/main/states.json')
+        .defer(d3.csv, 'https://raw.githubusercontent.com/geacquista/datavis-final/main/fight-songs.csv')
+        //./fight-songs.csv
+        //./states.json
         .await((error, geo, data) => {
             if (error) throw error;
 

@@ -65,6 +65,10 @@ svg {
     z-index: 11;
 }
 
+p {
+    margin: -12%;
+}
+
 .map-container {
     position: relative;
 }
@@ -105,4 +109,11 @@ svg {
     flex-direction: column-reverse;
     box-shadow: 0 0 2px #666;
     border-radius: 4px; 
+}
+
+#vid {
+    position: absolute;
+    align-items: center;
+    padding:10%;
+    padding-top: 30%;
 }
