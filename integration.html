@@ -485,14 +485,12 @@
             position: absolute;
             text-align: left;
             padding: .5rem;
-            background: #FFFFFF;
-            color: #000000;
-            border: 1px solid #000000;
-            border-radius: 8px;
+            background: #757575;
+            color: #ffffff;
             pointer-events: none;
-            font-family: sans-serif;
+            font-weight: 400;
             font-size: 1rem;
-            width: 300px;
+            max-width: 300px;
         }
 
     </style>
@@ -806,7 +804,7 @@
                 } else if (goal_page == 'home') {
                     selectionSide = null;
                     generateVis(data)
-                    setCountryLabels()
+                    setCountryLabels(data)
                     console.log("home");
                 }
             })
@@ -869,9 +867,11 @@
                 generateVis(data)
                 console.log(comparisonType)
             })
+
+            
         });
 
-        async function setCountryLabels() {
+        async function setCountryLabels(data) {
 
             $("#right_countries").empty()
             $("#left_countries").empty()
@@ -883,6 +883,60 @@
             for (i=0;i<leftCountries.length;i++) {
                 $("#left_countries").append("<button class='country_label'>"+leftCountries[i]+"</button>");
             }
+
+            $('#right_countries .country_label').mouseover( async function (event) {
+                console.log($(this).html())
+                tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+
+                var tempArray = []
+                tempArray.push($(this).html())
+                tempArray = await addGroups(tempArray)
+
+                countryData = generateDataset(data, tempArray)
+                profile = "Score: " + countryData.score.toString() + "<br>" 
+                                    + countryData.dataset[0].letter + ": " + countryData.dataset[0].frequency + "<br>" 
+                                    + countryData.dataset[1].letter + ": " + countryData.dataset[1].frequency + "<br>" 
+                                    + countryData.dataset[2].letter + ": " + countryData.dataset[2].frequency + "<br>" 
+                                    + countryData.dataset[3].letter + ": " + countryData.dataset[3].frequency + "<br>" 
+                                    + countryData.dataset[4].letter + ": " + countryData.dataset[4].frequency + "<br>" 
+                                    + countryData.dataset[5].letter + ": " + countryData.dataset[5].frequency
+
+                tooltip.html(profile)
+                    .style("left", (event.pageX - 250) + "px")
+                    .style("top", (event.pageY) + "px");
+            })
+
+            $('#left_countries .country_label').mouseover( async function (event) {
+                console.log($(this).html())
+                tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+
+                var tempArray = []
+                tempArray.push($(this).html())
+                tempArray = await addGroups(tempArray)
+
+                countryData = generateDataset(data, tempArray)
+                profile = "Score: " + countryData.score.toString() + "<br>" 
+                                    + countryData.dataset[0].letter + ": " + countryData.dataset[0].frequency + "<br>" 
+                                    + countryData.dataset[1].letter + ": " + countryData.dataset[1].frequency + "<br>" 
+                                    + countryData.dataset[2].letter + ": " + countryData.dataset[2].frequency + "<br>" 
+                                    + countryData.dataset[3].letter + ": " + countryData.dataset[3].frequency + "<br>" 
+                                    + countryData.dataset[4].letter + ": " + countryData.dataset[4].frequency + "<br>" 
+                                    + countryData.dataset[5].letter + ": " + countryData.dataset[5].frequency
+
+                tooltip.html(profile)
+                    .style("left", (event.pageX + 70) + "px")
+                    .style("top", (event.pageY) + "px");
+            })
+
+            $('.country_label').mouseout(function () {
+                tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 0);
+            })
         }
 
 
