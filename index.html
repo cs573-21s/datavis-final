@@ -39,7 +39,7 @@
             <div class="middle">
                 <div class="middle_left">
                     <h3>AVERAGE SCORE</h3>
-                    <div class="score">ADD COUNTRIES</div>
+                    <div class="score">ADD<br>COUNTRIES</div>
                     <div id="left_vis">
 
                     </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="middle_right">
                     <h3>AVERAGE SCORE</h3>
-                    <div class="score">ADD COUNTRIES</div>
+                    <div class="score">ADD<br>COUNTRIES</div>
                     <div id="right_vis">
                         
                     </div>
@@ -494,13 +494,15 @@
             leftData = generateDataset(data, actualLeftCountries)
 
             if (isNaN(rightData.score)) {
-                $(".middle_right .score").html("ADD COUNTRIES");
+                $(".middle_right .score").html("ADD<br>COUNTRIES");
+                d3.select("#right_vis svg").remove();
             } else {
                 $(".middle_right .score").html(rightData.score.toString());
             }
 
             if (isNaN(leftData.score)) {
-                $(".middle_left .score").html("ADD COUNTRIES");
+                $(".middle_left .score").html("ADD<br>COUNTRIES");
+                d3.select("#left_vis svg").remove();
             } else {
                 $(".middle_left .score").html(leftData.score.toString());
             }
