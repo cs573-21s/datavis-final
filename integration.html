@@ -1311,7 +1311,33 @@
             .attr("d",line)
             .attr("fill", color)
             .attr("stroke-opacity", 1)
-            .attr("opacity", .4);
+            .attr("opacity", .4)
+            .on("mouseover", function (d,i) {
+                    d3.select(this).style("cursor", "pointer")
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+
+                    var profile = "Score: " + score.toString() + "<br>" 
+                                    + dataset[0].letter + ": " + dataset[0].frequency + "<br>" 
+                                    + dataset[1].letter + ": " + dataset[1].frequency + "<br>" 
+                                    + dataset[2].letter + ": " + dataset[2].frequency + "<br>" 
+                                    + dataset[3].letter + ": " + dataset[3].frequency + "<br>" 
+                                    + dataset[4].letter + ": " + dataset[4].frequency + "<br>" 
+                                    + dataset[5].letter + ": " + dataset[5].frequency
+                    
+                    tooltip.html(profile)
+                        .style("left", (d3.event.pageX - 40) + "px")
+                        .style("top", (d3.event.pageY - 100) + "px");
+                })
+            .on("mouseout", function(d,i) {
+                d3.select(this).style("cursor", "default")
+                
+                tooltip.transition()
+                    .duration(50)
+                    .style('opacity', 0);
+            }); 
+
         }
 
         async function generateCombinedRadar(data1, color1, data2, color2, chosenDiv){
@@ -1420,7 +1446,32 @@
             .attr("d",line)
             .attr("fill", color1)
             .attr("stroke-opacity", 1)
-            .attr("opacity", .5);
+            .attr("opacity", .5)
+            .on("mouseover", function (d,i) {
+                    d3.select(this).style("cursor", "pointer")
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+
+                    var profile = "Score: " + score1.toString() + "<br>" 
+                                + dataset1[0].letter + ": " + dataset1[0].frequency + "<br>" 
+                                + dataset1[1].letter + ": " + dataset1[1].frequency + "<br>" 
+                                + dataset1[2].letter + ": " + dataset1[2].frequency + "<br>" 
+                                + dataset1[3].letter + ": " + dataset1[3].frequency + "<br>" 
+                                + dataset1[4].letter + ": " + dataset1[4].frequency + "<br>" 
+                                + dataset1[5].letter + ": " + dataset1[5].frequency
+                    
+                    tooltip.html(profile)
+                        .style("left", (d3.event.pageX - 40) + "px")
+                        .style("top", (d3.event.pageY - 100) + "px");
+                })
+            .on("mouseout", function(d,i) {
+                d3.select(this).style("cursor", "default")
+                
+                tooltip.transition()
+                    .duration(50)
+                    .style('opacity', 0);
+            }); 
 
             let coordinates2 = getPathCoordinates(dataset2);
 
@@ -1430,7 +1481,32 @@
             .attr("d",line)
             .attr("fill", color2)
             .attr("stroke-opacity", 1)
-            .attr("opacity", .5);
+            .attr("opacity", .5)
+            .on("mouseover", function (d,i) {
+                    d3.select(this).style("cursor", "pointer")
+                    tooltip.transition()
+                        .duration(50)
+                        .style('opacity', 1);
+
+                    var profile = "Score: " + score2.toString() + "<br>" 
+                                    + dataset2[0].letter + ": " + dataset2[0].frequency + "<br>" 
+                                    + dataset2[1].letter + ": " + dataset2[1].frequency + "<br>" 
+                                    + dataset2[2].letter + ": " + dataset2[2].frequency + "<br>" 
+                                    + dataset2[3].letter + ": " + dataset2[3].frequency + "<br>" 
+                                    + dataset2[4].letter + ": " + dataset2[4].frequency + "<br>" 
+                                    + dataset2[5].letter + ": " + dataset2[5].frequency
+                    
+                    tooltip.html(profile)
+                        .style("left", (d3.event.pageX - 40) + "px")
+                        .style("top", (d3.event.pageY - 100) + "px");
+                })
+            .on("mouseout", function(d,i) {
+                d3.select(this).style("cursor", "default")
+                
+                tooltip.transition()
+                    .duration(50)
+                    .style('opacity', 0);
+            }); 
         }
     </script>
     
