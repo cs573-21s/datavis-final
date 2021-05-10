@@ -572,12 +572,12 @@
             }
 
             score = Math.round((score / filtered_data.length + Number.EPSILON) * 100) / 100;
-            gdp_per_capita /= filtered_data.length;
-            social_support /= filtered_data.length;
-            life_expectancy /= filtered_data.length;
-            freedom /= filtered_data.length;
-            generosity /= filtered_data.length;
-            corruption /= filtered_data.length;
+            gdp_per_capita = Math.round((gdp_per_capita / filtered_data.length + Number.EPSILON) * 100) / 100;
+            social_support = Math.round((social_support / filtered_data.length + Number.EPSILON) * 100) / 100;
+            life_expectancy = Math.round((life_expectancy / filtered_data.length + Number.EPSILON) * 100) / 100;
+            freedom = Math.round((freedom / filtered_data.length + Number.EPSILON) * 100) / 100;
+            generosity = Math.round((generosity / filtered_data.length + Number.EPSILON) * 100) / 100;
+            corruption = Math.round((corruption / filtered_data.length + Number.EPSILON) * 100) / 100;
 
             var letterData = [
                 {letter: "GDP Per Capita", frequency: gdp_per_capita}, //GDP per capita
