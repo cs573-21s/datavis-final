@@ -226,7 +226,7 @@
         var countriesNorthAmerica = ['Canada', 'Costa Rica', 'United States', 'Mexico', 'Guatemala', 'Panama', 'El Salvador', 'Trinidad & Tobago', 'Nicaragua', 'Jamaica', 'Honduras', 'Dominican Republic', 'Haiti'].sort();
         var countriesSouthAmerica = ['Brazil', 'Chile', 'Uruguay', 'Colombia', 'Argentina', 'Ecuador', 'Bolivia', 'Paraguay', 'Peru', 'Venezuela'].sort();
         var countriesEurope = ['Finland', 'Denmark', 'Norway', 'Iceland', 'Netherlands', 'Switzerland', 'Sweden', 'Austria', 'Luxembourg', 'United Kingdom', 'Ireland', 'Germany', 'Belgium', 'Czech Republic', 'Malta', 'France', 'Spain', 'Italy', 'Slovakia', 'Poland', 'Lithuania', 'Slovenia', 'Kosovo', 'Romania', 'Cyprus', 'Latvia', 'Estonia', 'Hungary', 'Northern Cyprus', 'Portugal', 'Russia', 'Serbia', 'Moldova', 'Montenegro', 'Croatia', 'Bosnia and Herzegovina', 'Belarus', 'Greece', 'North Macedonia', 'Bulgaria', 'Albania', 'Ukraine'].sort();
-        var predefinedGroups = ['Top 50','Bottom 50','Developed','Developing','Transitioning']
+        var predefinedGroups = ['Top 50','Bottom 50','Developed','Developing','Transitioning', 'World']
         var continents = ['North America','South America', 'Asia', 'Europe', 'Africa', 'Oceania']
         var countriesAsia = ['Israel', 'United Arab Emirates', 'Taiwan', 'Saudi Arabia', 'Qatar', 'Singapore', 'Bahrain', 'Uzbekistan', 'Kuwait', 'Thailand', 'South Korea', 'Japan', 'Kazakhstan', 'Pakistan', 'Philippines', 'Tajikistan', 'Hong Kong', 'Turkey', 'Malaysia', 'Mongolia', 'Kyrgyzstan', 'Turkmenistan', 'Azerbaijan', 'Lebanon', 'Indonesia', 'China', 'Vietnam', 'Bhutan', 'Nepal', 'Jordan', 'Laos', 'Cambodia', 'Palestinian Territories', 'Armenia', 'Iran', 'Georgia', 'Bangladesh', 'Iraq', 'Sri Lanka', 'Myanmar', 'India', 'Syria', 'Yemen', 'Afghanistan'].sort();
         var countriesAfrica = ['Mauritius', 'Libya', 'Nigeria', 'Algeria', 'Morocco', 'Cameroon', 'Ghana', 'Ivory Coast', 'Benin', 'Congo (Brazzaville)', 'Gabon', 'South Africa', 'Senegal', 'Somalia', 'Namibia', 'Niger', 'Burkina Faso', 'Guinea', 'Gambia', 'Kenya', 'Mauritania', 'Tunisia', 'Congo (Kinshasa)', 'Mali', 'Sierra Leone', 'Chad', 'Ethiopia', 'Swaziland', 'Uganda', 'Egypt', 'Zambia', 'Togo', 'Liberia', 'Comoros', 'Madagascar', 'Lesotho', 'Burundi', 'Zimbabwe', 'Botswana', 'Malawi', 'Rwanda', 'Tanzania', 'Central African Republic', 'South Sudan'].sort();
@@ -478,6 +478,8 @@
                     finalCountries = finalCountries.concat(countriesAfrica)
                 } else if (countries[i] == "Oceania") {
                     finalCountries = finalCountries.concat(countriesOceania)
+                } else if (countries[i] == "World") {
+                    finalCountries = finalCountries.concat(countriesListRank)
                 } else {
                     finalCountries.push(countries[i])
                 }
