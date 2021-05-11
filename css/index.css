@@ -1,0 +1,356 @@
+html {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+body {
+    padding: 0;
+    overflow-x: hidden;
+    width: 100%;
+    background-color: #242224;
+    margin: 0;
+    height: 1700vh;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+}
+.name{
+    position: fixed;
+    left: 50vw;
+    margin-top: 540px;
+    margin-left: 210px;
+}
+
+.letter-m {
+    margin-top: 100px;
+    width: 250px;
+    left: 50vw;
+    margin-left: -385px;
+    position: fixed;
+}
+
+.letter-R {
+    margin-top: 230px;
+    position: fixed;
+    left: 50vw;
+    margin-left: -357px;
+    width: 150px;
+}
+
+.letter-A {
+    margin-top: 375px;
+    position: fixed;
+    left: 50vw;
+    margin-left: -357px;
+    width: 150px;
+}
+
+.letter-F {
+    width: 170px;
+    margin-top: 460px;
+    position: fixed;
+    left: 50vw;
+    margin-left: -360px;
+}
+
+.letter-V {
+    width: 200px;
+    margin-top: 390px;
+    position: fixed;
+    left: 50vw;
+    margin-left:-210px;
+}
+
+.letter-i {
+    width: 180px;
+    margin-top: 360px;
+    position: fixed;
+    left: 50vw;
+    margin-left:-80px;
+}
+
+.letter-S {
+    width: 170px;
+    margin-top: 390px;
+    position: fixed;
+    left: 50vw;
+    margin-left: 40px;
+}
+
+.processbook{
+    text-align: center;
+    border: 1px solid white;
+    position: fixed;
+    top: 60px;
+    height: 40px;
+    width: 200px;
+    right:60px;
+    line-height: 40px;
+    border-radius: 5px;
+    background-color: gray;
+    z-index:999;
+}
+.processbook a{
+    display: inline-block;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    color: white;
+    z-index:999;
+}
+
+.scrolldown {
+    bottom: 140px;
+    height: 40px;
+    position: fixed;
+    width: 300vw;
+    left: -100vw;
+    font-size: 40px;
+    text-align: center;
+}
+
+.downarrows {
+    bottom: 60px;
+    position: fixed;
+    left: 50vw;
+    width: 70px;
+    margin-left: -35px;
+    height: 26px;
+}
+
+.downarrows img {
+    width: 70px;
+    position: absolute;
+}
+
+.gallary {
+    display: none;
+    top: 10vh;
+    height: 5vh;
+    position: fixed;
+    width: 300vw;
+    left: -100vw;
+    font-size: 40px;
+    text-align: center;
+}
+
+div.carousel{
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid white;
+    background-color: #242224;
+    display: none;
+    position: fixed;
+    width: 60vw;
+    height: 60vh;
+    left: 20vw;
+    top: 20vh;
+    z-index: 888;
+}
+
+div.carousel div.item img{
+    width: 60vw;
+    height: 60vh;
+}
+div.carousel div.item video{
+    width: 40vw;
+    height: 40vh;
+    margin-left: 10vw;
+    margin-top: 10vh;
+}
+div.carousel-indicators li{
+    background-color: #242224 !important;
+}
+
+ .bubbles {
+    top: -100vh;
+    position: fixed;
+    -webkit-transform: translate3d(0, 0, 0);
+    z-index: 5;
+} 
+
+.bubble {
+    width: 140px;
+    height: 140px;
+    opacity: 1;
+    position: absolute;
+}
+
+.bubble.red {
+    background: #a94fe4;
+}
+
+.bubble.blue {
+    background: #68e4f1;
+}
+
+.bubble.yellow {
+    background: #ffe773;
+} 
+div.explaining{
+    display: none;
+    position: fixed;
+    width: 15vw;
+    left:83vw;
+    bottom: 5vh;
+
+}
+div.radialTree{
+    border: 1px solid white;
+    box-shadow: 0px 0px 10px 5px #ccc;
+    position: fixed;
+    left: -50vw;
+    top: 50vh;
+    margin-left: -400px;
+    margin-top: -400px;
+    width: 800px;
+    height: 800px;
+    z-index: 888;
+}
+
+div.soilTest{
+    display: none;
+    background-color:  rgba(36, 34, 36, 1);
+    position: fixed;
+    width: 60vw;
+    height: 60vh;
+    top: 20vh;
+    left: 20vw;
+    z-index: 888;
+}
+
+div.soilTest ul{
+    display: block;
+    list-style: none;
+}
+div.soilTest ul li{
+    display: inline-block;
+    padding: 10px;
+}
+
+div.board{
+    position: absolute;
+    display: none;
+    padding: 5px 10px ;
+    width: auto;
+    height: auto;
+    border: 1px solid black;
+    text-align: center;
+    background: white;
+    color: black;
+    font-size: 3px;
+    border-radius: 4px;
+    z-index: 999;
+}
+
+.radialPie{
+    display: none;
+    position: fixed;
+    width: 60vw;
+    height: 60vh;
+    left: 20vw;
+    top: 20vh;
+    z-index: 888;
+}
+
+.radialPie img{
+    width: 60vw;
+    height: 60vh;
+}
+
+.radialBar{
+    display: none;
+    position: fixed;
+    width: 60vw;
+    height: 60vh;
+    left: 20vw;
+    top: 20vh;
+    z-index: 888;
+}
+.radialBar img{
+    width: 60vw;
+    height: 60vh;
+}
+
+#prism{
+    position: fixed;
+    height: 60vh;
+    width: 60vw;
+    top: 20vh;
+    left: -60vw;
+    /* margin-left: -2000px; */
+    z-index: 999;
+}
+.calender{
+    position: fixed;
+    height: 60vh;
+    width: 60vw;
+    top: 20vh;
+    left: -60vw;
+    z-index: 999;
+}
+
+.zags {
+    top: 100vh;
+    z-index: 100;
+    position: fixed;
+    height: 100vh;
+}
+
+.zag {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+}
+
+#pinkZag {
+    background-image: url(../img/pink-zag.png);
+    background-size: 200px;
+    background-repeat: repeat-x;
+    background-position-y: bottom;
+}
+
+#tealZag {
+    background-image: url(../img/teal-zag.png);
+    background-size: 200px;
+    background-repeat: repeat-x;
+    background-position-y: bottom;
+}
+
+#purpleZag {
+    background-image: url(../img/purple-zag.png);
+    background-size: 200px;
+    background-repeat: repeat-x;
+    background-position-y: bottom;
+}
+
+div.end-bg{
+    background-color: #8d77ed;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 100vh;
+}
+
+img.car{
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    top: 70vh;
+    margin-left: -200px;
+    z-index: 999;
+}
+
+h1.thanks{
+    position: fixed;
+    width: 400px;
+    height: 40px;
+    text-align: center;
+    top: 120vh;
+    left: 50vw;
+    line-height: 40px;
+    margin-left:-200px;
+    z-index: 999;
+}
+
+

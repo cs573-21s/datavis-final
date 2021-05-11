@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/prism.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU=" crossorigin="anonymous"></script>
+    <!-- <script src="js/jquery.js"></script> -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-scrollLock.min.js"></script>
+    <script src="js/lax.js"></script>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+    <script src="js/d3v5.js"></script>
+    <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
+
+
+    <script src="js/d3v3.js"></script>
+
+    <link rel="stylesheet" href="css/calendar_map.css">
+</head>
+
+<body>
+    <div class="name">
+        <div>Stephanie Strom</div>
+        <div>Khulood Alkhudaidi</div>
+        <div>Samantha Woodland</div>
+        <div>Zihao Zhou</div>
+    </div>
+    <img src="img/m_letter.png" class="letter-m" />
+    <img src="img/R_letter.png" class="letter-R" />
+    <img src="img/A_letter.png" class="letter-A" />
+    <img src="img/F_letter.png" class="letter-F" />
+    <img src="img/v_letter.png" class="letter-V" />
+    <img src="img/i_letter.png" class="letter-i" />
+    <img src="img/s_letter.png" class="letter-S" />
+
+    <div class="processbook">
+        <a href="process_book.pdf">processbook</a>
+      </div>
+    <h2 class="scrolldown">scroll down</h2>
+
+    <div class="downarrows">
+        <img src="img/downarrow.png" />
+    </div>
+
+
+    <h2 class="gallary">Gallery</h2>
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="6"></li>
+        </ol>
+
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item item1">
+                <img src="img/Asset 7-80.png" alt="...">
+                <div class="carousel-caption">
+                     Radial Planting Timeline
+                </div>
+            </div>
+            <div class="item item2">
+                <img src="img/Design1.png" alt="...">
+                <div class="carousel-caption">
+                   Radial Assets Visualization
+                </div>
+            </div>
+            <div class="item item3">
+                <img src="img/radialTree.png" alt="...">
+                <div class="carousel-caption">
+                    radialTree
+                </div>
+            </div>
+            <div class="item item4">
+                <img src="img/paralle coordinates.png" alt="...">
+                <div class="carousel-caption">
+                    parallel coordinates
+                </div>
+            </div>
+            <div class="item item5">
+                <img src="img/prism.png" alt="...">
+                <div class="carousel-caption">
+                   prism
+                </div>
+            </div>
+            <div class="item item6">
+                <img src="img/calender.png" alt="...">
+                <div class="carousel-caption">
+                    calendar map
+                </div>
+            </div>
+            <div class="item item7  active">
+                <video src="farmvisvid.mp4" width="320" height="240" controls preload="auto"></video>
+                <div class="carousel-caption">
+                    video
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+
+    <div class="radialTree"></div>
+    <div class="explaining radialTreeExplain">
+        This is a radial tree chart, which has a higher density and can provide overview to users. The chart can be zoomed when user hovers the mouse on the test. The chart also has click interaction.
+    </div>
+
+
+
+
+
+    <div class="bubbles">
+        <div class="bubble blue"></div>
+        <div class="bubble red"></div>
+        <div class="bubble yellow"></div>
+        <div class="bubble red"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble yellow"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble red"></div>
+        <div class="bubble yellow"></div>
+        <div class="bubble red"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble red"></div>
+        <div class="bubble yellow"></div>
+        <div class="bubble red"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble yellow"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble red"></div>
+        <div class="bubble yellow"></div>
+        <div class="bubble red"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble yellow"></div>
+        <div class="bubble blue"></div>
+        <div class="bubble red"></div>
+    </div>
+
+    <div class="wrapper">
+        <div class="soilTest">
+            <div class="select">
+                <span class="title">Areas:</span>
+            </div>
+            <div class="box"></div>
+        </div>
+        <div class="board"></div>
+    </div>
+    <div class="explaining soilTestExplain">
+        This is a parallel coordinates chart. It is designed to compare different areas of the farm to find out the properties of each area. Try to put the mouse on every line or text! (also click the checkbox)
+    </div>
+
+    <div class="radialPie">
+        <img src="img/Design1.png" alt="">
+    </div>
+<div class="explaining radialPieExplain">
+     This visualization design represents asset types in the middle connected to pie charts of the farm's areas at the bottom and a detailed asset list at the top. The asset types are categorized by color throughout. The circles are also encoded by size. When implemented with interaction, hovering over each circle will show all of its connections.
+</div>
+
+    <div class="radialBar">
+        <img src="img/Asset 7-80.png" alt="">
+    </div>
+    <div class="explaining radialBarExplain">
+        This Adobe Illustrator design is a radial planting timeline. Each line represents the planting time of a specific plant; yellow represents the growth period, and green represents the harvest period. Future work will be implementing an interactive visualization with a tooltip that shows plant details in the center.
+    </div>
+
+    <div id="prism" class="prism"></div>
+    <div class="explaining prismExplain">
+            This visualization is a Choropleth map of the farm showing the number of logs by area. Mouseover highlights the area and gives details about the type of logs. There is also zoom functionality for the map.
+    </div>
+
+
+    <div class="calender"></div>
+    <div class="explaining calenderExplain">
+        This visualization is a calendar heat map showing the number of farm logs per day from 2018 to 2020. The days are color-coded depending on the number of logs and and each day shows the exact number of logs by hovering over the day.
+    </div>
+
+
+    <div class="zags">
+        <div id="pinkZag" class="zag"></div>
+        <div id="tealZag" class="zag"></div>
+        <div id="purpleZag" class="zag"></div>
+    </div>
+
+    <div class="end-bg"></div>
+    <img class="car" src="img/car.png" alt="">
+    <h1 class="thanks">Hope you enjoy!</h1>
+
+
+    <script src="js/radialTree.js"></script>
+    <script src="js/soilTest.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/calender.js"></script>
+</body>
+
+</html>

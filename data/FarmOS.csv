@@ -1,0 +1,488 @@
+﻿name,parent
+FarmOS,
+Assets,FarmOS
+Logs,FarmOS
+People,FarmOS
+Plans,FarmOS
+Animals,Assets
+Equipments,Assets
+Plantings,Assets
+Sensors,Assets
+Activities,Logs
+Births,Logs
+Inputs,Logs
+Maintenance,Logs
+Medical,Logs
+Observations,Logs
+Seedings,Logs
+Soil Tests,Logs
+Transplantings,Logs
+Farm Worker,People
+Farm Viewer,People
+Farm Account Admin,People
+Farm Manager,People
+Crop Plans,Plans
+Grazing Plans,Plans
+2020 Broilers Batch #6,Animals
+2020 Layers,Animals
+Abby,Animals
+Annie,Animals
+Banter,Animals
+Barbara,Animals
+Bear,Animals
+Becky,Animals
+Bessie,Animals
+Bounty,Animals
+Brazen,Animals
+Candace,Animals
+Cece,Animals
+Celebrate,Animals
+Celine,Animals
+Chandler,Animals
+Dana,Animals
+Darlin,Animals
+Diamond,Animals
+Dotty,Animals
+Dublin,Animals
+Edith,Animals
+Evie,Animals
+Fawcett,Animals
+Geraldine,Animals
+Ghost,Animals
+Gioia,Animals
+Hailey,Animals
+Harmony,Animals
+Harper,Animals
+Hattie,Animals
+Hazel,Animals
+Hedy,Animals
+Izzy,Animals
+Jack,Animals
+Jada,Animals
+Jenny,Animals
+Jerry,Animals
+Jolene,Animals
+Josie,Animals
+Julep,Animals
+Juneau,Animals
+Juniper,Animals
+Kash,Animals
+Kasper,Animals
+Katie,Animals
+Khaki,Animals
+Kiwi,Animals
+Lila,Animals
+Lisa,Animals
+Lissie,Animals
+Mabel,Animals
+Magnolia,Animals
+Mary Ellen,Animals
+Melinda,Animals
+Merica,Animals
+Mint,Animals
+Mischief,Animals
+Mythical,Animals
+Natty,Animals
+Nay Nay,Animals
+Nelly,Animals
+Nippy,Animals
+Nugget,Animals
+Paige,Animals
+Peanut,Animals
+Peggy,Animals
+Penny,Animals
+Poppy,Animals
+Pretty,Animals
+Quimby,Animals
+Quincy,Animals
+Ranger,Animals
+Rascal,Animals
+Raven,Animals
+Reba,Animals
+River,Animals
+Ruby,Animals
+Sapphire,Animals
+Saturn,Animals
+Sayer,Animals
+Scooby,Animals
+Shauna,Animals
+Sierra,Animals
+Silky,Animals
+Snuggles,Animals
+Sophie,Animals
+Sugar,Animals
+Tamra,Animals
+Tater,Animals
+Tierney,Animals
+Tigger,Animals
+Tina,Animals
+Toots,Animals
+Traveler,Animals
+Tumbler,Animals
+Twitter,Animals
+Vicki,Animals
+Vixen,Animals
+Zelda,Animals
+Zeva,Animals
+Zinga,Animals
+Zoe,Animals
+2020 2019 CIG State Park Forage Trial bed 1 Japanese Millet,Plantings
+2020 2019 CIG State Park Forage Trial bed 2 Boyd Soybean,Plantings
+2020 2019 CIG State Park Forage Trial bed 3 Tap Master Radish,Plantings
+2020 2019 CIG State Park Forage Trial bed 4 Sorghum,Plantings
+2020 2019 CIG State Park Forage Trial bed 5 Birdsfoot Trefoil,Plantings
+2020 75 footer basil aroma 2,Plantings
+2020 75 footer lettuce alkindas,Plantings
+2020 75 footer lettuce green towers,Plantings
+2020 75 footer lettuce lolla rossi,Plantings
+2020 75 footer lettuce mirlo,Plantings
+2020 75 footer lettuce mixed,Plantings
+2020 75 footer lettuce red oakleaf,Plantings
+2020 75 footer outdoors chard rainbow blend,Plantings
+2020 75 footer outdoors flower autumn beauty,Plantings
+2020 75 footer outdoors lettuce buttercrunch,Plantings
+2020 75 footer outdoors lettuce green towers,Plantings
+2020 75 footer outdoors lettuce nancy,Plantings
+2020 75 footer outdoors lettuce outredgeous,Plantings
+2020 75 footer outdoors lettuce parris island,Plantings
+2020 75 footer outdoors lettuce red oakleaf,Plantings
+2020 75 footer outdoors lettuce red salad,Plantings
+2020 75 footer outdoors onion,Plantings
+2020 75 footer outdoors turnips hakurei,Plantings
+2020 75 footer ovation greens,Plantings
+2020 75 footer pak choi,Plantings
+"2020 75 footer tomato brandywine, slicers",Plantings
+"2020 75 footer, Highroller summer plot basil aroma 2",Plantings
+2020 Back Fogg Hayfield Perennials,Plantings
+2020 Banter Hayfield Perennials,Plantings
+2020 Banter Orchard apple tree black oxford,Plantings
+2020 Banter Orchard peach tree red haven,Plantings
+2020 Banter Orchard Plum tree stanley,Plantings
+2020 Birch Point F&V cucumber pickling,Plantings
+2020 Birch Point F&V onion stuttergarter,Plantings
+2020 Birch Point F&V pepper sunrise bell,Plantings
+2020 Birch Point F&V potato yukon gold,Plantings
+2020 Birch Point F&V shallot conservor,Plantings
+2020 Birch Point F&V tomato san marzano,Plantings
+"2020 ed garden carrot yaya, Carrot early Napoli",Plantings
+2020 ed garden carrots romance,Plantings
+2020 ed garden carrots romance,Plantings
+2020 ed garden chard bright lights,Plantings
+2020 ed garden flower calendula,Plantings
+2020 ed garden radish cherry belle,Plantings
+2020 ed garden scallions parade,Plantings
+2020 ed garden scallions parade,Plantings
+2020 ed garden sunflower mammoth,Plantings
+2020 ed garden turnips hakurei,Plantings
+2020 Flower Nomad flower amaranth greens,Plantings
+2020 Flower Nomad flower bupleurum,Plantings
+2020 Flower Nomad flower larkspur,Plantings
+2020 Flower Nomad flower pincushion,Plantings
+2020 Flower Nomad flower rudbeckia triloba,Plantings
+2020 Flower Nomad flower statice,Plantings
+2020 Flower Nomad flower white finch,Plantings
+2020 Front Fogg Hayfield Perennials,Plantings
+2020 garlic,Plantings
+2020 Gloria's Hayfield Perennials,Plantings
+2020 Heart Hayfield Perennials,Plantings
+2020 high roller summer plot basil thai,Plantings
+2020 High roller summer plot cherry tomato sungold,Plantings
+2020 High roller summer plot tomato black prince,Plantings
+2020 High roller summer plot tomatoes valencia,Plantings
+2020 High roller tunnel leek comanche,Plantings
+2020 High roller tunnel lettuce elegants,Plantings
+2020 Highroller plot #2 beets chiogga,Plantings
+2020 Highroller plot #2 beets guardsmark,Plantings
+2020 Highroller plot #2 cherry tomato mixed,Plantings
+2020 Highroller plot #2 radish easter egg,Plantings
+2020 Highroller plot #2 turnips hakurei,Plantings
+2020 Highroller summer plot cherry tomato mixed,Plantings
+2020 Highroller summer plot flower giant coral zinnia,Plantings
+2020 Highroller summer plot flower yellow zinnia,Plantings
+2020 Highroller summer plot lettuce allstar gourmet,Plantings
+2020 Highroller summer plot pak choi,Plantings
+2020 Highroller summer plot tomato black cherry,Plantings
+2020 Highroller summer plot tomato brandywine,Plantings
+2020 Highroller summer plot tomato brandywine,Plantings
+2020 Highroller Winter plot carrots yaya,Plantings
+2020 Highroller Winter plot kale darkibor and scarlet,Plantings
+2020 Highroller Winter plot lettuce alkindas,Plantings
+2020 Highroller Winter plot lettuce nancy,Plantings
+2020 Highroller Winter plot lettuce parris island,Plantings
+2020 Highroller Winter plot lettuce red salad,Plantings
+2020 kuat hut basil rosie,Plantings
+2020 kuat hut flower cress,Plantings
+2020 Mixed orchard peach tree contender,Plantings
+2020 Mixed orchard pear tree asian,Plantings
+2020 Mixed orchard pear tree european,Plantings
+2020 North slope  peas snow,Plantings
+"2020 North Slope beets chiogga, guardsmark",Plantings
+2020 North Slope broccoli belstar,Plantings
+2020 north slope bush beans mixed,Plantings
+2020 North Slope bush beans mixed,Plantings
+2020 North Slope cilantro,Plantings
+2020 North Slope cucumber marketmore,Plantings
+2020 North Slope cucumber pickling,Plantings
+2020 north slope dill,Plantings
+2020 North Slope flower amaranth greens,Plantings
+2020 North Slope flower amaranth greens,Plantings
+2020 North Slope flower autumn beauty,Plantings
+2020 North Slope flower bachelor button,Plantings
+2020 North Slope flower cosmos,Plantings
+2020 North Slope flower cress,Plantings
+2020 North Slope flower giant purple zinnia,Plantings
+2020 North Slope flower peach strawflower,Plantings
+2020 North Slope flower pincushion scabiosa,Plantings
+2020 North Slope flower strawflower,Plantings
+2020 North Slope flower velvet queen,Plantings
+2020 North Slope flower white finch,Plantings
+2020 North Slope flower zinnias mixed,Plantings
+2020 North Slope flowers cosmos,Plantings
+2020 North Slope Kale curly green,Plantings
+2020 North Slope lettuce dragoon,Plantings
+2020 North Slope lettuce ezbruke,Plantings
+2020 North Slope lettuce flashy troutback,Plantings
+2020 North Slope lettuce green salad bowl,Plantings
+2020 North Slope lettuce marciano,Plantings
+2020 North Slope lettuce marciano,Plantings
+2020 North Slope sweet potato covington,Plantings
+2020 North Slope tomatoes mixed,Plantings
+2020 North Slope turnips purple top,Plantings
+2020 outside 75 footer Arugula,Plantings
+2020 Perennial Patch  Beach Plum,Plantings
+2020 Perennial Patch  Beach Plum,Plantings
+2020 Poor drainage beets chioggia,Plantings
+2020 Poor drainage beets mixed,Plantings
+2020 Poor drainage bush bean dragons tongue,Plantings
+2020 poor drainage bush bean ez pick,Plantings
+2020 Poor drainage carrot romance,Plantings
+2020 Poor drainage carrot romance,Plantings
+2020 Poor drainage Cilantro Santo,Plantings
+2020 Poor Drainage Kale Mixed,Plantings
+2020 Poor drainage lettuce ezbruke,Plantings
+2020 Poor drainage lettuce mixed,Plantings
+2020 Poor drainage lettuce parris island,Plantings
+2020 Poor Drainage lettuce red oakleaf,Plantings
+2020 Poor drainage peas snow,Plantings
+2020 Poor drainage summer squash yellow crookneck,Plantings
+2020 Poor drainage Tomatillo verde,Plantings
+2020 Poor drainage winter squash butternut,Plantings
+2020 Poor drainage winter squash delicata,Plantings
+2020 poor drainage zucchini dark green,Plantings
+2020 Propagation house basil thai,Plantings
+2020 Propagation house beets boro,Plantings
+2020 Propagation house cauliflower graffiti,Plantings
+2020 Propagation house chard bright lights,Plantings
+2020 Propagation house Cilantro Santo,Plantings
+2020 Propagation house Cilantro Santo,Plantings
+2020 Propagation house cucumber marketmore,Plantings
+2020 Propagation house cucumber national pickling,Plantings
+2020 Propagation house flower amaranth greens,Plantings
+2020 Propagation house flower amaranth greens,Plantings
+2020 Propagation house flower bachelor button,Plantings
+2020 Propagation house flower bachelor button,Plantings
+2020 Propagation House flower calendula,Plantings
+2020 Propagation house flower calendula,Plantings
+2020 Propagation house flower calendula,Plantings
+2020 Propagation house flower chinese forget me not,Plantings
+2020 Propagation house flower giant marigold,Plantings
+2020 Propagation house flower giant marigold,Plantings
+2020 Propagation house flower giant purple zinnia,Plantings
+2020 Propagation house flower globe amaranth,Plantings
+2020 Propagation house flower gomphrena,Plantings
+2020 Propagation house flower pincushion scabiosa,Plantings
+2020 Propagation house flower pincushion scabiosa,Plantings
+2020 Propagation house flower pincushion scabiosa,Plantings
+2020 Propagation house flower rudbeckia gloriosa,Plantings
+2020 Propagation house flower rudbeckia triloba,Plantings
+2020 Propagation house flower rudbeckia triloba,Plantings
+2020 Propagation house flower rudbeckia triloba,Plantings
+2020 Propagation house flower sea oats,Plantings
+2020 Propagation house flower snapdragon,Plantings
+2020 Propagation house flower sun ball,Plantings
+2020 Propagation house flower white finch,Plantings
+2020 Propagation house flower white finch,Plantings
+2020 Propagation House leek comanche,Plantings
+2020 Propagation house leeks takrima,Plantings
+2020 Propagation house microgreens golden frills,Plantings
+2020 Propagation house microgreens golden frills,Plantings
+2020 Propagation house microgreens golden frills,Plantings
+2020 Propagation house microgreens mild mix,Plantings
+2020 Propagation house microgreens mild mix,Plantings
+2020 Propagation house microgreens mild mix,Plantings
+2020 Propagation house microgreens mustard greens,Plantings
+2020 Propagation house microgreens radish,Plantings
+2020 Propagation house microgreens radish,Plantings
+2020 Propagation house microgreens radish,Plantings
+2020 Propagation house microgreens radish,Plantings
+2020 Propagation house microgreens radish,Plantings
+2020 Propagation house microgreens ruby streaks,Plantings
+2020 Propagation house microgreens ruby streaks,Plantings
+2020 Propagation house microgreens ruby streaks,Plantings
+2020 Propagation house onion cabernet,Plantings
+2020 Propagation house parsley giant of italy,Plantings
+2020 Propagation house scallions parade,Plantings
+2020 Propagation house shallots matador,Plantings
+2020 Propagation house sunflower mix,Plantings
+2020 Propagation house sunflower moulin rouge,Plantings
+2020 Propagation house sunflower ring of fire,Plantings
+2020 Propagation house sunflower soraya,Plantings
+2020 Rickter Hayfield Perennials,Plantings
+2020 Ropes Hayfield Perennials,Plantings
+2020 Smith Hayfield Perennials,Plantings
+2020 The L bush bean mixed,Plantings
+2020 The L potato kennebec,Plantings
+2020 The L potato magic molly,Plantings
+2020 The L potato norland red,Plantings
+2020 top lettuce ezbruke,Plantings
+2020 Top of Hill beets chioggia,Plantings
+2020 Top of Hill beets red,Plantings
+2020 Top of Hill beets red,Plantings
+2020 Top of Hill beets red,Plantings
+2020 Top of Hill beets touchstone gold,Plantings
+2020 Top of Hill cabbage green,Plantings
+2020 Top of Hill cabbage red express,Plantings
+2020 Top of Hill Carrots early Napoli,Plantings
+2020 Top of Hill carrots purple haze,Plantings
+2020 Top of Hill carrots yellowstone,Plantings
+2020 Top of Hill chard rainbow blend,Plantings
+2020 top of hill cilantro leisure,Plantings
+2020 Top of Hill Cilantro Santo,Plantings
+2020 Top of Hill lettuce alkindas,Plantings
+2020 Top of Hill lettuce alkindas,Plantings
+2020 Top of Hill lettuce alkindas,Plantings
+2020 Top of Hill lettuce ezbruke,Plantings
+2020 Top of Hill lettuce ezbruke,Plantings
+2020 Top of Hill lettuce lolla rossi,Plantings
+2020 top of hill lettuce lolla rossi,Plantings
+2020 Top of Hill lettuce mirlo,Plantings
+2020 Top of Hill lettuce nancy,Plantings
+2020 Top of Hill lettuce nancy,Plantings
+2020 Top of Hill lettuce nancy,Plantings
+2020 Top of Hill lettuce pariss island,Plantings
+2020 Top of Hill lettuce parris island,Plantings
+2020 Top of Hill lettuce red cross,Plantings
+2020 Top of Hill onion alisa craig,Plantings
+2020 Top of Hill onion new york early,Plantings
+2020 Top of Hill parsley,Plantings
+2020 Top of Hill squash crookneck,Plantings
+2020 Top of Hill squash spaghetti,Plantings
+2020 Top of Hill summer squash pattypan,Plantings
+2020 Top of Hill summer squash yellowfin,Plantings
+2020 Top of Hill winter squash acorn,Plantings
+2020 Top of Hill winter squash acorn,Plantings
+2020 Top of Hill winter squash butternut,Plantings
+2020 Top of Hill winter squash delicata,Plantings
+2020 Top of Hill winter squash delicata,Plantings
+2020 Top of Hill winter squash kabocha,Plantings
+2020 Top of Hill winter squash sweet meat,Plantings
+"2020 Top of Hill, North Slope peas sugar snap",Plantings
+2020 Ulrichson Hayfield Perennials,Plantings
+2020 Vivi's Hayfield Perennials,Plantings
+2020 Ward Hayfield Perennials,Plantings
+2020 Watkins Hayfield Perennials,Plantings
+2020 Wedding Hayfield Perennials,Plantings
+2020 West Bay Hayfield Perennials,Plantings
+2020 Wishcamper Hayfield Perennials,Plantings
+2021 Field 1 Arugula,Plantings
+carrot 8/5/20 pinot_noir,Plantings
+potato 8/14/20 caco,Plantings
+Bale wrapper 3 pt hitch 30 in roll,Equipments
+CHUCK WAGON 4 wheel hay ride wagon,Equipments
+Cultivator (6ft),Equipments
+Ford 3600,Equipments
+Ford 5600,Equipments
+Ford Dump Truck,Equipments
+Hay Ride Wagon,Equipments
+JD 5510,Equipments
+JD 6125,Equipments
+JD Hydra Push 450 Rear Discharge Spreader,Equipments
+JD MX7 7 ft Rotary Cutter,Equipments
+JD Square Baler,Equipments
+Kuhn Rotary Rake,Equipments
+"Kuhn Rototiller 6""",Equipments
+Kuhn Small Side Slinger,Equipments
+Land Pride PD35 3pt Post Hole Auger,Equipments
+mcGann round bale hauler trailer wooden deck,Equipments
+Moldboard Plow,Equipments
+NH 648 Round Baler Silage Special,Equipments
+Seeder (Culti-Packer/Grass Seeder),Equipments
+stafix fence charger 12 joule,Equipments
+stafix fence charger 18 joule,Equipments
+Thomas Wagon,Equipments
+a2_esp32_001,Sensors
+Artisan's Circuitpython Test,Sensors
+Artisan's Depth Test EPA,Sensors
+Campbell data logger,Sensors
+Campbell data logger w/ complete sensor data,Sensors
+Don's Co-Deployment Sensor 1,Sensors
+Don's Co-Deployment Sensor 2,Sensors
+dwb_gateway_a,Sensors
+Gund Field,Sensors
+High Roller Humidity,Sensors
+High Roller temperature,Sensors
+huzzah_001,Sensors
+huzzah_002,Sensors
+Knuth_Test_One,Sensors
+Nuvu BR,Sensors
+Quahog A2 Test One,Sensors
+Quahog Cellular Test,Sensors
+Quahog Test Boot One,Sensors
+quahog_001,Sensors
+quahog_elec_fence,Sensors
+quahog_tuckaway_001,Sensors
+quahog_WNF_001,Sensors
+satelllite monitor,Sensors
+SB_ESP32,Sensors
+SB_ESP32_001,Sensors
+SHCC2018 Quahog One,Sensors
+SHCC2018 Quahog Two,Sensors
+Test,Sensors
+Test Sensor,Sensors
+test_quahog_post,Sensors
+UVM Test One,Sensors
+Mike,Farm Manager
+Nell Campbell,Farm Manager
+OpenTEAM,Farm Manager
+Rbryan,Farm Manager
+Rick,Farm Manager
+RJ,Farm Manager
+Simone Schenkel,Farm Manager
+SJ,Farm Manager
+teenag,Farm Manager
+Tom Ianello,Farm Manager
+Tom-Interns,Farm Manager
+Worth,Farm Manager
+Wsssladies,Farm Manager
+Alix,Farm Manager
+Ben,Farm Manager
+Ben Gotschall,Farm Manager
+Britt,Farm Manager
+chrowe,Farm Manager
+Cora Kerber,Farm Manager
+David,Farm Manager
+Don,Farm Manager
+Dorn,Farm Manager
+Eliza,Farm Manager
+Haden Gooch,Farm Manager
+Jeff Herrick,Farm Manager
+jgrady,Farm Manager
+Josh Harlan,Farm Manager
+Katherine,Farm Manager
+Kyle,Farm Manager
+Leah Puro,Farm Manager
+madeleineking,Farm Manager
+Matt,Farm Manager
+Abigial Smith,Farm Worker
+Corinne,Farm Worker
+Josh Harlan,Farm Worker
+Kelly O'Connell,Farm Worker
+Tierney,Farm Worker
+Stephanie Strom,Farm Viewer
+Sarah Littlefield,Farm Viewer
+Nick Honegger,Farm Viewer
+Dan_Kane,Farm Viewer
+Jeremy,Farm Viewer
+Lauren Robertson,Farm Viewer
+Dorn,Farm Account Admin
+Leah Puro,Farm Account Admin
