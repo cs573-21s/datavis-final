@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>CS573 Final Project</title>
-    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="js/touche-min.js" charset="utf-8"></script>
     <script src="js/zepto.min.js" charset="utf-8"></script>
@@ -39,7 +39,7 @@
             <div class="middle">
                 <div class="middle_left">
                     <h3>AVERAGE SCORE</h3>
-                    <div class="score">ADD COUNTRIES</div>
+                    <div class="score">ADD<br>COUNTRIES</div>
                     <div id="left_vis">
 
                     </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="middle_right">
                     <h3>AVERAGE SCORE</h3>
-                    <div class="score">ADD COUNTRIES</div>
+                    <div class="score">ADD<br>COUNTRIES</div>
                     <div id="right_vis">
                         
                     </div>
@@ -369,11 +369,11 @@
             $("#compare_toggle_button").click(async function() {
                 if (comparisonType == "separate") {
                     comparisonType = 'together';
-                    $('#compare_toggle_button').css("background-image", "url('../../img/expand.png')");  
+                    $('#compare_toggle_button').css("background-image", "url('img/expand.png')");  
 
                 } else {
                     comparisonType = 'separate';
-                    $('#compare_toggle_button').css("background-image", "url('../../img/combine.png')");  
+                    $('#compare_toggle_button').css("background-image", "url('img/combine.png')");  
                 }
 
                 generateVis(data)
@@ -494,13 +494,15 @@
             leftData = generateDataset(data, actualLeftCountries)
 
             if (isNaN(rightData.score)) {
-                $(".middle_right .score").html("ADD COUNTRIES");
+                $(".middle_right .score").html("ADD<br>COUNTRIES");
+                d3.select("#right_vis svg").remove();
             } else {
                 $(".middle_right .score").html(rightData.score.toString());
             }
 
             if (isNaN(leftData.score)) {
-                $(".middle_left .score").html("ADD COUNTRIES");
+                $(".middle_left .score").html("ADD<br>COUNTRIES");
+                d3.select("#left_vis svg").remove();
             } else {
                 $(".middle_left .score").html(leftData.score.toString());
             }
