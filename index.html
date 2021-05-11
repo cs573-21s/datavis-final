@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>CS 573: Final Project</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+        <script src="./script.js"></script>
+    </head>
+    <body>
+        <div id="overlay"></div>
+        <div id="start">
+            <h1>School Beats</h1>
+            <p style="margin: -12%;">View Our <a href="process_book.pdf">Process Book</a>!</p>
+            <button id="init">Start</button>
+        </div>
+        <div id="content">
+            <div id="filter-containers">
+                <select class="dropdowns" id="conference"></select>
+                <select class="dropdowns" id="tropes"></select>
+            </div>
+            <div class="map-container">
+                <svg id="vis" width="1500" height="700"></svg>
+                <img id="sound" src="img/on.png">
+            </div>
+        </div>
+        <div class="footer-controller">
+            <p>You can also see our Process Book <a href="process_book.pdf">here</a> if you forgot before :)</p>
+            <button id="video-btn"> Show Video </button>
+        </div>
+        <div id="vid">
+            <iframe width="1200" height="662.5" src="https://www.youtube.com/embed/NtHvdB7kLWo" title="Short Video Explanation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </body>
+</html>
