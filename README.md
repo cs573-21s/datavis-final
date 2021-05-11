@@ -3,7 +3,7 @@ Final Project - Interactive Data Visualization
 Ashish Gurung, Aaron Haim, Gabrielle Acquista, Tahrifa Lisa
 
 
-Final Project - Overview
+Final Project - Prelude
 ---
  [Website link](https://ashishjumbo.github.io/datavis-final/)
 
@@ -23,5 +23,6 @@ Figure 3 shows a screenshot of the [trend analysis](https://public.flourish.stud
 ![flourish](/img/flourish2.png)
 Figure 3: Visual representation of us exploring the ability to extend the pre-existing work.
 
-
-**Note: As you can see, we found our attempts to extend the visualization to be somewhat limiting. Hence we decided to pivot and develop a visualization that facilitates the ability to ask intuitive questions about the dataset instead of our current conundrum where we are trying to figure out what to do with the dataset next. To do this, we analyzed various approaches to contextualizing the dataset and the ability to interpret the data directly and instantaneously. To achieve this, we decided to implement the dataset on the map as the geographical location of the schools would provide both political and geographical context to the schools. The [process book](process_book.pdf) details our design desisions and the [working deom](https://ashishjumbo.github.io/datavis-final/) shows a minimal viable product of our visualization.**
+Process Book
+----------
+As you can see, we found our attempts to extend the visualization to be somewhat limiting. Hence we decided to pivot and develop a visualization that facilitates the ability to ask intuitive questions about the dataset instead of our current conundrum where we are trying to figure out what to do with the dataset next. To do this, we analyzed various approaches to contextualizing the dataset and the ability to interpret the data directly and instantaneously. To achieve this, we decided to implement the dataset on the map as the geographical location of the schools would provide both political and geographical context to the schools. The ***[process book](process_book.pdf)*** details our design desisions and the ***[working deom](https://ashishjumbo.github.io/datavis-final/)*** shows a minimal viable product of our visualization.
