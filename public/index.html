@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CS 573 / Final Project</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- load stylesheets -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/dc@4/dist/style/dc.css" />
+
+    <!-- load crossfilter / dc.js -->
+    <script src="https://unpkg.com/d3@5/dist/d3.js"></script>
+    <script src="https://unpkg.com/crossfilter2@1.5/crossfilter.js"></script>
+    <script src="https://unpkg.com/dc@4/dist/dc.js"></script>
+    <script src="https://rawgit.com/crossfilter/reductio/master/reductio.js"></script>
+      <script src="https://npmcdn.com/universe@latest/universe.js"></script>
+
+      <!-- load the d3.js library / map stuff -->
+		<!-- <script src="https://d3js.org/d3.v6.min.js"></script> -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+    <script src="https://unpkg.com/topojson@3"></script>
+
+    <!-- load Ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+      setTimeout(function () {
+        $(".landing-sides").fadeOut("slow");
+      }, 4000);
+
+      setTimeout(function () {
+        $(".landing-nav").fadeIn("slow");
+      }, 3500);
+
+    </script>
+  </head>
+  <body>
+    <section class="landing-container" id="landing">
+      <div class="landing-nav">
+        <div class="company">
+          <img src="graphsGalore.png" />Geospatial Macronutrients
+        </div>
+      </div>
+
+      <div class="landing-map">
+        <div id="diet-chart" style="position: relative;">
+					<div class="tooltipBar">
+						<div class="headerBar"></div>
+						<div class="detail-tip">
+							<div class="detail--row">
+                <i class="material-icons">show_chart</i>
+								<span class="detailBarTitle"></span>
+								<span class="majorBar"></span>
+							</div>
+						</div>
+					</div>
+          <strong>Diet (share)</strong>
+					<div>
+						<label for="ordering-select-input">Order by: </label>
+						<select id="ordering-select-input" name="ordering">
+							<option value="animalProtein" selected>Animal Protein</option>
+							<option value="plantProtein">Plant Protein</option>
+							<option value="carbohydrates">Carbohydrates</option>
+							<option value="fat">Fat</option>
+						</select>
+					</div>
+        </div>
+        
+        <div id="map-chart" style="position: relative">
+          <div class="map-subtitle--desc">
+            <strong>Globe</strong><br />
+            <span>BMI (body-mass index) in different countries</span> 
+          </div>
+
+					<div class="tooltip">
+						<div class="header"></div>
+<!--                        <div class="detail-tip">-->
+<!--                            <div class="detail&#45;&#45;row">-->
+<!--                                <i class="material-icons">show_chart</i>-->
+<!--                                <span class="detailTitle"></span>-->
+<!--                                <span class="major"></span>-->
+<!--                            </div>-->
+                        </div>
+					</div>
+        </div>
+
+      </div>
+
+      <div id="year-chart">
+          <strong> Timeline</strong>
+          <span>Parse through time</span> 
+
+      </div>
+
+
+
+      <div class="landing-sides">
+        <div class="item landing-jumbo">
+          <div class="company"><img src="graphsGalore.png" />Final Project</div>
+          <div class="title">Geospatial Macronutrients</div>
+          <div class="subtitle">
+            Exploring Time Series Macronutrient Data Across the Globe
+          </div>
+        </div>
+        <div class="landing-cover">
+          <img src="undra.svg" />
+        </div>
+      </div>
+    </section>
+
+
+    <script>
+				let dietOrder = 'animalProtein';
+				let dietChart;
+
+				function reorderDietChart() {
+					dietChart.ordering(d => d.value[dietOrder]);
+					dietChart.redraw();
+				}
+
+				function dietOrderChange(event) {
+					dietOrder = event.target.value;
+					reorderDietChart();
+				}
+
+				document.querySelector('select[name=ordering]').addEventListener('change', dietOrderChange);
+
+        // Load Map
+
+        var width = "100%", height = "100%";
+
+        var projection = d3
+          .geoMercator()
+          .center([-90, 45])
+          .scale(155)
+          .rotate([0, 0]);
+
+        var svg = d3
+          .select("div.landing-map")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+
+          .attr("preserveAspectRatio", "xMinYMin meet");
+
+        var path = d3.geoPath().projection(projection);
+
+        var tooltip = d3.select("div.tooltip");
+        tooltip.classed("hidden", true).style("hidden", true);
+        var header = d3.select("div.header");
+        // var headerTitle = d3.select(".detailTitle");
+        // var headerValue = d3.select(".major");
+
+        var tooltipBar = d3.select("div.tooltipBar");
+        tooltipBar.classed("hidden", true).style("hidden", true);
+        var headerBar = d3.select("div.headerBar");
+        var headerBarTitle = d3.select(".detailBarTitle");
+        var headerBarValue = d3.select(".majorBar");
+
+        var toolTipSpanMajor = d3.select("div.detail--row span.major");
+        var toolTipSpanMinor = d3.select("div.detail--row span.minor");
+        var g = svg.append("g");
+  
+     
+        // Load Map Events
+  
+        let mouseOver = function (d) {
+          d3.selectAll(".path").transition()
+          .duration(200)
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style("opacity", 0.4);
+
+            // .style("opacity", 1);
+            // .style("fill", "#004673");
+  
+          header.html(d.name);
+  
+          return tooltip.style("hidden", false);
+        };
+  
+        let mouseMove = function (event, d) {
+          const [x, y] = d3.mouse(this);
+  
+          header.html(event.name);
+          tooltip
+            .classed("hidden", false)
+            .style("top", y + "px")
+            .style("left", x + 10 + "px");
+        };
+  
+        let mouseLeave = function (d) {
+          d3.selectAll(".path").transition().duration(200);
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .style("opacity", 1);
+            // .style("fill", "#2c2f31");
+  
+          header.html("");
+          tooltip.classed("hidden", true).style("hidden", true);
+        };
+  
+        let mouseOverBar = function (d) {
+          d3.selectAll(".path").transition().duration(200).style("opacity", 0.5);
+          headerBar.html(d.x);
+          headerBarTitle.html(d.layer === 'animalProtein' ? 'Animal Protein' : d.layer);
+          headerBarValue.html(d.y.toFixed(1) + '%');
+  
+          return tooltipBar.classed("hidden", false);
+        };
+  
+        let mouseMoveBar = function (event, d) {
+          const [x, y] = d3.mouse(this);
+  
+          headerBar.html(event.x);
+          headerBarTitle.html(event.layer === 'animalProtein' ? 'Animal Protein' : event.layer);
+          headerBarValue.html(event.y.toFixed(1) + '%');
+          tooltipBar
+            .classed("hidden", false)
+            .style("top", y + 40 + "px")
+            .style("left", x + 40 + "px");
+        };
+  
+        let mouseLeaveBar = function (d) {
+          d3.selectAll(".path").transition().duration(200);
+          headerBar.html("");
+          tooltipBar.classed("hidden", true);
+        };
+  
+        // load and display the World
+        d3.csv("world-country-names.csv").then(function (names) {
+          d3.json("world-110m2.json").then(function (topology) {
+            let countries1 = topojson.feature(
+              topology,
+              topology.objects.countries
+            ).features;
+            let countries = countries1.filter(function (d) {
+              return names.some(function (n) {
+                if (d.id == n.id) return (d.name = n.name);
+              });
+            });
+
+            d3.csv("overweight.csv").then(function (overweight_rates) {
+                let key = "Prevalence of overweight adults (both sexes) - WHO (2019)"
+                d3.csv("macronutrient-data.csv").then(function (data) {
+                    data.forEach(x => {
+                        x.country = x.entity;
+                        x.caloriesFromAnimalProtein = +x.caloriesFromAnimalProtein;
+                        x.caloriesFromCarbohydrates = +x.caloriesFromCarbohydrates;
+                        x.caloriesFromFat = +x.caloriesFromFat;
+                        x.caloriesFromPlantProtein = +x.caloriesFromPlantProtein;
+                        x.caloriesFromProtein = +x.caloriesFromProtein;
+                        x.carbohydratesSupply = +x.carbohydratesSupply
+                        x.fatSupply = +x.fatSupply;
+                        x.proteinSupply = +x.proteinSupply;
+                        x.proteinSupplyOfAnimalOrigin = +x.proteinSupplyOfAnimalOrigin;
+                        x.proteinSupplyOfPlantOrigin = +x.proteinSupplyOfPlantOrigin;
+                        x.shareOfCaloriesFromAnimalProtein = +x.shareOfCaloriesFromAnimalProtein;
+                        x.shareOfCaloriesFromCarbohydrates = +x.shareOfCaloriesFromCarbohydrates;
+                        x.shareOfCaloriesFromFat = +x.shareOfCaloriesFromFat;
+                        x.shareOfCaloriesFromPlantProtein = +x.shareOfCaloriesFromPlantProtein;
+                        x.shareOfCaloriesFromProtein = +x.shareOfCaloriesFromProtein;
+                        x.year = +x.year;
+                        x.overweight = overweight_rates.find(element => element.Entity == x.country && +element.Year == x.year) ?
+                            +overweight_rates.find(element => element.Entity == x.country && +element.Year == x.year)[key]
+                            : 0;
+                    });
+                    let countryNames = countries.map(function (c) {
+                        return c.name;
+                    });
+                    data = data.filter(function (d) {
+                        return countryNames.includes(d.country);
+                    });
+                    displayVis(data, countries);
+                });
+            });
+          });
+        });
+
+        function displayVis(data, countries) {
+          const ndx = crossfilter(data);
+          // const all = ndx.groupAll();
+
+          const countryDimension = ndx.dimension(d => d.country);
+          const countryDimension2 = ndx.dimension(d => d.country);
+          const countryGroup = countryDimension2.group();
+          const supplyChartGroup = countryDimension.group().reduce(
+                  /* callback for when data is added to the current filter results */
+                  (p, v) => {
+                    ++p.count;
+                    p.sumAnimalProtein += v.shareOfCaloriesFromAnimalProtein;
+                    p.animalProtein = p.sumAnimalProtein / p.count;
+                    p.sumPlantProtein += v.shareOfCaloriesFromPlantProtein;
+                    p.plantProtein = p.sumPlantProtein / p.count;
+                    p.sumCarbohydrates += v.shareOfCaloriesFromCarbohydrates;
+                    p.carbohydrates = p.sumCarbohydrates / p.count;
+                    p.sumFat += v.shareOfCaloriesFromFat;
+                    p.fat = p.sumFat / p.count;
+                    p.sumOverweight += v.overweight;
+                    p.overweight = p.sumOverweight / p.count;
+                    return p;
+                  },
+                  /* callback for when data is removed from the current filter results */
+                  (p, v) => {
+                    --p.count;
+                    p.sumAnimalProtein -= v.shareOfCaloriesFromAnimalProtein;
+                    p.animalProtein = p.count ? p.sumAnimalProtein / p.count : 0;
+                    p.sumPlantProtein -= v.shareOfCaloriesFromPlantProtein;
+                    p.plantProtein = p.count ? p.sumPlantProtein / p.count : 0;
+                    p.sumCarbohydrates -= v.shareOfCaloriesFromCarbohydrates;
+                    p.carbohydrates = p.count ? p.sumCarbohydrates / p.count  : 0;
+                    p.sumFat -= v.shareOfCaloriesFromFat;
+                    p.fat = p.count ? p.sumFat / p.count : 0;
+                    p.sumOverweight -= v.overweight;
+                    p.overweight = p.count ? p.sumOverweight / p.count : 0;
+                    return p;
+                  },
+                  /* initialize p */
+                  () => ({
+                    count: 0,
+                    animalProtein: 0,
+                    carbohydrates: 0,
+                    fat: 0,
+                    planetProtein: 0,
+                    overweight: 0,
+                    sumAnimalProtein: 0,
+                    sumPlantProtein: 0,
+                    sumCarbohydrates: 0,
+                    sumFat: 0,
+                    overweightSum: 0,
+                  })
+          );
+
+          const overweightGroup = countryDimension2.group().reduce(
+              /* callback for when data is added to the current filter results */
+              (p, v) => {
+                  if (v.overweight > 0) {
+                      ++p.count;
+                      p.sumOverweight += v.overweight;
+                      p.overweight = p.sumOverweight / p.count;
+                  }
+                  return p;
+              },
+              /* callback for when data is removed from the current filter results */
+              (p, v) => {
+                  if (v.overweight > 0) {
+                      --p.count;
+                      p.sumOverweight -= v.overweight;
+                      p.overweight = p.count ? p.sumOverweight / p.count : 0;
+                  }
+                  return p;
+              },
+              /* initialize p */
+              () => ({
+                  count: 0,
+                  overweight: 0,
+                  sumOverweight: 0,
+              })
+          );
+
+          const supplChartGroup2 = remove_empty_bins(supplyChartGroup);
+          console.log(overweightGroup);
+
+          dietChart = dc.barChart('#diet-chart')
+                  .width(1000)
+                  .height(600)
+                  .dimension(countryDimension)
+                  .group(supplChartGroup2, "animalProtein")
+                  .valueAccessor(function(d) { return d.value.animalProtein; })
+                  .x(d3.scaleOrdinal().domain(supplChartGroup2))
+									.ordinalColors(['#004673', '#1262A1', '#18C2E6', '#8CE6FF'])
+                  .stack(supplChartGroup2,"Plant Protein", function(d) {
+                    return d.value.plantProtein; })
+									// this is counting animal protein twice?
+                  // .stack(supplChartGroup2,"Animal Protein", function(d) {
+                  //   return d.value.animalProtein; })
+                  .stack(supplChartGroup2,"Carbohydrates", function(d) {
+                    return d.value.carbohydrates; })
+                  .stack(supplChartGroup2,"Fat", function(d) {
+                    return d.value.fat; })
+                  .ordering(function(d) {
+                    return d.value[dietOrder]; })
+                  .y(d3.scaleLinear().domain([0, 100]))
+                  .elasticX(true)
+                  .xUnits(dc.units.ordinal)
+                  .renderLabel(true)
+									.renderTitle(false)
+                  .label(p => p.key)
+                  .transitionDuration(500)
+									// .on('filtered', function(e, country) {
+										// countryDimension2.filter(country)
+									// })
+					dietChart.xAxis().tickFormat(v => '').ticks(0);
+          dietChart.margins().bottom = 100;
+
+          dietChart.legend(new dc.Legend().y(520).x(880).itemHeight(13).gap(5));
+
+            var colors = [
+                '#011526',
+                '#566873',
+                '#183140',
+                '#8BBBD9',
+                '#8BE7FF',
+            ];
+            colors = colors.reverse();
+            var colorScaleInternal = d3.scaleQuantile()
+                .domain([0, 70])
+                .range(colors);
+            var colorScale = function(value) {
+                return colorScaleInternal(value);
+            };
+
+          const countryChart = dc.geoChoroplethChart('#map-chart')
+                  .width(1000)
+                  .height(600)
+                  .dimension(countryDimension2)
+                  .projection(d3.geoMercator()
+                          .scale(170)
+                          .translate([500, 300])
+                          .precision(.1))
+                  .group(overweightGroup)
+                  .valueAccessor(p => {
+                      return p.value ? p.value.overweight : 0;
+                  })
+                  .colors(colorScale)
+                  .overlayGeoJson(countries, "country", function (d) {
+                    return d.name;
+                  });
+
+
+          const yearDimension = ndx.dimension(d => d.year);
+          const yearGroup = yearDimension.group();
+
+          const yearChart = dc.barChart('#year-chart')
+                  .width(2000)
+                  .height(200)
+                  .dimension(yearDimension)
+                  .group(yearGroup)
+                  .gap(1)
+                  .x(d3.scaleLinear().domain([1961, 2013]));
+                  yearChart.yAxis().tickFormat(v => '').ticks(0)
+
+					yearChart.xAxis().ticks(10, ".4")
+
+          dc.renderAll();
+					
+					d3.selectAll("g.country > path")
+              .on("mouseover", mouseOver)
+              .on("mousemove", mouseMove)
+              .on("mouseleave", mouseLeave);
+					d3.selectAll("g.stack > rect")
+              .on("mouseover", mouseOverBar)
+              .on("mousemove", mouseMoveBar)
+              .on("mouseleave", mouseLeaveBar);
+        }
+
+        function remove_empty_bins(source_group) {
+          return {
+            all:function () {
+              return source_group.all().filter(function(d) {
+                //return Math.abs(d.value) > 0.00001; // if using floating-point numbers
+                return d.value !== 0; // if integers only
+              });
+            }
+          };
+        }
+      </script>
+  </body>
+</html>
