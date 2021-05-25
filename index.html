@@ -1,0 +1,177 @@
+<html>
+
+<head>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="charts">
+        <div id="streamChart"> Stream Chart</div>
+        <div class="scatterPlots">
+            Scatter Plots
+        </div>
+        <div id="list"> List of Songs </div>
+    </div>
+</body>
+
+</html>
+
+
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="//alexmacy.github.io/crossfilter/crossfilter.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<script>
+    console.log(d3);
+
+    // Getting genres for key
+    var keys = [];
+
+    // Load data in
+    d3.csv('top10s.csv', function (er, data) {
+        data.forEach(function (d) {
+            d["title"] = d["title"]
+            d["artist"] = d["artist"]
+            d["genre"] = d["top genre"]
+            d["year"] = +d["year"]
+            d["bpm"] = +d["bpm"]
+            d["nrgy"] = +d["nrgy"]
+            d["dnce"] = +d["dnce"]
+            d["db"] = +d["db"]
+            d["live"] = +d["live"]
+            d["val"] = +d["val"]
+            d["dur"] = +d["dur"]
+            d["acous"] = +d["acous"]
+            d["spch"] = +d["spch"]
+            d["pop"] = +d["pop"]
+
+            if (!keys.includes(d["top genre"])) {
+                keys.push(d["top genre"])
+            }
+        })
+
+        console.log(keys)
+
+        // Crossfilter and organizing data
+        var songs = crossfilter(data),
+            year = songs.dimension(function (d) { return d.year; });
+
+        var orgData = [],
+            i = 0;          // i represents the year
+
+        for (i; i < 10; i++) {
+            var filteredYear = year.filterFunction(function (d) { return d == (2010 + i); }),
+                tempCrossfilter = crossfilter(filteredYear.top(Infinity)),
+                byGenre = tempCrossfilter.dimension(function (d) { return d.genre; }),
+                genreGroup = byGenre.group().all();
+
+            //console.log(genreGroup);
+
+            var genreOverview = [],
+                j = 0;      // j represents the genre
+
+            for (j; j < 5; j++) { //keys.length
+                    var curYear = 2010 + i, 
+                    y0,
+                    y;
+
+                if (i == 0) {
+                    y0 = 0;
+                } else {
+                    y0 = orgData[(i * 5) + (j - 1)].y;
+                }
+                if (checkGenre(keys[j], genreGroup) == -1) {  // need to see if a genre is in the year's list
+                    //console.log(keys[j] + " index: " + j)
+                    y = y0
+                } else {
+                    y = y0 + genreGroup[j].value
+                }
+                orgData.push({"year": curYear, "y0": y0, "y": y});
+            }
+            //orgData.push(genreOverview)
+        }
+
+        //console.log(orgData)
+
+        // establishing variables
+        var margin = { top: 20, right: 30, bottom: 0, left: 20 },
+            width = 500 - margin.left - margin.right,
+            height = 500 - margin.left - margin.right;
+
+        // creating svg 
+        var svg = d3.select("div#streamChart").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.left + margin.right)
+            .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+        // scaling
+        var xscale = d3.scaleLinear()
+            .domain(d3.extent(data, function (d) { return d.year; }))
+            .range([0, width]);
+
+        var yscale = d3.scaleLinear()
+            .domain([-10, 10])
+            .range([height, 0]);
+
+        // Add X axis
+        var x_axis = d3.axisBottom()
+            .scale(xscale)
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + height + ")")
+            .call(x_axis)
+            .attr("class", "xAxis")
+
+        // Add Y axis
+        var y_axis = d3.axisLeft()
+            .scale(yscale)
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + ", 0 )")
+            .call(y_axis)
+            .attr("class", "yAxis")
+
+        // Color palette
+        var color = d3.scaleOrdinal()
+            .domain(keys)
+            .range(d3.schemeDark2)
+
+        // Stack data
+        var stackedData = d3.stack()
+            .offset(d3.stackOffsetSilhouette)
+            .keys(keys)
+            (orgData)  
+
+        console.log(orgData)
+
+        // Show on SVG
+        svg.selectAll("layers")
+            .data(orgData)
+            .enter()
+            .append('path')
+            .attr("class", "area")
+            .style("fill", function (d) { return color(d.key); })
+            .attr("d", d3.area()
+                .x(function (d) { 
+                    //console.log(d)
+                    return xscale(d.year); })
+                .y0(function (d) { return yscale(d.y0); })
+                .y1(function (d) { return yscale(d.y); }))
+
+    })
+
+    function checkGenre(curGenre, genres) {
+        var result = -1,
+            i = 0;
+        for (i; i < genres.length; i++) {
+            if (curGenre == genres[i].key) {
+                //console.log(curGenre + " is " + d.key)
+                result = 1;
+            }
+        }
+        return result;
+    }
+
+</script>
