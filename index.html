@@ -2,31 +2,36 @@
 
 <head>
     <style>
-        body{
+        body {
             font-family: 'Open Sans';
         }
-        #streamChart{
+
+        #streamChart {
             float: left;
             width: 50%;
         }
-        #info{
+
+        #info {
             float: left;
             width: 15%;
         }
-        #legend{
+
+        #legend {
             float: right;
             width: 30%;
-            margin: 520px, 30px, 0px, 20px;
+            margin-top: 20px;
+            text-align: center;
         }
-        #scatterPlots{
+
+        #scatterPlots {
             float: left;
             width: 100%;
         }
-        button{
+
+        button {
             display: inline-block;
             margin: 2px;
         }
-
     </style>
 </head>
 
@@ -52,6 +57,7 @@
 
 <script>
     console.log(d3);
+    var buttonClicked = -1;
 
     // Getting genres for key
     var keys = [];
@@ -114,8 +120,8 @@
         }
 
         // establishing variables
-        var margin = { top: 20, right: 30, bottom: 0, left: 10 },
-            width = 700 - margin.left - margin.right,
+        var margin = { top: 20, right: 10, bottom: 0, left: 10 },
+            width = 800 - margin.left - margin.right,
             height = 400 - margin.left - margin.right;
 
         // creating svg 
@@ -153,7 +159,7 @@
 
         // Tooltip
         var tooltip = d3.select("div#info").append("p")
-            .attr("id","line0")
+            .attr("id", "line0")
             .attr("x", 700)
             .attr("y", 20)
             .style("opacity", 0)
@@ -244,7 +250,7 @@
 
         // Tooltip
         var tooltip2 = d3.select("div#info").append("p")
-            .attr("id","line1")
+            .attr("id", "line1")
             .attr("x", 700)
             .attr("y", 20)
             .style("opacity", 0)
@@ -293,32 +299,36 @@
 
         // Change circle when user hovers / leaves circle
         var mouseover = function (d, i) {
-            d3.selectAll("circle.pt" + i)
-                .raise()
-                .transition()
-                .duration(100)
-                .attr("r", 4)
-                .style("fill", "red")
-                .style("opacity", 1)
-                .style("stroke", "black")
+            if (buttonClicked == -1) {
+                d3.selectAll("circle.pt" + i)
+                    .raise()
+                    .transition()
+                    .duration(100)
+                    .attr("r", 4)
+                    .style("fill", "red")
+                    .style("opacity", 1)
+                    .style("stroke", "black")
+            } else if (d3.select(this).style("r") == 4) {
+                var song = d.title + " by " + d.artist,
+                    gen = "Genre: " + d.genre
+                tooltip.text(song)
+                tooltip.style("opacity", 1)
+                tooltip2.text(gen)
+                tooltip2.style("opacity", 1)
+            }
 
-            var song = d.title + " by " + d.artist,
-                gen = "Genre: " + d.genre
-            tooltip.text(song)
-            tooltip.style("opacity", 1)
-            tooltip2.text(gen)
-            tooltip2.style("opacity", 1)
         }
 
         var mouseleave = function (d) {
-            d3.selectAll("circle")
-                .transition()
-                .duration(100)
-                .attr("r", 2)
-                .style("fill", "black")
-                .style("stroke", "none")
-                .style("opacity", 0.25)
-
+            if (buttonClicked == -1) {
+                d3.selectAll("circle")
+                    .transition()
+                    .duration(100)
+                    .attr("r", 2)
+                    .style("fill", "black")
+                    .style("stroke", "none")
+                    .style("opacity", 0.25)
+            }
             tooltip.style("opacity", 0)
             tooltip2.style("opacity", 0)
         }
@@ -387,10 +397,12 @@
         // Select div
         var list = d3.select("div#legend")
 
+        // Create reset button
         list.append("button")
             .text("Reset")
             .attr("margin", "")
             .on("click", function (d) {
+                buttonClicked = -1;
                 d3.selectAll(".legendButton")
                     .transition()
                     .duration(500)
@@ -423,6 +435,7 @@
             .attr("width", "auto")
             .style("background-color", function (i) { return color(i); })
             .on("click", function (d) {
+                buttonClicked = 1
                 d3.selectAll(".legendButton")
                     .transition()
                     .duration(500)
@@ -442,7 +455,7 @@
                     .style("r", 2)
                     .style("fill", "black")
                     .style("opacity", 0.25)
-                    .attr("pointer-events", "none")
+                //.attr("pointer-events", "none")
 
                 d3.select(this)
                     .transition()
