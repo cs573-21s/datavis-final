@@ -36,18 +36,26 @@
         <button id="closeFindingsB" onclick="closeFindings()">Close</button>
         <div class="information">
             <h2>Overview</h2>
-            <p>This website explores the "Top Spotify songs from 2010-2019 - BY YEAR" dataset provided by Kaggle. It breaks down each song into
-                different characteristics based on Billboard. The visualizations provide insight on music trends and patterns from 2010 to 2019.
+            <p>This website explores the "Top Spotify songs from 2010-2019 - BY YEAR" dataset provided by Kaggle. It
+                breaks down each song into
+                different characteristics based on Billboard. The visualizations provide insight on music trends and
+                patterns from 2010 to 2019.
 
-                To use this site, you can interact with the stream chart by hovering over areas to discover what genre they represent, or by filtering
-                particular genres by clicking on the buttons on the right side. This will also filter out songs of that genre in the scatterplots.
+                To use this site, you can interact with the stream chart by hovering over areas to discover what genre
+                they represent, or by filtering
+                particular genres by clicking on the buttons on the right side. This will also filter out songs of that
+                genre in the scatterplots.
 
-                Each circle in the scatterplot represents a song. Hovering over a circle will show more information on that particular song, as well 
-                as where it is on the other plots. 
+                Each circle in the scatterplot represents a song. Hovering over a circle will show more information on
+                that particular song, as well
+                as where it is on the other plots.
 
-                Each scatterplot also has a trendline to show the averages throughout the years. Hovering over the trendline will also display a 
+                Each scatterplot also has a trendline to show the averages throughout the years. Hovering over the
+                trendline will also display a
                 tooltip with more information.
             </p>
+            <iframe height="200" src="https://www.youtube.com/embed/-YYgnuW3J4o">
+            </iframe>
         </div>
         <div class="information">
             <h2>Variables</h2>
@@ -69,7 +77,8 @@
         <div class="information">
             <h2>Findings</h2>
             <p>
-                &emsp;Because there is a lot of data being shown in all of the visualizations, users can explore different
+                &emsp;Because there is a lot of data being shown in all of the visualizations, users can explore
+                different
                 trends with each given trait of a song. Here are some of the findings we discovered:
             </p>
             <p>
@@ -78,7 +87,8 @@
                 some sort of "pop" genre or "hip pop".
             </p>
             <p>
-                &emsp;We can also see that the energy of these top songs are slowly declining throughout the years. Of course,
+                &emsp;We can also see that the energy of these top songs are slowly declining throughout the years. Of
+                course,
                 while there is a large range, the averages are decreasing. This could also tie into
                 the declining tempos. While it isn't as apparent as the energy trendline, by using the tooltip, we can
                 see that the BPM throughout the years increases slightly at 2015 and then proceeds to decrease.
@@ -86,7 +96,8 @@
                 energy have decreased.
             </p>
             <p>
-                &emsp;Another more immediate trend we can see is that the acousticness of songs have increased, as well as a
+                &emsp;Another more immediate trend we can see is that the acousticness of songs have increased, as well
+                as a
                 decrease in song duration.
             </p>
         </div>
@@ -174,7 +185,7 @@
                 } else {
                     byYear[curGenre] = genreGroup[index].value;
                 }
-                
+
             }
             orgData.push(byYear);
         }
@@ -461,7 +472,7 @@
                 sum += propertyGroup[j].value * propertyGroup[j].key
                 count += propertyGroup[j].value
             }
-            average.push({ "year": 2010 + i, "avg": Math.round(sum / count *100)/100 })
+            average.push({ "year": 2010 + i, "avg": Math.round(sum / count * 100) / 100 })
         }
         console.log(average)
 

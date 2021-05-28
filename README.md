@@ -1,6 +1,6 @@
 ## Links
 - [Final Website](https://evelyntrvn.github.io/datavis-final/)
-- [Video]()
+- [Video](https://youtu.be/-YYgnuW3J4o)
 
 ## File Overview
 - index.html: html and javascript
