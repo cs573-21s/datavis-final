@@ -1,0 +1,605 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+</head>
+
+<body>
+    <div id="charts">
+        <div id="title">
+            <h2>Spotify Top Songs: 2010-2019</h2>
+            <div id="tooltips">
+                <p class="tooltip" id="line1"></p>
+                <p class="tooltip" id="line2"></p>
+                <p class="tooltip" id="line3"></p>
+                <p class="tooltip" id="line4"></p>
+                <p class="tooltip" id="line5"></p>
+                <p class="tooltip" id="line6"></p>
+                <p class="tooltip" id="line7"></p>
+                <p class="tooltip" id="line8"></p>
+                <p class="tooltip" id="line9"></p>
+                <p class="tooltip" id="line10"></p>
+                <p class="tooltip" id="line11"></p>
+            </div>
+
+        </div>
+        <div id="legend"></div>
+        <div id="streamChartdiv">
+            <svg id="streamChart"></svg>
+        </div>
+        <div id="scatterPlots"></div>
+        <div id="infoBDiv"></div>
+    </div>
+
+    <div id="findings">
+        <button id="closeFindingsB" onclick="closeFindings()">Close</button>
+        <div class="information">
+            <h2>Overview</h2>
+            <p>This website explores the "Top Spotify songs from 2010-2019 - BY YEAR" dataset provided by Kaggle. It
+                breaks down each song into
+                different characteristics based on Billboard. The visualizations provide insight on music trends and
+                patterns from 2010 to 2019.
+
+                To use this site, you can interact with the stream chart by hovering over areas to discover what genre
+                they represent, or by filtering
+                particular genres by clicking on the buttons on the right side. This will also filter out songs of that
+                genre in the scatterplots.
+
+                Each circle in the scatterplot represents a song. Hovering over a circle will show more information on
+                that particular song, as well
+                as where it is on the other plots.
+
+                Each scatterplot also has a trendline to show the averages throughout the years. Hovering over the
+                trendline will also display a
+                tooltip with more information.
+            </p>
+            <iframe height="200" src="https://www.youtube.com/embed/-YYgnuW3J4o">
+            </iframe>
+        </div>
+        <div class="information">
+            <h2>Variables</h2>
+            <h3></h3>
+            <p><b>Genre:</b> The category of the song based on musical form and style</p>
+            <p><b>Tempo:</b> Measures the speed of the song in beats per minute</p>
+            <p><b>Energy:</b> Measures how energetic the song is- the higher the value, the more energy it has</p>
+            <p><b>Danceability:</b> Measures how danceable the song is- the higher the value, the easier it is to dance
+                to the song</p>
+            <p><b>Volume:</b> Measures how loud the song is in decibels</p>
+            <p><b>Liveness:</b> Measures how likely the song is a live recording- the higher the value, the more likely
+            </p>
+            <p><b>Valence:</b> Measures the mood of the the song- the higher the value, the more positive it is</p>
+            <p><b>Duration:</b> Measures how long the song is in seconds</p>
+            <p><b>Acousticness:</b> Measures how acoustic the song is- the higher the value, the more acoustic it is</p>
+            <p><b>Speechiness:</b> Measures how word-y the song is- the higher the value, the more spoken words it has
+            </p>
+        </div>
+        <div class="information">
+            <h2>Findings</h2>
+            <p>
+                &emsp;Because there is a lot of data being shown in all of the visualizations, users can explore
+                different
+                trends with each given trait of a song. Here are some of the findings we discovered:
+            </p>
+            <p>
+                &emsp;Through the visualization we can see a large majority of Spotify's Top Songs have been
+                composed of the dance pop genre. Even so, generally most of the top songs of Spotify were
+                some sort of "pop" genre or "hip pop".
+            </p>
+            <p>
+                &emsp;We can also see that the energy of these top songs are slowly declining throughout the years. Of
+                course,
+                while there is a large range, the averages are decreasing. This could also tie into
+                the declining tempos. While it isn't as apparent as the energy trendline, by using the tooltip, we can
+                see that the BPM throughout the years increases slightly at 2015 and then proceeds to decrease.
+                This is interesting because the danceability of songs have increased through the years, as the tempo and
+                energy have decreased.
+            </p>
+            <p>
+                &emsp;Another more immediate trend we can see is that the acousticness of songs have increased, as well
+                as a
+                decrease in song duration.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
+
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="//alexmacy.github.io/crossfilter/crossfilter.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<script>
+    console.log(d3);
+
+    // Variables
+    var buttonClicked = -1,
+        keys = [],
+        line = [],
+        data,
+        year;
+
+    // Tooltip
+    d3.select(".tooltip")
+        .style("opacity", 0)
+        .style("font-size", 17)
+
+    var tooltips = d3.selectAll(".tooltip"),
+        tooltip = d3.select(".tooltip#line1")
+
+
+    // Load data in
+    d3.csv('top10s.csv', function (er, loadedData) {
+        data = loadedData
+        data.forEach(function (d) {
+            d["title"] = d["title"]
+            d["artist"] = d["artist"]
+            d["genre"] = d["top genre"]
+            d["year"] = +d["year"]
+            d["bpm"] = +d["bpm"]
+            d["nrgy"] = +d["nrgy"]
+            d["dnce"] = +d["dnce"]
+            d["dB"] = +d["dB"]
+            d["live"] = +d["live"]
+            d["val"] = +d["val"]
+            d["dur"] = +d["dur"]
+            d["acous"] = +d["acous"]
+            d["spch"] = +d["spch"]
+            d["pop"] = +d["pop"]
+
+            if (!keys.includes(d["top genre"])) {
+                keys.push(d["top genre"])
+            }
+        })
+
+        //console.log(data)
+
+        // Crossfilter and organizing data
+        var songs = crossfilter(data),
+            tempo = songs.dimension(function (d) { return d.tempo; }),
+            tempoGroup = tempo.group().all();
+
+        year = songs.dimension(function (d) { return d.year; })
+
+        var orgData = [],
+            i = 0;          // i represents the year
+
+        for (i; i < 10; i++) {
+            var filteredYear = year.filterFunction(function (d) { return d == (2010 + i); }),
+                tempCrossfilter = crossfilter(filteredYear.top(Infinity)),
+                byGenre = tempCrossfilter.dimension(function (d) { return d.genre; }),
+                genreGroup = byGenre.group().all();
+
+            var byYear = {},
+                j = 0;      // j represents the index of the genre in keys
+
+            byYear.year = 2010 + i;
+            for (j; j < keys.length; j++) {
+                var curGenre = keys[j],
+                    index = genreIndex(curGenre, genreGroup);
+
+                if (index == -1) {  // if genre isn't on year's list
+                    byYear[curGenre] = 0;
+                } else {
+                    byYear[curGenre] = genreGroup[index].value;
+                }
+
+            }
+            orgData.push(byYear);
+        }
+        console.log(orgData)
+
+        // establishing variables
+        var margin = { top: 20, right: 10, bottom: 0, left: 10 },
+            width = 700 - margin.left - margin.right,
+            height = 380 - margin.left - margin.right;
+
+        // creating svg 
+        var svg = d3.select("#streamChart")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.left + margin.right)
+            .attr("transform", "translate(" + margin.left + ", " + margin.top + ")");
+
+        // scaling
+        var xscale = d3.scaleLinear()
+            .domain(d3.extent(data, function (d) { return d.year; }))
+            .range([0, width]);
+
+        var yscale = d3.scaleLinear()
+            .domain([-50, 50])
+            .range([height, 0]);
+
+        // Add X axis
+        var x_axis = d3.axisBottom()
+            .scale(xscale)
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + height + ")")
+            .call(x_axis)
+            .attr("class", "xAxis")
+            .call(d3.axisBottom(xscale)
+                .tickSize(-height)
+                .tickValues([2010, 2011, 2012, 2013, 2013, 2014, 2015, 2016, 2017, 2018, 2019]))
+            .select(".domain").remove()
+        svg.selectAll(".tick line").attr("stroke", "#b8b8b8")
+
+        // Color palette
+        var color = d3.scaleOrdinal()
+            .domain(keys)
+            .range(d3.schemePaired)
+
+        // Change the tooltip when user hover / move / leave a cell
+        var mouseover = function (d) {
+            tooltip.style("opacity", 1)
+            d3.selectAll(".area")
+                .style("opacity", .2)
+            d3.select(this)
+                .style("opacity", 1)
+
+            d3.selectAll().selectAll("[genre='" + d3.select(this).attr("genre") + "']")
+                .attr("r", 4)
+                .style("fill", "#1DB954")
+                .style("opacity", 1)
+        }
+        var mousemove = function (d, i) {
+            grp = keys[i]
+            tooltip.text(grp)
+        }
+        var mouseleave = function (d) {
+            tooltip.style("opacity", 0)
+            d3.selectAll(".area")
+                .style("opacity", 1)
+                .style("stroke", "none")
+                .style("fill", function (d) { return color(d.key); })
+        }
+
+        // Stack data
+        var stackedData = d3.stack()
+            .offset(d3.stackOffsetSilhouette)
+            .keys(keys)
+            (orgData)
+
+        // Create streams
+        svg.selectAll("layer")
+            .data(stackedData)
+            .enter()
+            .append('path')
+            .attr("class", "area")
+            .attr("genre", function (d) { return d.key; })
+            .style("fill", function (d) { return color(d.key); })
+            .attr("color", function (d) { return color(d.key); })
+            .attr("d", d3.line())
+            .attr("transform", "translate(" + margin.left + ", 0 )")
+            .on("mouseover", mouseover)
+            .on("mousemove", mousemove)
+            .on("mouseleave", mouseleave)
+            .attr("d", d3.area()
+                .x(function (d) { return xscale(d.data.year); })
+                .y0(function (d) { return yscale(0); })
+                .y1(function (d) { return yscale(0); }))
+            .transition()
+            .delay(1000)
+            .duration(4000)
+            .attr("d", d3.area()
+                .x(function (d) { return xscale(d.data.year); })
+                .y0(function (d) { return yscale(d[0]); })
+                .y1(function (d) { return yscale(d[1]); }))
+
+
+        scatterplot("bpm", "tempoPlot", "Tempo (bpm)")
+        scatterplot("nrgy", "energyPlot", "Energy")
+        scatterplot("dnce", "dancePlot", "Danceability")
+        scatterplot("dB", "volumePlot", "Volume (dB)")
+        scatterplot("live", "livePlot", "Liveness")
+        scatterplot("val", "valencePlot", "Valence")
+        scatterplot("dur", "durationPlot", "Duration (s)")
+        scatterplot("acous", "acousPlot", "Acousticness")
+        scatterplot("spch", "speechPlot", "Speechiness")
+
+        genreLengend(color)
+
+        d3.select("#infoBDiv")
+            .append("button")
+            .attr("id", "infoB")
+            .text("i")
+            .on("click", function () {
+                d3.select("#findings")
+                    .style("height", "100%")
+
+            })
+
+    })
+
+    function genreIndex(curGenre, genres) {
+        var result = -1,
+            i = 0;
+        for (i; i < genres.length; i++) {
+            if (curGenre == genres[i].key) {
+                //console.log(curGenre + " is " + d.key)
+                result = i;
+            }
+        }
+        return result;
+    }
+
+    function scatterplot(prop, id, yscaleLabel) {
+
+        var margin = { top: 10, right: 20, bottom: 0, left: 50 },
+            height = 110 - margin.top - margin.bottom,
+            width = 300 - margin.right - margin.left;
+
+        // Creating svg 
+        var svg = d3.select("div#scatterPlots").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.left + margin.right)
+            .attr("transform", "translate(" + 15 + ", " + margin.top + ")")
+            .attr('id', id);
+
+        // Scaling
+        var xscale = d3.scaleLinear()
+            .domain(d3.extent(data, function (d) { return d.year; }))
+            .range([0, width]);
+
+        var yscale = d3.scaleLinear()
+            .domain(d3.extent(data, function (d) { return d[prop] }))
+            .range([height, 0]);
+
+        // Add X Axis
+        var x_axis = d3.axisBottom()
+            .scale(xscale)
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + height + ")")
+            .call(x_axis)
+            .attr("class", "xAxis")
+            .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-45)");
+
+        // Add Y Axis
+        var y_axis = d3.axisLeft()
+            .scale(yscale)
+            .ticks(5)
+        svg.append("g")
+            .attr("transform", "translate(" + margin.left + ", 0 )")
+            .call(y_axis)
+            .attr("class", "yAxis")
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .style("fill", "white")
+            .style("font-weight", "bold")
+            .text(yscaleLabel);
+
+        // Change circle when user hovers / leaves circle
+        var mouseover = function (d, i) {
+            if (buttonClicked == -1) {
+                d3.selectAll("circle.pt" + i)
+                    .raise()
+                    .transition()
+                    .duration(100)
+                    .style("r", 4)
+                    .style("fill", "#8fd9a9")
+                    .style("opacity", 1)
+
+                line[1] = d.title + " by " + d.artist,
+                    line[2] = "Genre: " + d.genre,
+                    line[3] = "BPM: " + d.bpm,
+                    line[4] = "Energy: " + d.nrgy,
+                    line[5] = "Danceability: " + d.dnce,
+                    line[6] = "Volume: " + d.dB + "dB"
+                line[7] = "Liveliness: " + d.live,
+                    line[8] = "Valence: " + d.val,
+                    line[9] = "Duration: " + d.dur + " sec",
+                    line[10] = "Acousticness: " + d.acous,
+                    line[11] = "Speechiness: " + d.spch;
+                for (let i = 1; i <= 11; i++) {
+                    d3.select(".tooltip#line" + i).text(line[i])
+                }
+
+                tooltips.style("opacity", 1)
+
+
+            } else if (d3.select(this).style("r") == 4) {
+                line[1] = d.title + " by " + d.artist,
+                    line[2] = "Genre: " + d.genre,
+                    line[3] = "BPM: " + d.bpm,
+                    line[4] = "Energy: " + d.nrgy,
+                    line[5] = "Danceability: " + d.dnce,
+                    line[6] = "Volume: " + d.dB + "dB"
+                line[7] = "Liveliness: " + d.live,
+                    line[8] = "Valence: " + d.val,
+                    line[9] = "Duration: " + d.dur + " sec",
+                    line[10] = "Acousticness: " + d.acous,
+                    line[11] = "Speechiness: " + d.spch;
+                for (let i = 1; i <= 11; i++) {
+                    d3.select(".tooltip#line" + i).text(line[i])
+                }
+
+                tooltips.style("opacity", 1)
+            }
+        }
+
+        var mouseleave = function (d) {
+            if (buttonClicked == -1) {
+                d3.selectAll("circle")
+                    .transition()
+                    .duration(100)
+                    .style("r", 2)
+                    .style("fill", "#1DB954")
+                    .style("stroke", "none")
+                    .style("opacity", 0.25)
+            }
+            tooltips.style("opacity", 0)
+        }
+
+        //Add circles
+        var circles = svg.selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("genre", function (d) { return d.genre; })
+            .attr("class", function (d, i) { return "pt" + i; })
+            .attr("cx", function (d) { return xscale(d.year); })
+            .attr("cy", function (d) { return yscale(d[prop]); })
+            .attr("r", 2)
+            .style("opacity", "0.3")
+            .style("fill", "#1DB954")
+            .attr("transform", "translate(" + margin.left + ", 0 )")
+            .on("mouseover", mouseover)
+            .on("mouseleave", mouseleave)
+
+        // Getting averages for line
+        var average = [],
+            i = 0;
+
+        for (i; i < 10; i++) {
+            var filteredYear = year.filterFunction(function (d) { return d == (2010 + i); }),
+                tempCrossfilter = crossfilter(filteredYear.top(Infinity)),
+                propertyDim = tempCrossfilter.dimension(function (d) { return d[prop]; }),
+                propertyGroup = propertyDim.group().all();
+
+            var j = 0,
+                sum = 0,
+                count = 0;
+
+            for (j; j < propertyGroup.length; j++) {
+                sum += propertyGroup[j].value * propertyGroup[j].key
+                count += propertyGroup[j].value
+            }
+            average.push({ "year": 2010 + i, "avg": Math.round(sum / count * 100) / 100 })
+        }
+        console.log(average)
+
+        // Line generator
+        var avgLine = d3.line()
+            .x(function (d) { return xscale(d.year); })
+            .y(function (d) { return yscale(d.avg); })
+
+        // Tooltip for line
+        var div = d3.select("body").append('div')
+            .attr("class", "avgTooltip")
+            .style("opacity", 0)
+
+        // Add line
+        var line = svg.selectAll(".line")
+            .data([average])
+            .enter()
+            .append("path")
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 3)
+            .attr("d", avgLine)
+            .attr("transform", "translate(" + margin.left + ", 0 )")
+            .on("mouseover", function (d) {
+                var x0 = Math.round(xscale.invert(d3.mouse(this)[0]));
+                div.transition()
+                    .duration('300')
+                    .style("opacity", 1);
+                div.html(
+                    "Year: " + x0 +
+                    ", Average: " + d[x0 - 2010].avg
+                )
+                    .style("left", d3.event.pageX)
+                    .style("top", d3.event.pageY);
+            })
+            .on('mouseout', function (d) {
+                div.transition()
+                    .duration('300')
+                    .style("opacity", 0);
+            });
+
+    }
+
+    function genreLengend(color) {
+
+        // Establish variables
+        var margin = { top: 30, right: 30, bottom: 0, left: 20 },
+            height = 150 - margin.top - margin.bottom,
+            width = 250 - margin.right - margin.left;
+
+        // Select div
+        var list = d3.select("div#legend")
+
+        // Create reset button
+        list.append("button")
+            .text("Reset")
+            .attr("margin", "")
+            .on("click", function (d) {
+                buttonClicked = -1;
+                d3.selectAll(".legendButton")
+                    .style("font-weight", "normal")
+                d3.selectAll(".area")
+                    .transition()
+                    .duration(500)
+                    .style("opacity", 1)
+                    .style("fill", function (d) { return color(d.key); })
+                    .style("stroke", "none")
+                    .attr("pointer-events", "all")
+                d3.selectAll("circle")
+                    .transition()
+                    .duration(500)
+                    .style("r", 2)
+                    .style("fill", "#1DB954")
+                    .style("opacity", 0.25)
+                    .attr("pointer-events", "all")
+            })
+        list.append("br")
+
+        // Create Buttons
+        var buttons = list.selectAll(".button")
+            .data(keys)
+            .enter()
+            .append('button')
+            .attr("id", function (d, i) { return "button" + i; })
+            .attr("class", "legendButton")
+            .text(function (d) { return d; })
+            .attr("width", "auto")
+            .style("background-color", function (i) { return color(i); })
+            .on("click", function (d) {
+                buttonClicked = 1
+                d3.selectAll(".legendButton")
+                    .transition()
+                    .duration(500)
+                    .style("font-weight", "normal")
+
+                d3.selectAll(".area")
+                    .transition()
+                    .duration(500)
+                    .style("opacity", 0.2)
+                    .style("fill", function (d) { return color(d.key); })
+                    .style("stroke", "none")
+                    .attr("pointer-events", "none")
+
+                d3.selectAll("circle")
+                    .transition()
+                    .duration(500)
+                    .style("r", 2)
+                    .style("fill", "#1DB954")
+                    .style("opacity", 0.25)
+
+                d3.select(this)
+                    .transition()
+                    .duration(500)
+                    .style("font-weight", "bold")
+
+                d3.selectAll("[genre='" + d + "']")
+                    .raise()
+                    .transition()
+                    .duration(500)
+                    .style("opacity", 1)
+                    .style("fill", "#8fd9a9")
+                    .style("r", 4)
+            })
+    }
+
+    function closeFindings() {
+        d3.select("#findings")
+            .style("height", "0%")
+    }
+</script>
