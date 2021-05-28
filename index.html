@@ -1,119 +1,8 @@
 <html>
 
 <head>
-    <style>
-        body {
-            font-family: 'Open Sans';
-            color: white;
-            background-color: black;
-        }
-
-        p {
-            margin-left: 20;
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-        #title {
-            text-align: center;
-            float: left;
-            width: 25%;
-        }
-
-        #streamChartdiv {
-            float: right;
-            width: 50%;
-            text-align: center;
-        }
-
-        #legend {
-            float: right;
-            width: 25%;
-            text-align: center;
-        }
-
-        #scatterPlots {
-            float: left;
-            width: 100%;
-        }
-
-        #infoBDiv {
-            position: fixed;
-            height: 100px;
-            width: 100px;
-            bottom: 0;
-            right: 0;
-        }
-
-        #findings {
-            height: 0%;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            background-color: black;
-            transition: 0.5s;
-        }
-        .information{
-            margin: 20px;
-            float: left;
-            width: 30%;
-            line-height: 1.75em;
-        }
-
-        div.avgTooltip {
-            position: absolute;
-            text-align: center;
-            padding: .2rem;
-            background: rgb(87, 94, 99);
-            color: #f9f9f9;
-            border: 0px;
-            border-radius: 8px;
-            pointer-events: none;
-            font-size: .7rem;
-        }
-
-        .xAxis line,
-        .xAxis path,
-        .yAxis line,
-        .yAxis path {
-            stroke: white;
-            opacity: 0.5;
-        }
-
-        .xAxis text,
-        .yAxis text {
-            fill: white;
-        }
-
-        #line1 {
-            font-weight: bold;
-        }
-
-        button {
-            display: inline-block;
-            margin: 2px;
-            stroke: none;
-            border-radius: 4px;
-        }
-
-        #infoB {
-            height: 40px;
-            width: 40px;
-            border-radius: 20px;
-            font-size: 20;
-        }
-
-        #closeFindingsB {
-            position: absolute;
-            right: 15px;
-            top: 15px;
-            background-color: #272727;
-            color: white;
-            font-size: 16px;
-            padding: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 </head>
 
 <body>
@@ -189,8 +78,8 @@
                 some sort of "pop" genre or "hip pop".
             </p>
             <p>
-                &emsp;We can also see that the energy of these top songs are slowly declining throughout the years. Of couse
-                there is a large range, the averages are decreasing. This could also tie into
+                &emsp;We can also see that the energy of these top songs are slowly declining throughout the years. Of course,
+                while there is a large range, the averages are decreasing. This could also tie into
                 the declining tempos. While it isn't as apparent as the energy trendline, by using the tooltip, we can
                 see that the BPM throughout the years increases slightly at 2015 and then proceeds to decrease.
                 This is interesting because the danceability of songs have increased through the years, as the tempo and
@@ -206,7 +95,6 @@
 
 </html>
 
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="//alexmacy.github.io/crossfilter/crossfilter.v1.min.js"></script>
@@ -286,9 +174,11 @@
                 } else {
                     byYear[curGenre] = genreGroup[index].value;
                 }
-                orgData.push(byYear);
+                
             }
+            orgData.push(byYear);
         }
+        console.log(orgData)
 
         // establishing variables
         var margin = { top: 20, right: 10, bottom: 0, left: 10 },
@@ -571,8 +461,9 @@
                 sum += propertyGroup[j].value * propertyGroup[j].key
                 count += propertyGroup[j].value
             }
-            average.push({ "year": 2010 + i, "avg": sum / count })
+            average.push({ "year": 2010 + i, "avg": Math.round(sum / count *100)/100 })
         }
+        console.log(average)
 
         // Line generator
         var avgLine = d3.line()
